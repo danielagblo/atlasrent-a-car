@@ -1,0 +1,62 @@
+[
+  {
+    "id": "lux",
+    "name": "EKG Lux",
+    "category": "Sedan",
+    "rate": "¢1,100/day",
+    "desc": "Flagship electric sedan — hand-crafted luxury with long range.",
+    "price": "$89,900",
+    "range": "370 mi",
+    "topSpeed": "155 mph",
+    "zeroToSixty": "3.8s",
+    "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=80",
+    "localImage": "/assets/lux.jpg",
+    "gallery": [],
+    "specs": {
+      "battery": "98 kWh",
+      "drive": "Dual Motor AWD",
+      "seats": 5,
+      "charging": "250 kW DC fast charge"
+    }
+  },
+  {
+    "id": "sport",
+    "name": "EKG Sport",
+    "category": "Performance",
+    "rate": "¢1,700/day",
+    "desc": "Performance first — aggressive dynamics and track-capability.",
+    "price": "$109,900",
+    "range": "320 mi",
+    "topSpeed": "190 mph",
+    "zeroToSixty": "2.9s",
+    "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1400&q=80",
+    "localImage": "/assets/sport.jpg",
+    "gallery": [],
+    "specs": {
+      "battery": "110 kWh",
+      "drive": "Tri Motor AWD",
+      "seats": 4,
+      "charging": "300 kW DC fast charge"
+    }
+  },
+  {
+    "id": "tour",
+    "name": "EKG Tour",
+    "category": "SUV",
+    "rate": "¢1,500/day",
+    "desc": "Long range SUV — family comfort with a commanding presence.",
+    "price": "$99,900",
+    "range": "410 mi",
+    "topSpeed": "145 mph",
+    "zeroToSixty": "4.6s",
+    "image": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1400&q=80",
+    "localImage": "/assets/tour.jpg",
+    "gallery": [],
+    "specs": {
+      "battery": "120 kWh",
+      "drive": "Dual Motor AWD",
+      "seats": 7,
+      "charging": "270 kW DC fast charge"
+    }
+  }
+]

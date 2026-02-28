@@ -1,0 +1,6 @@
+const NEWS = [
+  { id: 'n1', title: 'EKG Lux Wins Design Award', date: '2026-01-15', excerpt: 'The EKG Lux was recognized for innovative interior design and sustainability initiatives.' , image: '/assets/news1.jpg' },
+  { id: 'n2', title: 'New Charging Network Partnership', date: '2026-02-01', excerpt: 'EKG Logistics and transport partners with GridCharge to expand fast-charging availability across major routes.' , image: '/assets/news2.jpg' }
+]
+
+export default NEWS

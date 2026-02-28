@@ -1,0 +1,15 @@
+{
+  "name": "EKG Logistics and transport",
+  "short_name": "EKG",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#071029",
+  "theme_color": "#071029",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}
