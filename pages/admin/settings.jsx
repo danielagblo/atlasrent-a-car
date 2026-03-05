@@ -10,6 +10,7 @@ export default function AdminSettings() {
         fromEmail: '',
         adminSmsNumber: '',
         supportPhone: '',
+        headquarters: '',
         featuredBrands: ''
     })
     const [loading, setLoading] = useState(true)
@@ -43,6 +44,7 @@ export default function AdminSettings() {
                     fromEmail: data.fromEmail || '',
                     adminSmsNumber: data.adminSmsNumber || '',
                     supportPhone: data.supportPhone || '+233 (0)501 326 989',
+                    headquarters: data.headquarters || 'Accra, Ghana',
                     featuredBrands: data.featuredBrands || 'Toyota, Honda, Nissan, Hyundai'
                 })
             }
@@ -220,6 +222,32 @@ export default function AdminSettings() {
                                     Displayed on public invoices and booking.
                                 </span>
                             </div>
+                        </div>
+
+                        <div style={{ marginTop: 32 }}>
+                            <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                                Headquarters / Physical Address
+                            </label>
+                            <input
+                                type="text"
+                                value={settings.headquarters}
+                                onChange={(e) => setSettings({ ...settings, headquarters: e.target.value })}
+                                placeholder="Accra, Ghana"
+                                style={{
+                                    width: '100%',
+                                    padding: '16px 20px',
+                                    borderRadius: 16,
+                                    border: '1px solid var(--border)',
+                                    background: 'var(--input-bg)',
+                                    color: 'var(--text-primary)',
+                                    fontSize: 15,
+                                    outline: 'none',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            />
+                            <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
+                                Official address shown on the contact page.
+                            </span>
                         </div>
                     </section>
 

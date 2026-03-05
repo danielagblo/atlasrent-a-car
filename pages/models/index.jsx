@@ -1,14 +1,13 @@
 import React from 'react'
 import Products from '../../components/Products'
+import Layout from '../../components/Layout'
 
-export default function Models(){
+export default function Models() {
   return (
-    <section className="page page-models">
-      <div style={{padding:60}}>
-        <h2>Models</h2>
-        <p style={{color:'var(--muted)'}}>Explore our full lineup.</p>
+    <Layout>
+      <div style={{ padding: '0 0 60px' }}>
         <Products />
       </div>
-    </section>
+    </Layout>
   )
 }

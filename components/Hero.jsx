@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import { getCldImageUrl } from 'next-cloudinary'
 import React from 'react'
 import IMAGES from '../data/images'
 
@@ -11,6 +12,17 @@ export default function Hero() {
     const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 768)
     const videoRef = React.useRef(null)
     const [videoError, setVideoError] = React.useState(false)
+
+    // Generate Cloudinary URL for CSS background
+    const heroBgUrl = IMAGES.hero.startsWith('http') || IMAGES.hero.startsWith('/')
+        ? IMAGES.hero
+        : getCldImageUrl({
+            src: IMAGES.hero,
+            width: 1920,
+            height: 1080,
+            crop: 'fill',
+            gravity: 'center'
+        });
 
     React.useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768)
@@ -82,7 +94,7 @@ export default function Hero() {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: `url(${IMAGES.hero})`,
+                        background: `url(${heroBgUrl})`,
                         backgroundSize: 'cover',
                         backgroundPosition: isMobile ? '62% center' : 'center',
                         filter: 'brightness(0.9) contrast(1.05) saturate(1.08)',

@@ -10,9 +10,10 @@ export default async function handler(req, res) {
         const settings = await storage.getSettings()
         // We only return public-safe settings here
         return res.json({
-            adminEmail: settings?.adminEmail || 'concierge@ekgtransport.com',
+            adminEmail: settings?.adminEmail || 'info@ekgsite.com',
             adminSmsNumber: settings?.adminSmsNumber || '+233 501 326 989',
-            supportPhone: settings?.supportPhone || '+233 (0)501 326 989',
+            supportPhone: settings?.supportPhone || '+233 501 326 989',
+            headquarters: settings?.headquarters || 'Accra, Ghana',
             featuredBrands: settings?.featuredBrands || 'Toyota, Honda, Nissan, Hyundai'
         })
     } catch (e) {

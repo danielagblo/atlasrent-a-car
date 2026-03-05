@@ -16,6 +16,26 @@ export default function ContactPage() {
 
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [settings, setSettings] = useState({
+    supportPhone: '+233 501 326 989',
+    headquarters: 'Accra, Ghana',
+    adminEmail: 'info@ekgsite.com'
+  })
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setSettings({
+            supportPhone: data.supportPhone || '+233 501 326 989',
+            headquarters: data.headquarters || 'Accra, Ghana',
+            adminEmail: data.adminEmail || 'info@ekgsite.com'
+          })
+        }
+      })
+      .catch(console.error)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -73,7 +93,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--muted)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Call Us (24/7 Support)</div>
-                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>+233 501 326 989</div>
+                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>{settings.supportPhone}</div>
                   </div>
                 </div>
 
@@ -83,7 +103,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--muted)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Headquarters</div>
-                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>Accra, Ghana</div>
+                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>{settings.headquarters}</div>
                   </div>
                 </div>
 
@@ -93,7 +113,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div style={{ color: 'var(--muted)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>General Inquiries</div>
-                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>info@ekgsite.com</div>
+                    <div style={{ color: '#fff', fontSize: 16, fontWeight: 600 }}>{settings.adminEmail}</div>
                   </div>
                 </div>
               </div>

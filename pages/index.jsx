@@ -3,6 +3,7 @@ import Hero from '../components/Hero'
 import Products from '../components/Products'
 import IMAGES from '../data/images'
 import { motion } from 'framer-motion'
+import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
 import TrustBadges from '../components/TrustBadges'
 
@@ -54,7 +55,7 @@ function Testimonials({ testimonials }) {
               <div style={{ position: 'absolute', top: 30, right: 30, fontSize: 100, fontFamily: 'Georgia, serif', color: 'rgba(212,175,55,0.06)', lineHeight: 1, userSelect: 'none' }}>”</div>
 
               <div style={{ position: 'relative', display: 'flex', gap: 6, marginBottom: 32 }}>
-                {[...Array(5)].map((_, star) => <span key={star} style={{ color: '#D4AF37', fontSize: 18 }}>★</span>)}
+                {[...Array(Star = 5)].map((_, star) => <span key={star} style={{ color: '#D4AF37', fontSize: 18 }}>★</span>)}
               </div>
 
               <p style={{ fontSize: 17, lineHeight: 1.8, color: 'rgba(255,255,255,0.85)', fontStyle: 'italic', marginBottom: 40, position: 'relative', zIndex: 1 }}>
@@ -62,8 +63,8 @@ function Testimonials({ testimonials }) {
               </p>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 24 }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', background: 'rgba(212,175,55,0.1)', padding: 2 }}>
-                  <img src={t.avatar || t.image || IMAGES.hero} alt={t.name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', background: 'rgba(212, 175, 55, 0.1)', padding: 2 }}>
+                  <CldOptimizedImage src={t.avatar || t.image || IMAGES.hero} alt={t.name} width={56} height={56} crop="thumb" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                 </div>
                 <div>
                   <h4 style={{ margin: '0 0 6px', fontSize: 16, color: '#fff', fontWeight: 700, letterSpacing: '0.02em' }}>{t.name}</h4>
@@ -91,7 +92,7 @@ function News({ newsItems }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
         {newsItems.map((n, i) => (
           <article key={n.id} className="news-article">
-            <img src={n.image || IMAGES.news1} alt={n.title} style={{ width: 140, height: 100, objectFit: 'cover', borderRadius: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} />
+            <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={140} height={100} crop="fill" style={{ width: 140, height: 100, objectFit: 'cover', borderRadius: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} />
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ fontWeight: 800, fontSize: 18, color: '#fff', marginBottom: 8, lineHeight: 1.3 }}>{n.title}</div>
               <div style={{ color: 'var(--muted)', fontSize: 14, lineHeight: 1.5 }}>{n.excerpt?.slice(0, 80)}{n.excerpt?.length > 80 ? '...' : ''}</div>

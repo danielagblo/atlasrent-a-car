@@ -1,26 +1,15 @@
 export const config = { api: { bodyParser: false } }
 
-const { formidable } = require('formidable')
-const fs = require('fs-extra')
-const path = require('path')
+import { formidable } from 'formidable'
+import cloudinary from '../../lib/cloudinary'
 
 async function handler(req, res) {
   if (req.method !== 'POST') return res.setHeader('Allow', 'POST') && res.status(405).end('Method Not Allowed')
 
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-  await fs.ensureDir(uploadDir)
-
-  const form = formidable({
-    uploadDir,
-    keepExtensions: true,
-    maxFileSize: 8 * 1024 * 1024,
-    filename: (name, ext, part) => {
-      return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}${ext || '.jpg'}`
-    }
-  })
+  const form = formidable({})
 
   return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
       if (err) {
         res.status(500).json({ error: 'Upload failed', detail: err.message })
         return resolve()
@@ -31,12 +20,16 @@ async function handler(req, res) {
         return resolve()
       }
 
-      const filename = file.newFilename
-      const host = req.headers.host
-      const protocol = req.headers['x-forwarded-proto'] || (req.socket && req.socket.encrypted ? 'https' : 'http') || 'http'
-      const url = `${protocol}://${host}/uploads/${filename}`
-      res.json({ url, path: `/uploads/${filename}` })
-      resolve()
+      try {
+        const result = await cloudinary.uploader.upload(file.filepath, {
+          folder: 'ekgsite/uploads',
+        })
+        res.json({ url: result.secure_url, public_id: result.public_id })
+        resolve()
+      } catch (uploadError) {
+        res.status(500).json({ error: 'Cloudinary upload failed', detail: uploadError.message })
+        resolve()
+      }
     })
   })
 }

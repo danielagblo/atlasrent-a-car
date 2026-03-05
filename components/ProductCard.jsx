@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import CldOptimizedImage from './CldOptimizedImage'
 import ProductModal from './ProductModal'
 import IMAGES from '../data/images'
 
 export default function ProductCard({ item }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const imgSrc = item.localImage || item.image || '/assets/hero.jpg'
+
   return (
     <>
       <motion.article
@@ -20,7 +21,14 @@ export default function ProductCard({ item }) {
         style={{ cursor: 'pointer' }}
       >
         <div className="thumb" style={{ position: 'relative' }}>
-          <img className="card-img" src={imgSrc} alt={item.name} loading="lazy" decoding="async" onError={(e) => { e.target.onerror = null; e.target.src = item.image }} />
+          <CldOptimizedImage
+            width={600}
+            height={400}
+            src={item.image}
+            alt={item.name}
+            className="card-img"
+            style={{ objectFit: 'cover' }}
+          />
 
           {/* Badges Overlays */}
           <div style={{ position: 'absolute', inset: 0, padding: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pointerEvents: 'none' }}>
@@ -62,10 +70,14 @@ export default function ProductCard({ item }) {
           <p style={{ color: 'var(--muted)', margin: 0, fontSize: 15, lineHeight: 1.5 }}>{item.desc}</p>
           <div className="card-footer">
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 800, color: '#D4AF37', fontSize: 20 }}>{item.rate || item.price}</div>
+              <div style={{ fontWeight: 800, color: '#D4AF37', fontSize: 20 }}>
+                {item.price || item.rate} GHS
+                <span style={{ fontSize: 13, fontWeight: 500, opacity: 0.6, marginLeft: 4 }}>/day</span>
+              </div>
               <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8, display: 'flex', gap: 16 }}>
                 <span>{item.specs?.seats || '-'} Seats</span>
-                <span>Electric</span>
+                <span>{item.specs?.transmission || 'Automatic'}</span>
+                <span>{item.specs?.fuelType || 'Electric'}</span>
               </div>
             </div>
             <div style={{
