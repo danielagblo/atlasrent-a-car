@@ -134,6 +134,20 @@ Notes:
 - If SMS vars are missing, order creation still succeeds and the server logs that SMS was skipped.
 - If the gateway responds with an error, order creation still succeeds and the server logs the SMS error.
 
+Arkesel SMS provider
+
+If you prefer Arkesel as the SMS provider set `SMS_PROVIDER=arkesel` and add these variables before starting the server:
+
+```bash
+export SMS_PROVIDER=arkesel
+export ARKESEL_API_KEY=your_arkesel_api_key
+export ARKESEL_SMS_URL=https://api.arkesel.com/api/sms/send  # optional, defaults to Arkesel public endpoint
+export ARKESEL_SENDER="EKG"
+export ADMIN_SMS_NUMBER=+233XXXXXXXXX
+```
+
+The server will attempt to POST a JSON payload to the Arkesel URL. If the SMS vars are not set the server will skip SMS sending and still persist orders.
+
 The frontend will try to post orders to `/api/orders` when available; it still keeps a localStorage fallback for demos.
 
 CI
