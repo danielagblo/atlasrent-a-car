@@ -46,7 +46,7 @@ export default function ProductModal({ item, onClose }) {
               <p style={{ color: 'var(--muted)', marginTop: 6 }}>Note: Payment will be collected upon delivery.</p>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                 <button className="small" onClick={onClose}>Close</button>
-                <button className="primary" onClick={onClose}>Track Orders</button>
+                <button className="primary" onClick={() => { onClose(); router.push('/my-orders'); }}>Track Orders</button>
               </div>
             </div>
           )}

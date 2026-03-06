@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-import { getCldImageUrl } from 'next-cloudinary'
+import { getCldImageUrl } from './CldOptimizedImage'
 import React from 'react'
 import IMAGES from '../data/images'
 
@@ -49,8 +49,8 @@ export default function Hero() {
     return (
         <section style={{
             position: 'relative',
-            height: isMobile ? '74vh' : '88vh',
-            minHeight: isMobile ? 500 : 600,
+            minHeight: isMobile ? '70vh' : '85vh',
+            padding: isMobile ? '120px 0 100px' : '160px 0 140px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

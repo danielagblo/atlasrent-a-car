@@ -1,5 +1,5 @@
 import React from 'react'
-import { CldImage } from 'next-cloudinary'
+import { CldImage, getCldImageUrl as nextGetCldImageUrl } from 'next-cloudinary'
 
 /**
  * Standard utility to parse URLs or local paths into Cloudinary public IDs.
@@ -35,6 +35,25 @@ export const getCldPublicId = (url) => {
     if (url.startsWith('ekgsite/')) return url
 
     return url
+}
+
+/**
+ * Utility to get an optimized Cloudinary URL for CSS backgrounds or other non-component uses.
+ */
+export const getCldImageUrl = (src, options = {}) => {
+    const publicId = getCldPublicId(src)
+    const isCld = !publicId.startsWith('http') && !publicId.startsWith('/') && !publicId.startsWith('data:')
+
+    if (!isCld) return publicId
+
+    return nextGetCldImageUrl({
+        src: publicId,
+        width: options.width || 1920,
+        height: options.height || 1080,
+        crop: options.crop || 'fill',
+        quality: options.quality || 'auto',
+        ...options
+    })
 }
 
 /**

@@ -1,8 +1,8 @@
 const IMAGES = {
-    hero: 'ekgsite/assets/hero',
-    featured1: 'ekgsite/assets/lux',
-    featured2: 'ekgsite/assets/sport',
-    featured3: 'ekgsite/assets/tour',
+    hero: '/assets/hero.jpg',
+    featured1: '/assets/lux.jpg',
+    featured2: '/assets/sport.jpg',
+    featured3: '/assets/tour.jpg',
 
     // Testimonials
     testimonial1: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=256&h=256&fit=crop',

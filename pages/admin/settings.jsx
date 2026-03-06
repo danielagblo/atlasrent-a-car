@@ -43,9 +43,9 @@ export default function AdminSettings() {
                     adminEmail: data.adminEmail || '',
                     fromEmail: data.fromEmail || '',
                     adminSmsNumber: data.adminSmsNumber || '',
-                    supportPhone: data.supportPhone || '+233 (0)501 326 989',
-                    headquarters: data.headquarters || 'Accra, Ghana',
-                    featuredBrands: data.featuredBrands || 'Toyota, Honda, Nissan, Hyundai'
+                    supportPhone: data.supportPhone || '',
+                    headquarters: data.headquarters || '',
+                    featuredBrands: data.featuredBrands || ''
                 })
             }
         } catch (e) {

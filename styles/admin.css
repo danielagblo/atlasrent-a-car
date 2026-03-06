@@ -644,13 +644,13 @@ select {
 }
 
 .btn-edit {
-  background: rgba(255, 255, 255, 0.03);
-  color: white;
+  background: var(--glass);
+  color: var(--text-primary);
   border: 1px solid var(--border);
 }
 
 .btn-edit:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border);
 }
 
 .btn-delete {
@@ -724,6 +724,21 @@ select {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+}
+
+.modal-head h3 {
+  color: var(--text-primary);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btn.ghost:hover {
+  background: var(--glass);
+  color: var(--text-primary);
 }
 
 @keyframes fadeIn {

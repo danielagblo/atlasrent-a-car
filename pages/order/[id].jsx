@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { saveOrder } from '../../lib/orders'
 import { getModels } from '../../lib/modelsApi'
+import CldOptimizedImage, { getCldImageUrl } from '../../components/CldOptimizedImage'
 
 export default function OrderPage() {
   const router = useRouter()
@@ -100,10 +101,11 @@ export default function OrderPage() {
         <div style={{
           maxWidth: 600,
           textAlign: 'center',
-          background: 'rgba(255,255,255,0.02)',
-          padding: 60,
-          borderRadius: 20,
-          border: '1px solid rgba(255,255,255,0.05)'
+          background: 'var(--surface)',
+          padding: isMobile ? '40px 20px' : '60px',
+          borderRadius: 24,
+          border: '1px solid var(--border)',
+          boxShadow: '0 20px 50px var(--shadow)'
         }}>
           <div style={{
             width: 80,
@@ -114,14 +116,15 @@ export default function OrderPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 40
+            fontSize: 40,
+            color: '#fff'
           }}>✓</div>
-          <h2 style={{ marginBottom: 16 }}>Order Placed Successfully!</h2>
+          <h2 style={{ marginBottom: 16, color: 'var(--heading)' }}>Order Placed Successfully!</h2>
           <p style={{ color: 'var(--muted)', fontSize: 16, lineHeight: 1.6 }}>
-            Your rental order <strong style={{ color: 'var(--accent-2)' }}>#{orderSuccess.id}</strong> for the <strong>{model.name}</strong> has been confirmed.
+            Your rental order <strong style={{ color: 'var(--accent-2)' }}>#{orderSuccess.id}</strong> for the <strong style={{ color: 'var(--text)' }}>{model.name}</strong> has been confirmed.
           </p>
           <p style={{ color: 'var(--muted)', marginTop: 12, fontSize: 15 }}>
-            We will contact you at <strong style={{ color: '#fff' }}>{orderSuccess.email}</strong> within 24 hours to finalize the details.
+            We will contact you at <strong style={{ color: 'var(--text)' }}>{orderSuccess.email}</strong> within 24 hours to finalize the details.
           </p>
           <div style={{
             background: 'rgba(212, 178, 106, 0.1)',
@@ -134,7 +137,7 @@ export default function OrderPage() {
             <strong style={{ color: 'var(--accent-2)' }}>Payment Notice:</strong> Payment will be collected upon vehicle delivery — no online payment required.
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center' }}>
-            <button className="small" onClick={() => navigate('/orders')}>View All Orders</button>
+            <button className="small" onClick={() => navigate('/my-orders')}>View All Orders</button>
             <button className="primary" onClick={() => navigate('/models')}>Browse More Models</button>
           </div>
         </div>
@@ -153,7 +156,7 @@ export default function OrderPage() {
         position: 'relative',
         height: isMobile ? '50vh' : '70vh',
         minHeight: isMobile ? 350 : 500,
-        background: `linear-gradient(rgba(0,0,0,0.65), rgba(16,24,40,0.92)), url(${model.image})`,
+        background: `linear-gradient(rgba(0,0,0,0.65), rgba(16,24,40,0.92)), url(${getCldImageUrl(model.image, { width: 1920, height: 1080 })})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
@@ -250,7 +253,7 @@ export default function OrderPage() {
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
                 <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-                  {model.range}
+                  {model.range}{model.rangeUnit && !String(model.range).includes(model.rangeUnit) ? ` ${model.rangeUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
                   Range
@@ -265,7 +268,7 @@ export default function OrderPage() {
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
                 <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-                  {model.zeroToSixty}
+                  {model.zeroToSixty}{model.zeroToSixtyUnit && !String(model.zeroToSixty).includes(model.zeroToSixtyUnit) ? `${model.zeroToSixtyUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
                   0–60 mph
@@ -280,7 +283,7 @@ export default function OrderPage() {
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
                 <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-                  {model.topSpeed}
+                  {model.topSpeed}{model.topSpeedUnit && !String(model.topSpeed).includes(model.topSpeedUnit) ? ` ${model.topSpeedUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
                   Top Speed
@@ -347,9 +350,11 @@ export default function OrderPage() {
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
-              <img
+              <CldOptimizedImage
                 src={allImages[selectedImage]}
                 alt={model.name}
+                width={800}
+                height={500}
                 style={{
                   width: '100%',
                   height: isMobile ? 280 : 480,
@@ -380,9 +385,11 @@ export default function OrderPage() {
                       transition: 'border 0.2s'
                     }}
                   >
-                    <img
+                    <CldOptimizedImage
                       src={img}
                       alt={`${model.name} view ${idx + 1}`}
+                      width={120}
+                      height={80}
                       style={{
                         width: 120,
                         height: 80,
@@ -400,9 +407,10 @@ export default function OrderPage() {
             <div style={{
               marginTop: 32,
               padding: 24,
-              background: 'rgba(255,255,255,0.02)',
+              background: 'var(--surface)',
               borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.05)'
+              border: '1px solid var(--border)',
+              boxShadow: '0 4px 20px var(--shadow)'
             }}>
               <h3 style={{ marginBottom: 12 }}>About This Vehicle</h3>
               <p style={{ color: 'var(--muted)', lineHeight: 1.7, fontSize: 15 }}>
@@ -414,9 +422,10 @@ export default function OrderPage() {
             <div style={{
               marginTop: 24,
               padding: 24,
-              background: 'rgba(255,255,255,0.02)',
+              background: 'var(--surface)',
               borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.05)'
+              border: '1px solid var(--border)',
+              boxShadow: '0 4px 20px var(--shadow)'
             }}>
               <h3 style={{ marginBottom: 16 }}>Features & Specifications</h3>
               <div style={{
@@ -491,7 +500,7 @@ export default function OrderPage() {
               </div>
 
               {/* Additional Features */}
-              <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid var(--border)' }}>
                 <h4 style={{ marginBottom: 12, fontSize: 15 }}>Included Features</h4>
                 <div style={{
                   display: 'grid',
@@ -504,15 +513,7 @@ export default function OrderPage() {
                     model.features.map((feature, i) => (
                       <div key={i}>✓ {feature}</div>
                     ))
-                  ) : (
-                    <>
-                      <div>✓ Autopilot</div>
-                      <div>✓ Premium Audio</div>
-                      <div>✓ Climate Control</div>
-                      <div>✓ Navigation System</div>
-                      <div>✓ Leather Interior</div>
-                    </>
-                  )}
+                  ) : "No features available"}
                 </div>
               </div>
             </div>
@@ -521,11 +522,11 @@ export default function OrderPage() {
           {/* Right Column - Booking Form */}
           <div style={{ position: 'sticky', top: 40, height: 'fit-content' }}>
             <div style={{
-              background: 'rgba(255,255,255,0.03)',
+              background: 'var(--surface)',
               padding: 32,
               borderRadius: 20,
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.2)'
+              border: '1px solid var(--border)',
+              boxShadow: '0 20px 60px var(--shadow)'
             }}>
               <div style={{
                 display: 'flex',
@@ -533,7 +534,7 @@ export default function OrderPage() {
                 alignItems: 'center',
                 marginBottom: 24,
                 paddingBottom: 20,
-                borderBottom: '1px solid rgba(255,255,255,0.08)'
+                borderBottom: '1px solid var(--border)'
               }}>
                 <div>
                   <h3 style={{ margin: 0, marginBottom: 4 }}>Rental Details</h3>
@@ -566,8 +567,9 @@ export default function OrderPage() {
                       width: '100%',
                       padding: '12px 14px',
                       borderRadius: 10,
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg)',
+                      color: 'var(--text)',
                       fontSize: 15
                     }}
                   />
@@ -589,8 +591,9 @@ export default function OrderPage() {
                         width: '100%',
                         padding: '12px 14px',
                         borderRadius: 10,
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        background: 'var(--bg)',
+                        color: 'var(--text)',
                         fontSize: 15
                       }}
                     />
@@ -609,8 +612,9 @@ export default function OrderPage() {
                         width: '100%',
                         padding: '12px 14px',
                         borderRadius: 10,
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        background: 'var(--bg)',
+                        color: 'var(--text)',
                         fontSize: 15
                       }}
                     />
@@ -634,8 +638,9 @@ export default function OrderPage() {
                         width: '100%',
                         padding: '12px 14px',
                         borderRadius: 10,
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        background: 'var(--bg)',
+                        color: 'var(--text)',
                         fontSize: 15
                       }}
                     />
@@ -655,8 +660,9 @@ export default function OrderPage() {
                         width: '100%',
                         padding: '12px 14px',
                         borderRadius: 10,
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        background: 'var(--bg)',
+                        color: 'var(--text)',
                         fontSize: 15
                       }}
                     />
@@ -677,8 +683,9 @@ export default function OrderPage() {
                       width: '100%',
                       padding: '12px 14px',
                       borderRadius: 10,
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg)',
+                      color: 'var(--text)',
                       fontSize: 15
                     }}
                   />
@@ -699,8 +706,9 @@ export default function OrderPage() {
                       width: '100%',
                       padding: '12px 14px',
                       borderRadius: 10,
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg)',
+                      color: 'var(--text)',
                       fontSize: 15,
                       resize: 'vertical'
                     }}
@@ -713,7 +721,7 @@ export default function OrderPage() {
                     background: 'rgba(255, 80, 80, 0.1)',
                     border: '1px solid rgba(255, 80, 80, 0.3)',
                     borderRadius: 10,
-                    color: '#ff8080',
+                    color: 'var(--primary)',
                     fontSize: 14
                   }}>
                     {error}
@@ -759,9 +767,9 @@ export default function OrderPage() {
             <div style={{
               marginTop: 24,
               padding: 24,
-              background: 'rgba(255,255,255,0.02)',
+              background: 'var(--surface)',
               borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.08)'
+              border: '1px solid var(--border)'
             }}>
               <h4 style={{ fontSize: 16, marginBottom: 16, color: 'var(--accent-2)' }}>📋 Rental Terms & Information</h4>
               <div style={{ display: 'grid', gap: 12, fontSize: 14, color: 'var(--muted)' }}>
@@ -776,7 +784,7 @@ export default function OrderPage() {
                   <div>Outside Ghana: $35 per night</div>
                 </div>
                 <div style={{ padding: 12, background: 'rgba(255, 80, 80, 0.08)', borderRadius: 8, border: '1px solid rgba(255, 80, 80, 0.15)' }}>
-                  <strong style={{ color: '#ff8080', display: 'block', marginBottom: 6 }}>🚨 Emergency Breakdown</strong>
+                  <strong style={{ color: 'var(--primary)', display: 'block', marginBottom: 6 }}>🚨 Emergency Breakdown</strong>
                   <div>Call: +233 (0)501 326 989</div>
                   <div style={{ fontSize: 12, marginTop: 4, color: 'rgba(255,255,255,0.5)' }}>No unauthorized repairs allowed</div>
                 </div>
@@ -791,7 +799,7 @@ export default function OrderPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
             {/* Chauffeur Service */}
-            <div style={{ padding: 24, background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ padding: 24, background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)' }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>👨‍✈️</div>
               <h4 style={{ fontSize: 18, marginBottom: 16 }}>Chauffeur-Driven Service</h4>
               <div style={{ display: 'grid', gap: 10, fontSize: 14, color: 'var(--muted)' }}>
@@ -834,7 +842,7 @@ export default function OrderPage() {
               <h4 style={{ fontSize: 18, marginBottom: 16 }}>Emergency Breakdown</h4>
               <div style={{ display: 'grid', gap: 10, fontSize: 14, color: 'var(--muted)' }}>
                 <div>
-                  <strong style={{ color: '#ff8080' }}>Call Immediately:</strong>
+                  <strong style={{ color: 'var(--primary)' }}>Call Immediately:</strong>
                   <div style={{ marginTop: 4 }}>
                     <a href="tel:+233501326989" style={{ color: 'var(--accent-2)', textDecoration: 'none' }}>+233 (0)501 326 989</a>
                   </div>
@@ -843,7 +851,7 @@ export default function OrderPage() {
                   </div>
                 </div>
                 <div style={{ marginTop: 8, padding: 10, background: 'rgba(255, 80, 80, 0.1)', borderRadius: 6 }}>
-                  <strong style={{ color: '#ff8080', fontSize: 13 }}>⚠️ Important:</strong>
+                  <strong style={{ color: 'var(--primary)', fontSize: 13 }}>⚠️ Important:</strong>
                   <div style={{ fontSize: 12, marginTop: 4 }}>Do NOT allow unauthorized repairs. Only EKG-approved workshops.</div>
                 </div>
               </div>
@@ -854,9 +862,9 @@ export default function OrderPage() {
           <div style={{
             marginTop: 32,
             padding: 32,
-            background: 'rgba(255,255,255,0.02)',
+            background: 'var(--surface)',
             borderRadius: 20,
-            border: '1px solid rgba(255,255,255,0.08)'
+            border: '1px solid var(--border)'
           }}>
             <h4 style={{ fontSize: 20, marginBottom: 20, textAlign: 'center' }}>Rental Conditions</h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, fontSize: 14, color: 'var(--muted)' }}>

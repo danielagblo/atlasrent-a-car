@@ -17,9 +17,9 @@ export default function ContactPage() {
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
   const [settings, setSettings] = useState({
-    supportPhone: '+233 501 326 989',
-    headquarters: 'Accra, Ghana',
-    adminEmail: 'info@ekgsite.com'
+    supportPhone: '',
+    headquarters: '',
+    adminEmail: ''
   })
 
   useEffect(() => {
@@ -28,9 +28,9 @@ export default function ContactPage() {
       .then(data => {
         if (data) {
           setSettings({
-            supportPhone: data.supportPhone || '+233 501 326 989',
-            headquarters: data.headquarters || 'Accra, Ghana',
-            adminEmail: data.adminEmail || 'info@ekgsite.com'
+            supportPhone: data.supportPhone || '',
+            headquarters: data.headquarters || '',
+            adminEmail: data.adminEmail || ''
           })
         }
       })

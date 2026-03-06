@@ -8,10 +8,12 @@ import {
   Edit2,
   Trash2,
   MessageSquare,
-  User
+  User,
+  Eye
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
+import CldOptimizedImage from '../../components/CldOptimizedImage'
 
 function empty() { return { name: '', role: '', quote: '', status: 'active', avatar: '' } }
 
@@ -27,6 +29,7 @@ export default function AdminTestimonials() {
   const [search, setSearch] = React.useState('')
   const [filterStatus, setFilterStatus] = React.useState('all')
   const [sortBy, setSortBy] = React.useState('newest')
+  const [viewItem, setViewItem] = React.useState(null)
 
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
@@ -213,9 +216,11 @@ export default function AdminTestimonials() {
               <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
                 {(item.avatar || item.image) && (
                   <div style={{ position: 'relative' }}>
-                    <img
+                    <CldOptimizedImage
                       src={item.avatar || item.image}
                       alt={item.name}
+                      width={64}
+                      height={64}
                       style={{ width: 64, height: 64, borderRadius: 16, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
                     />
                     <div style={{ position: 'absolute', bottom: -5, right: -5, width: 22, height: 22, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '3px solid var(--bg-card)' }}>
@@ -235,6 +240,14 @@ export default function AdminTestimonials() {
               </div>
 
               <div className="card-actions" style={{ display: 'flex', gap: 12 }}>
+                <button
+                  className="btn btn-edit"
+                  onClick={() => setViewItem(item)}
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  title="View Details"
+                >
+                  <Eye size={18} />
+                </button>
                 <button
                   className="btn btn-edit"
                   onClick={() => edit(item)}
@@ -299,6 +312,33 @@ export default function AdminTestimonials() {
             <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
           </div>
         </form>
+      </Modal>
+
+      <Modal open={!!viewItem} title="Testimonial Details" onClose={() => setViewItem(null)}>
+        {viewItem && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {viewItem.avatar && (
+              <img src={viewItem.avatar} alt={viewItem.name} style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '50%' }} />
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16 }}>
+              <div><strong>Name:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.name}</span></div>
+              <div><strong>Role / Company:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.role}</span></div>
+              <div><strong>Status:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.status}</span></div>
+            </div>
+
+            <div>
+              <strong>Quote:</strong>
+              <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', fontStyle: 'italic', whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
+                "{viewItem.quote || 'No content provided.'}"
+              </div>
+            </div>
+
+            <div className="form-actions" style={{ marginTop: 12, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+              <button className="btn btn-outline" onClick={() => setViewItem(null)}>Close</button>
+            </div>
+          </div>
+        )}
       </Modal>
 
     </AdminLayout>

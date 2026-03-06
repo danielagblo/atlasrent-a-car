@@ -1,14 +1,23 @@
 import '../styles.css'
 import '../styles/admin.css'
 import React from 'react'
+import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
-export default function App({ Component, pageProps }){
+export default function App({ Component, pageProps }) {
   const hideLayout = Component.noLayout === true
 
   return (
     <div className="app-root">
+      <Head>
+        <title>EKG Logistics - Logistics & Executive Mobility</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#071029" />
+      </Head>
       <a className="skip-link" href="#site-main">Skip to content</a>
       {!hideLayout && <Navbar />}
       <main id="site-main">

@@ -13,17 +13,21 @@ import {
   Box,
   MapPin,
   MessageSquare,
-  Clock
+  Clock,
+  Eye
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
+import Modal from '../../components/Modal'
 
 export default function AdminOrders() {
   const router = useRouter()
   const [orders, setOrders] = React.useState([])
   const [loading, setLoading] = React.useState(true)
+  const [updating, setUpdating] = React.useState(false)
   const [error, setError] = React.useState('')
   const [search, setSearch] = React.useState('')
   const [sortBy, setSortBy] = React.useState('newest')
+  const [viewItem, setViewItem] = React.useState(null)
 
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
@@ -77,6 +81,29 @@ export default function AdminOrders() {
       const d = new Date(dateStr)
       return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     } catch (e) { return dateStr }
+  }
+
+  const updateStatus = async (id, status) => {
+    setUpdating(true)
+    try {
+      const token = localStorage.getItem('admin_token')
+      const res = await fetch(`/api/orders/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      })
+      if (!res.ok) throw new Error('Failed to update status')
+      const updated = await res.json()
+      setOrders(prev => prev.map(o => o.id === id ? updated : o))
+      setViewItem(updated)
+    } catch (e) {
+      alert(e.message)
+    } finally {
+      setUpdating(false)
+    }
   }
 
   return (
@@ -181,10 +208,23 @@ export default function AdminOrders() {
                       <div style={{ fontStyle: 'italic' }}>"{o.note}"</div>
                     </div>
                   )}
+                  {o.status === 'Approved' && (
+                    <div style={{ marginTop: 12, color: '#10b981', fontSize: 12, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <TrendingUp size={14} /> APPROVED
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div className="card-actions">
+              <div className="card-actions" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <button
+                  className="btn btn-edit"
+                  onClick={() => setViewItem(o)}
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  title="View Details"
+                >
+                  <Eye size={18} />
+                </button>
                 <a
                   className="btn btn-primary"
                   href={`/api/invoice/${o.id}`}
@@ -200,6 +240,53 @@ export default function AdminOrders() {
           ))}
         </section>
       )}
+
+      <Modal open={!!viewItem} title="Order Details" onClose={() => setViewItem(null)}>
+        {viewItem && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div><strong>Order ID:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.id}</span></div>
+              <div><strong>Date:</strong> <span style={{ color: 'var(--text-secondary)' }}>{formatDate(viewItem.createdAt)}</span></div>
+              <div><strong>Customer Name:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.name}</span></div>
+              <div><strong>Email:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.email}</span></div>
+              <div><strong>Phone:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.phone || '-'}</span></div>
+              <div><strong>Vehicle/Product:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.productName}</span></div>
+              <div><strong>Price:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.price || viewItem.rate} GHS</span></div>
+              <div><strong>Duration:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.start} to {viewItem.end}</span></div>
+              <div><strong>Location:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.location || 'Main Terminal'}</span></div>
+              <div><strong>Status:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.status || 'Pending'}</span></div>
+            </div>
+
+            {viewItem.note && (
+              <div>
+                <strong>Additional Customer Notes:</strong>
+                <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', whiteSpace: 'pre-wrap' }}>
+                  {viewItem.note}
+                </div>
+              </div>
+            )}
+
+            <div className="form-actions" style={{ marginTop: 12, paddingTop: 16, borderTop: '1px solid var(--border)', display: 'flex', gap: 12 }}>
+              {viewItem.status !== 'Approved' && (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => updateStatus(viewItem.id, 'Approved')}
+                  disabled={updating}
+                  style={{ background: '#10b981', borderColor: '#10b981' }}
+                >
+                  {updating ? 'Processing...' : 'Approve Order'}
+                </button>
+              )}
+              {viewItem.status === 'Approved' && (
+                <div style={{ color: '#10b981', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6, fontSize: 14 }}>
+                  <TrendingUp size={16} /> Order Approved & Notified
+                </div>
+              )}
+              <button className="btn btn-outline" onClick={() => setViewItem(null)} style={{ marginLeft: 'auto' }}>Close</button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </AdminLayout>
   )
 }

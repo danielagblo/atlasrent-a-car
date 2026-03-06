@@ -35,15 +35,15 @@ export default function ModelDetail() {
 
         <div style={{ display: 'flex', gap: 14, marginTop: 18 }}>
           <div style={{ padding: 12, background: 'rgba(255,255,255,0.02)', borderRadius: 10 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.range}</div>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.range}{model.rangeUnit && !String(model.range).includes(model.rangeUnit) ? ` ${model.rangeUnit}` : ''}</div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>Range</div>
           </div>
           <div style={{ padding: 12, background: 'rgba(255,255,255,0.02)', borderRadius: 10 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.topSpeed}</div>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.topSpeed}{model.topSpeedUnit && !String(model.topSpeed).includes(model.topSpeedUnit) ? ` ${model.topSpeedUnit}` : ''}</div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>Top speed</div>
           </div>
           <div style={{ padding: 12, background: 'rgba(255,255,255,0.02)', borderRadius: 10 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.zeroToSixty}</div>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>{model.zeroToSixty}{model.zeroToSixtyUnit && !String(model.zeroToSixty).includes(model.zeroToSixtyUnit) ? `${model.zeroToSixtyUnit}` : ''}</div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>0–60</div>
           </div>
         </div>

@@ -60,13 +60,13 @@ export default function ProductCard({ item }) {
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase'
               }}>
-                {item.range}
+                {item.range}{item.rangeUnit && !String(item.range).includes(item.rangeUnit) ? ` ${item.rangeUnit}` : ''}
               </div>
             )}
           </div>
         </div>
         <div className="card-body">
-          <h3 style={{ marginBottom: 12, color: '#fff', fontSize: 24 }}>{item.name}</h3>
+          <h3 style={{ marginBottom: 12, color: 'var(--text)', fontSize: 24 }}>{item.name}</h3>
           <p style={{ color: 'var(--muted)', margin: 0, fontSize: 15, lineHeight: 1.5 }}>{item.desc}</p>
           <div className="card-footer">
             <div style={{ flex: 1 }}>

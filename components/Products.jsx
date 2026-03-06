@@ -32,16 +32,7 @@ export default function Products({ limit }) {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // If no admin models exist, inject a few fallback/placeholders to keep the layout pretty
-          if (data.length === 0) {
-            setItems([
-              { id: 'lux', name: 'EKG Luxe', category: 'Luxury', desc: 'Executive sedan', image: IMAGES.featured1, range: '420 km', price: '2000', specs: { seats: 5 } },
-              { id: 'sport', name: 'EKG Sport', category: 'Sport', desc: 'Performance coupe', image: IMAGES.featured2, range: '370 km', price: '2600', specs: { seats: 4 } },
-              { id: 'tour', name: 'EKG Tour', category: 'Economy', desc: 'Comfort MPV', image: IMAGES.featured3, range: '500 km', price: '1500', specs: { seats: 7 } }
-            ])
-          } else {
-            setItems(data.filter(i => i.status !== 'inactive'))
-          }
+          setItems(data.filter(i => i.status !== 'inactive'))
         }
       })
       .catch(e => console.error('Failed to load fleet', e))
@@ -69,7 +60,7 @@ export default function Products({ limit }) {
   return (
     <section style={{ padding: limit ? '80px 20px' : '40px 20px 100px', maxWidth: 1440, margin: '0 auto' }}>
       <div style={{ textAlign: limit ? 'center' : 'left', marginBottom: 48 }}>
-        <h2 style={{ fontSize: isMobile ? 32 : 42, color: '#fff', marginBottom: 16 }}>{limit ? 'The Fleet' : 'Our Professional Fleet'}</h2>
+        <h2 style={{ fontSize: isMobile ? 32 : 42, color: 'var(--text)', marginBottom: 16 }}>{limit ? 'The Fleet' : 'Our Professional Fleet'}</h2>
         <p style={{ color: 'var(--muted)', fontSize: 18 }}>{limit ? 'Explore our curated collection of executive vehicles' : 'A diverse range of logistics and executive solutions tailored for your success.'}</p>
       </div>
 
@@ -84,11 +75,11 @@ export default function Products({ limit }) {
               onChange={(e) => setSearch(e.target.value)}
               style={{
                 width: '100%',
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'var(--glass)',
+                border: '1px solid var(--glass-border)',
                 borderRadius: 12,
                 padding: '12px 16px 12px 48px',
-                color: '#fff',
+                color: 'var(--text)',
                 outline: 'none',
                 fontSize: 15
               }}
@@ -105,9 +96,9 @@ export default function Products({ limit }) {
                   padding: '10px 20px',
                   borderRadius: 99,
                   border: '1px solid',
-                  borderColor: selectedCategory === cat ? '#D4AF37' : 'rgba(255,255,255,0.1)',
+                  borderColor: selectedCategory === cat ? 'var(--accent-2)' : 'var(--glass-border)',
                   background: selectedCategory === cat ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
-                  color: selectedCategory === cat ? '#D4AF37' : 'var(--muted)',
+                  color: selectedCategory === cat ? 'var(--accent-2)' : 'var(--muted)',
                   fontSize: 13,
                   fontWeight: 600,
                   whiteSpace: 'nowrap',
@@ -123,9 +114,9 @@ export default function Products({ limit }) {
       )}
 
       {filteredItems.length === 0 && !limit ? (
-        <div style={{ textAlign: 'center', padding: '100px 20px', background: 'rgba(255,255,255,0.02)', borderRadius: 24, border: '1px dashed rgba(255,255,255,0.1)' }}>
+        <div style={{ textAlign: 'center', padding: '100px 20px', background: 'var(--glass)', borderRadius: 24, border: '1px dashed var(--glass-border)' }}>
           <Filter size={48} style={{ color: 'var(--muted)', opacity: 0.3, marginBottom: 20 }} />
-          <h3 style={{ color: '#fff', fontSize: 20, marginBottom: 8 }}>No vehicles found</h3>
+          <h3 style={{ color: 'var(--text)', fontSize: 20, marginBottom: 8 }}>No vehicles found</h3>
           <p style={{ color: 'var(--muted)' }}>Try adjusting your search or category filters.</p>
           <button
             onClick={() => { setSearch(''); setSelectedCategory('All') }}

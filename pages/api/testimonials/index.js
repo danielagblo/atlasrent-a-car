@@ -14,7 +14,14 @@ export default async function handler(req, res) {
       if (!name.trim() || !quote.trim())
         return res.status(400).json({ error: "Name and quote are required" });
       const id = req.body?.id || `t-${Date.now().toString(36)}`;
-      const item = { id, name, role: req.body?.role || "", quote };
+      const item = {
+        id,
+        name,
+        role: req.body?.role || "",
+        quote,
+        avatar: req.body?.avatar || "",
+        status: req.body?.status || "active"
+      };
       items.unshift(item);
       await storage.saveTestimonials(items);
       return res.json(item);

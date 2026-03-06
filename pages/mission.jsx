@@ -17,7 +17,7 @@ export default function MissionPage() {
 
   return (
     <Layout>
-      <section style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '60px 20px' : '100px 60px', background: 'linear-gradient(180deg, #111111 0%, #0a0a0a 100%)' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '60px 20px' : '100px 60px', background: 'var(--bg)' }}>
         <div style={{
           position: 'absolute',
           inset: 0,
@@ -43,7 +43,7 @@ export default function MissionPage() {
               fontWeight: 700
             }}>Our Mission</motion.div>
 
-            <motion.h1 variants={fadeUp} style={{ fontSize: isMobile ? 36 : 56, fontWeight: 800, lineHeight: 1.1, marginBottom: 24, color: '#fff', letterSpacing: '-0.02em' }}>
+            <motion.h1 variants={fadeUp} style={{ fontSize: isMobile ? 36 : 56, fontWeight: 800, lineHeight: 1.1, marginBottom: 24, color: 'var(--text)', letterSpacing: '-0.02em' }}>
               Setting the Standard for <span style={{ background: 'linear-gradient(135deg, #D4AF37, #FCEABB)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Premium Transport</span>
             </motion.h1>
 
@@ -52,12 +52,12 @@ export default function MissionPage() {
             </motion.p>
 
             <motion.div variants={fadeUp} style={{ display: 'grid', gap: 20 }}>
-              <div style={{ padding: 24, background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ padding: 24, background: 'var(--glass)', borderRadius: 16, border: '1px solid var(--glass-border)' }}>
                 <h3 style={{ fontSize: 20, color: '#D4AF37', marginBottom: 12 }}>Uncompromising Safety</h3>
                 <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>All vehicles are comprehensively insured with 24-hour tracked monitoring and are driven by rigorously trained defensive drivers.</p>
               </div>
 
-              <div style={{ padding: 24, background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ padding: 24, background: 'var(--glass)', borderRadius: 16, border: '1px solid var(--glass-border)' }}>
                 <h3 style={{ fontSize: 20, color: '#D4AF37', marginBottom: 12 }}>Reliability & Flexibility</h3>
                 <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>Unlimited mileage, flexible payment options, and quick vehicle replacement guarantees peace of mind unconditionally.</p>
               </div>
@@ -69,8 +69,8 @@ export default function MissionPage() {
               position: 'relative',
               borderRadius: 24,
               overflow: 'hidden',
-              boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
-              border: '1px solid rgba(255,255,255,0.1)'
+              boxShadow: 'var(--shadow)',
+              border: '1px solid var(--glass-border)'
             }}>
               <img src={IMAGES.featured1} alt="Luxury Car" style={{ display: 'block', width: '100%', height: 'auto', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}></div>
@@ -85,7 +85,7 @@ export default function MissionPage() {
                 position: 'absolute',
                 bottom: isMobile ? -20 : -40,
                 left: isMobile ? 20 : -40,
-                background: 'rgba(10,10,10,0.8)',
+                background: 'var(--surface)',
                 backdropFilter: 'blur(20px)',
                 padding: 24,
                 borderRadius: 16,
@@ -93,14 +93,14 @@ export default function MissionPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 20,
-                boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+                boxShadow: 'var(--shadow)'
               }}
             >
               <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(212, 175, 55, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>
                 🛡️
               </div>
               <div>
-                <div style={{ fontSize: 24, fontWeight: 800, color: '#fff', marginBottom: 4 }}>100%</div>
+                <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>100%</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>Insured Fleet</div>
               </div>
             </motion.div>

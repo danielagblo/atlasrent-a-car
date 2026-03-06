@@ -116,8 +116,8 @@ export default function MyOrders() {
             <div className="my-orders-page" style={{
                 padding: '100px 20px',
                 minHeight: '100vh',
-                background: '#0a0a0a',
-                color: '#fff',
+                background: 'var(--bg)',
+                color: 'var(--text)',
                 backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%)'
             }}>
                 <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -127,7 +127,7 @@ export default function MyOrders() {
                         style={{ marginBottom: 60, textAlign: 'center' }}
                     >
                         <div style={{ fontSize: 12, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 800, marginBottom: 12 }}>Your Concierge</div>
-                        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: '#fff', marginBottom: 16, letterSpacing: '-0.02em' }}>Order History</h1>
+                        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: 'var(--text)', marginBottom: 16, letterSpacing: '-0.02em' }}>Order History</h1>
                         <p style={{ color: 'var(--muted)', fontSize: '1.1rem', maxWidth: 600, margin: '0 auto' }}>Manage your executive fleet rentals and view all confirmed bookings across your various profiles.</p>
                     </motion.header>
 
@@ -140,10 +140,10 @@ export default function MyOrders() {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 style={{
-                                    background: 'rgba(255,255,255,0.02)',
+                                    background: 'var(--glass)',
                                     padding: 24,
                                     borderRadius: 24,
-                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    border: '1px solid var(--glass-border)',
                                     height: 'fit-content',
                                     position: 'sticky',
                                     top: 100
@@ -161,11 +161,11 @@ export default function MyOrders() {
                                             alignItems: 'center',
                                             justifyContent: 'space-between',
                                             padding: '12px 14px',
-                                            background: 'rgba(255,255,255,0.03)',
+                                            background: 'var(--glass)',
                                             borderRadius: 12,
                                             fontSize: 13,
-                                            color: 'rgba(255,255,255,0.9)',
-                                            border: '1px solid rgba(255,255,255,0.05)'
+                                            color: 'var(--text)',
+                                            border: '1px solid var(--glass-border)'
                                         }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                                 {s.includes('@') ? <Mail size={14} style={{ opacity: 0.5 }} /> : <Phone size={14} style={{ opacity: 0.5 }} />}
@@ -188,12 +188,12 @@ export default function MyOrders() {
                                             onChange={(e) => setInputValue(e.target.value)}
                                             style={{
                                                 width: '100%',
-                                                border: '1px dashed rgba(255,255,255,0.1)',
+                                                border: '1px dashed var(--border)',
                                                 background: 'transparent',
                                                 borderRadius: 12,
                                                 padding: '12px 14px',
                                                 fontSize: 13,
-                                                color: '#fff',
+                                                color: 'var(--text)',
                                                 outline: 'none',
                                             }}
                                         />
@@ -210,11 +210,11 @@ export default function MyOrders() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     style={{
                                         padding: '80px 40px',
-                                        background: 'rgba(255,255,255,0.01)',
+                                        background: 'var(--glass)',
                                         borderRadius: 32,
                                         textAlign: 'center',
-                                        border: '1px solid rgba(255,255,255,0.05)',
-                                        boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                                        border: '1px solid var(--glass-border)',
+                                        boxShadow: 'var(--shadow)'
                                     }}
                                 >
                                     <div style={{
@@ -226,13 +226,13 @@ export default function MyOrders() {
                                     }}>
                                         <ShoppingBag size={32} style={{ color: '#D4AF37' }} />
                                     </div>
-                                    <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginBottom: 16 }}>Find Your Legacy</h2>
+                                    <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>Find Your Legacy</h2>
                                     <p style={{ color: 'var(--muted)', marginBottom: 40, maxWidth: 500, margin: '0 auto 40px', lineHeight: 1.6 }}>
                                         Enter any email or phone number used during your EKG Luxury bookings. We will automatically link and secure your entire fleet history.
                                     </p>
                                     <form onSubmit={handleManualAdd} style={{ maxWidth: 500, margin: '0 auto', display: 'flex', gap: 12 }}>
                                         <div style={{ position: 'relative', flex: 1 }}>
-                                            <Search style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)' }} size={20} />
+                                            <Search style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--muted)' }} size={20} />
                                             <input
                                                 type="text"
                                                 placeholder="Email or phone number"
@@ -242,10 +242,10 @@ export default function MyOrders() {
                                                     width: '100%',
                                                     padding: '18px 20px 18px 52px',
                                                     borderRadius: 16,
-                                                    background: 'rgba(255,255,255,0.03)',
-                                                    border: '1px solid rgba(212, 175, 55, 0.2)',
+                                                    background: 'var(--bg)',
+                                                    border: '1px solid var(--border)',
                                                     fontSize: 16,
-                                                    color: '#fff',
+                                                    color: 'var(--text)',
                                                     outline: 'none'
                                                 }}
                                             />
@@ -298,13 +298,13 @@ export default function MyOrders() {
                                             transition={{ delay: idx * 0.1 }}
                                             whileHover={{ y: -4 }}
                                             style={{
-                                                background: 'rgba(15,15,15,0.8)',
+                                                background: 'var(--surface)',
                                                 borderRadius: 24,
                                                 padding: 32,
-                                                border: '1px solid rgba(255,255,255,0.06)',
+                                                border: '1px solid var(--glass-border)',
                                                 position: 'relative',
                                                 overflow: 'hidden',
-                                                boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+                                                boxShadow: 'var(--shadow)'
                                             }}
                                         >
                                             <div style={{
@@ -328,26 +328,26 @@ export default function MyOrders() {
 
                                             <div style={{ marginBottom: 32 }}>
                                                 <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>
-                                                    Order Reference <span style={{ color: '#fff' }}>#{order.id}</span>
+                                                    Order Reference <span style={{ color: 'var(--text)' }}>#{order.id}</span>
                                                 </div>
-                                                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>{order.productName || 'Executive Transport'}</h3>
+                                                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.01em' }}>{order.productName || 'Executive Transport'}</h3>
                                             </div>
 
-                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 32 }}>
+                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
                                                 <div>
                                                     <h4 style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Contact Record</h4>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
-                                                            <Mail size={16} strokeWidth={1.5} /> <span>{order.email}</span>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--text)' }}>
+                                                            <Mail size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{order.email}</span>
                                                         </div>
-                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
-                                                            <Phone size={16} strokeWidth={1.5} /> <span>{order.phone}</span>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--text)' }}>
+                                                            <Phone size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{order.phone}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <h4 style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Itinerary</h4>
-                                                    <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.6 }}>
+                                                    <div style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.6 }}>
                                                         <div style={{ marginBottom: 6 }}>
                                                             <Calendar size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: 'middle' }} />
                                                             {order.start} to {order.end}
@@ -359,7 +359,7 @@ export default function MyOrders() {
                                                 </div>
                                                 <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                                                     <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 4, fontWeight: 600 }}>Total Value</div>
-                                                    <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#fff', fontStyle: 'italic' }}> ${order.price}</div>
+                                                    <div style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--text)', fontStyle: 'italic' }}> ${order.price}</div>
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -372,9 +372,9 @@ export default function MyOrders() {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    style={{ textAlign: 'center', padding: '100px 40px', background: 'rgba(255,255,255,0.01)', borderRadius: 32, border: '1px dashed rgba(255,255,255,0.1)' }}
+                                    style={{ textAlign: 'center', padding: '100px 40px', background: 'var(--glass)', borderRadius: 32, border: '1px dashed var(--glass-border)' }}
                                 >
-                                    <Box size={40} style={{ color: 'rgba(255,255,255,0.1)', marginBottom: 20, margin: '0 auto 20px' }} />
+                                    <Box size={40} style={{ color: 'var(--muted)', marginBottom: 20, margin: '0 auto 20px' }} />
                                     <p style={{ color: 'var(--muted)', fontSize: '1.1rem' }}>We couldn't find any confirmed luxury rentals linked to these profiles.</p>
                                     <button
                                         onClick={() => { setSeeds([]); localStorage.removeItem('ekg_linked_contacts_v1'); }}

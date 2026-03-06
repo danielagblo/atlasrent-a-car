@@ -2,6 +2,8 @@ const storage = require("../../../lib/api-storage");
 const {
   sendAdminOrderSms,
   sendAdminOrderEmail,
+  sendCustomerOrderSms,
+  sendCustomerOrderEmail,
 } = require("../../../lib/api-utils/notifications");
 const { verifyAdmin } = require("../../../lib/api-middleware/auth");
 
@@ -28,12 +30,14 @@ async function handler(req, res) {
       orders.unshift(order);
       await storage.saveOrders(orders);
 
-      // notify admin (sms + email) but do not block response
+      // notify admin (sms + email) + notify customer but do not block response
       (async () => {
         try {
           await Promise.allSettled([
             sendAdminOrderSms(order),
             sendAdminOrderEmail(order),
+            sendCustomerOrderSms(order),
+            sendCustomerOrderEmail(order),
           ]);
         } catch (e) {
           console.error("Notification error", e);

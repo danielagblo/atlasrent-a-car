@@ -19,6 +19,7 @@ export default async function handler(req, res) {
         date: req.body?.date || new Date().toISOString().slice(0, 10),
         excerpt: req.body?.excerpt || "",
         image: req.body?.image || "",
+        status: req.body?.status || "active",
       };
       items.unshift(item);
       await storage.saveNews(items);

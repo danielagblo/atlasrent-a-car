@@ -7,10 +7,12 @@ import {
   SlidersHorizontal,
   Edit2,
   Trash2,
-  Box
+  Box,
+  Eye
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
+import CldOptimizedImage from '../../components/CldOptimizedImage'
 
 function empty() {
   return {
@@ -21,8 +23,11 @@ function empty() {
     desc: '',
     status: 'active',
     range: '',
+    rangeUnit: 'km',
     topSpeed: '',
+    topSpeedUnit: 'km/h',
     zeroToSixty: '',
+    zeroToSixtyUnit: 's',
     rate: '',
     features: '',
     specs: {
@@ -48,6 +53,7 @@ export default function AdminModels() {
   const [search, setSearch] = React.useState('')
   const [filterStatus, setFilterStatus] = React.useState('all')
   const [sortBy, setSortBy] = React.useState('newest')
+  const [viewItem, setViewItem] = React.useState(null)
 
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
@@ -125,8 +131,11 @@ export default function AdminModels() {
       desc: item.desc || '',
       status: item.status || 'active',
       range: item.range || '',
+      rangeUnit: item.rangeUnit || 'km',
       topSpeed: item.topSpeed || '',
+      topSpeedUnit: item.topSpeedUnit || 'km/h',
       zeroToSixty: item.zeroToSixty || '',
+      zeroToSixtyUnit: item.zeroToSixtyUnit || 's',
       rate: item.rate || '',
       specs: {
         battery: item.specs?.battery || '',
@@ -269,9 +278,11 @@ export default function AdminModels() {
           {filtered.map(item => (
             <article key={item.id} className="model-card" style={{ padding: '20px 28px', background: 'var(--bg-card)', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 20 }}>
               <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 20 }}>
-                <img
+                <CldOptimizedImage
                   src={item.image || '/placeholder.png'}
                   alt={item.name}
+                  width={100}
+                  height={64}
                   style={{ width: 100, height: 64, borderRadius: 12, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
                 />
                 <div className="card-info">
@@ -290,6 +301,14 @@ export default function AdminModels() {
               </div>
 
               <div className="card-actions" style={{ display: 'flex', gap: 12 }}>
+                <button
+                  className="btn btn-edit"
+                  onClick={() => setViewItem(item)}
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  title="View Details"
+                >
+                  <Eye size={18} />
+                </button>
                 <button
                   className="btn btn-edit"
                   onClick={() => edit(item)}
@@ -313,16 +332,16 @@ export default function AdminModels() {
       )}
 
       <Modal open={showCreate} title={editingId ? "Edit Model" : "Create Model"} onClose={() => setShowCreate(false)}>
-        <form onSubmit={handleSubmit} className="form-grid">
-          <div className="form-sections" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
-            <div className="form-column">
-              <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.5px' }}>General Info</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-grid">
+            <div className="form-col">
+              <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.5px' }}>General Info</h3>
 
               <label className="field-label">Model Name</label>
               <input name="name" placeholder="e.g. Mercedes Benz C300" value={form.name} onChange={onChange} required />
 
               <label className="field-label">Category</label>
-              <select name="category" value={form.category} onChange={onChange} className="form-select">
+              <select name="category" value={form.category} onChange={onChange}>
                 <option value="">Select a category</option>
                 <option value="Luxury">Luxury (Elite)</option>
                 <option value="Executive">Executive</option>
@@ -338,7 +357,7 @@ export default function AdminModels() {
               <label className="field-label">Description</label>
               <textarea name="desc" placeholder="Brief description of the vehicle" value={form.desc} onChange={onChange} style={{ minHeight: 100 }} />
 
-              <label className="field-label" style={{ marginTop: 16 }}>Included Features (comma separated)</label>
+              <label className="field-label">Included Features (comma separated)</label>
               <textarea
                 name="features"
                 placeholder="e.g. Autopilot, Premium Audio, Climate Control"
@@ -348,13 +367,19 @@ export default function AdminModels() {
               />
             </div>
 
-            <div className="form-column">
-              <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Technical Details</h3>
+            <div className="form-col">
+              <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Technical Details</h3>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
-                  <label className="field-label">Range (e.g. 500km)</label>
-                  <input name="range" placeholder="500km" value={form.range} onChange={onChange} />
+                  <label className="field-label">Range</label>
+                  <div style={{ display: 'flex' }}>
+                    <input name="range" placeholder="500" value={form.range} onChange={onChange} style={{ borderRight: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0, flex: 1 }} />
+                    <select name="rangeUnit" value={form.rangeUnit} onChange={onChange} style={{ width: 70, borderTopLeftRadius: 0, borderBottomLeftRadius: 0, padding: '0 8px', background: 'var(--bg-body)' }}>
+                      <option value="km">km</option>
+                      <option value="mi">mi</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label className="field-label">Seats</label>
@@ -365,46 +390,57 @@ export default function AdminModels() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
                   <label className="field-label">Top Speed</label>
-                  <input name="topSpeed" placeholder="250 km/h" value={form.topSpeed} onChange={onChange} />
+                  <div style={{ display: 'flex' }}>
+                    <input name="topSpeed" placeholder="250" value={form.topSpeed} onChange={onChange} style={{ borderRight: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0, flex: 1 }} />
+                    <select name="topSpeedUnit" value={form.topSpeedUnit} onChange={onChange} style={{ width: 85, borderTopLeftRadius: 0, borderBottomLeftRadius: 0, padding: '0 8px', background: 'var(--bg-body)' }}>
+                      <option value="km/h">km/h</option>
+                      <option value="mph">mph</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
-                  <label className="field-label">0-60 MPH</label>
-                  <input name="zeroToSixty" placeholder="4.5s" value={form.zeroToSixty} onChange={onChange} />
+                  <label className="field-label">Acceleration</label>
+                  <div style={{ display: 'flex' }}>
+                    <input name="zeroToSixty" placeholder="4.5" value={form.zeroToSixty} onChange={onChange} style={{ borderRight: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0, flex: 1 }} />
+                    <select name="zeroToSixtyUnit" value={form.zeroToSixtyUnit} onChange={onChange} style={{ width: 60, borderTopLeftRadius: 0, borderBottomLeftRadius: 0, padding: '0 8px', background: 'var(--bg-body)' }}>
+                      <option value="s">s</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
                   <label className="field-label">Transmission</label>
-                  <select name="transmission" value={form.specs?.transmission} onChange={onSpecChange} className="form-select">
-                    <option value="">Select Transmission</option>
+                  <select name="transmission" value={form.specs?.transmission} onChange={onSpecChange}>
+                    <option value="">Select</option>
                     <option value="Automatic">Automatic</option>
                     <option value="Manual">Manual</option>
                     <option value="Semi-Automatic">Semi-Automatic</option>
-                    <option value="Direct Drive">Direct Drive (Electric)</option>
+                    <option value="Direct Drive">Direct Drive</option>
                   </select>
                 </div>
                 <div>
                   <label className="field-label">Fuel Type</label>
-                  <select name="fuelType" value={form.specs?.fuelType} onChange={onSpecChange} className="form-select">
-                    <option value="">Select Fuel Type</option>
-                    <option value="Electric">100% Electric</option>
+                  <select name="fuelType" value={form.specs?.fuelType} onChange={onSpecChange}>
+                    <option value="">Select</option>
+                    <option value="Electric">Electric</option>
                     <option value="Petrol">Petrol</option>
                     <option value="Diesel">Diesel</option>
-                    <option value="Hybrid">Hybrid (Petrol/Electric)</option>
-                    <option value="Plug-in Hybrid">Plug-in Hybrid (PHEV)</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Plug-in Hybrid">PHEV</option>
                   </select>
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
-                  <label className="field-label">Battery/Engine</label>
-                  <select name="battery" value={form.specs?.battery} onChange={onSpecChange} className="form-select">
-                    <option value="">Select Power Unit</option>
-                    <option value="60 kWh">60 kWh (Standard Range)</option>
-                    <option value="80 kWh">80 kWh (Long Range)</option>
-                    <option value="100 kWh">100 kWh (Performance)</option>
+                  <label className="field-label">Power Unit</label>
+                  <select name="battery" value={form.specs?.battery} onChange={onSpecChange}>
+                    <option value="">Select</option>
+                    <option value="60 kWh">60 kWh</option>
+                    <option value="80 kWh">80 kWh</option>
+                    <option value="100 kWh">100 kWh</option>
                     <option value="2.0L I4">2.0L I4 Turbo</option>
                     <option value="3.0L V6">3.0L V6 Turbo</option>
                     <option value="4.0L V8">4.0L V8 Biturbo</option>
@@ -412,42 +448,85 @@ export default function AdminModels() {
                 </div>
                 <div>
                   <label className="field-label">Drive Type</label>
-                  <select name="drive" value={form.specs?.drive} onChange={onSpecChange} className="form-select">
-                    <option value="">Select Drive</option>
-                    <option value="AWD">AWD (All Wheel Drive)</option>
-                    <option value="RWD">RWD (Rear Wheel Drive)</option>
-                    <option value="FWD">FWD (Front Wheel Drive)</option>
-                    <option value="4WD">4×4 / 4WD</option>
+                  <select name="drive" value={form.specs?.drive} onChange={onSpecChange}>
+                    <option value="">Select</option>
+                    <option value="AWD">AWD</option>
+                    <option value="RWD">RWD</option>
+                    <option value="FWD">FWD</option>
+                    <option value="4WD">4×4</option>
                   </select>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div style={{ marginTop: 24, padding: 16, border: '1px solid #F1F5F9', borderRadius: 12, background: '#F8FAFC' }}>
-              <label className="field-label">Vehicle Image</label>
-              <div className="input-group-row" style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
-                <input name="image" placeholder="Image URL" value={form.image} onChange={onChange} style={{ flex: 1 }} />
-                <span style={{ fontSize: 12, color: '#94A3B8' }}>or</span>
-                <label className="btn btn-outline" style={{ margin: 0, height: 44, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                  <span>Upload File</span>
-                  <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
-                </label>
+          <div style={{ marginTop: 24, padding: 16, border: '1px solid var(--border)', borderRadius: 12, background: 'var(--glass)' }}>
+            <label className="field-label">Vehicle Image</label>
+            <div className="input-group-row" style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+              <input name="image" placeholder="Image URL" value={form.image} onChange={onChange} style={{ flex: 1 }} />
+              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>or</span>
+              <label className="btn btn-outline" style={{ margin: 0, height: 44, padding: '0 16px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                <span style={{ whiteSpace: 'nowrap' }}>Upload File</span>
+                <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
+              </label>
+            </div>
+            {imagePreview && (
+              <div style={{ width: '100%', height: 180, borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
+                <img src={imagePreview} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              {imagePreview && (
-                <div style={{ width: '100%', height: 180, borderRadius: 8, overflow: 'hidden', border: '1px solid #E2E8F0' }}>
-                  <img src={imagePreview} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-              )}
-            </div>
+            )}
+          </div>
 
-            <div className="form-actions" style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid #F1F5F9', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
-              <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
-              <button className="btn btn-primary" type="submit">
-                {editingId ? 'Save Changes' : 'Create Model'}
-              </button>
-            </div>
+          <div className="form-actions" style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+            <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
+            <button className="btn btn-primary" type="submit">
+              {editingId ? 'Save Changes' : 'Create Model'}
+            </button>
           </div>
         </form>
+      </Modal>
+
+      <Modal open={!!viewItem} title="Model Details" onClose={() => setViewItem(null)}>
+        {viewItem && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {viewItem.image && (
+              <img src={viewItem.image} alt={viewItem.name} style={{ width: '100%', height: 240, objectFit: 'cover', borderRadius: 16 }} />
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div><strong>Name:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.name}</span></div>
+              <div><strong>Category:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.category}</span></div>
+              <div><strong>Price:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.price || viewItem.rate} GHS</span></div>
+              <div><strong>Status:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.status}</span></div>
+              <div><strong>Top Speed:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.topSpeed ? `${viewItem.topSpeed} ${viewItem.topSpeedUnit || ''}` : '-'}</span></div>
+              <div><strong>Acceleration:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.zeroToSixty ? `${viewItem.zeroToSixty} ${viewItem.zeroToSixtyUnit || ''}` : '-'}</span></div>
+              <div><strong>Range:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.range ? `${viewItem.range} ${viewItem.rangeUnit || ''}` : '-'}</span></div>
+              <div><strong>Transmission:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.specs?.transmission || '-'}</span></div>
+              <div><strong>Fuel Type:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.specs?.fuelType || '-'}</span></div>
+              <div><strong>Power Unit:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.specs?.battery || '-'}</span></div>
+              <div><strong>Drive Type:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.specs?.drive || '-'}</span></div>
+              <div><strong>Seats:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.specs?.seats || '-'}</span></div>
+            </div>
+
+            <div>
+              <strong>Description:</strong>
+              <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', whiteSpace: 'pre-wrap' }}>
+                {viewItem.desc || 'No description provided.'}
+              </div>
+            </div>
+
+            <div>
+              <strong>Features:</strong>
+              <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)' }}>
+                {Array.isArray(viewItem.features) ? viewItem.features.join(', ') : (viewItem.features || 'None')}
+              </div>
+            </div>
+
+            <div className="form-actions" style={{ marginTop: 12, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+              <button className="btn btn-outline" onClick={() => setViewItem(null)}>Close</button>
+            </div>
+          </div>
+        )}
       </Modal>
 
     </AdminLayout>

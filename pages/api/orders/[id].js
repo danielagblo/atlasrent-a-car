@@ -1,5 +1,6 @@
 const storage = require("../../../lib/api-storage");
 const { verifyAdmin } = require("../../../lib/api-middleware/auth");
+const { sendApprovalSms, sendApprovalEmail } = require("../../../lib/api-utils/notifications");
 
 module.exports = async function handler(req, res) {
   const { id } = req.query;
@@ -22,6 +23,21 @@ module.exports = async function handler(req, res) {
       });
       orders[idx] = next;
       await storage.saveOrders(orders);
+
+      // Trigger approval notifications if status changed to Approved
+      if (next.status === "Approved" && current.status !== "Approved") {
+        (async () => {
+          try {
+            await Promise.allSettled([
+              sendApprovalSms(next),
+              sendApprovalEmail(next)
+            ]);
+          } catch (e) {
+            console.error("Approval notification error", e);
+          }
+        })();
+      }
+
       return res.json(next);
     });
   }

@@ -7,7 +7,8 @@ import {
   SlidersHorizontal,
   Edit2,
   Trash2,
-  Newspaper
+  Newspaper,
+  Eye
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
@@ -26,6 +27,7 @@ export default function AdminNews() {
   const [search, setSearch] = React.useState('')
   const [filterStatus, setFilterStatus] = React.useState('all')
   const [sortBy, setSortBy] = React.useState('newest')
+  const [viewItem, setViewItem] = React.useState(null)
 
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
@@ -229,6 +231,14 @@ export default function AdminNews() {
               <div className="card-actions" style={{ display: 'flex', gap: 12 }}>
                 <button
                   className="btn btn-edit"
+                  onClick={() => setViewItem(item)}
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  title="View Details"
+                >
+                  <Eye size={18} />
+                </button>
+                <button
+                  className="btn btn-edit"
                   onClick={() => edit(item)}
                   style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   title="Edit"
@@ -289,6 +299,33 @@ export default function AdminNews() {
             <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
           </div>
         </form>
+      </Modal>
+
+      <Modal open={!!viewItem} title="News Article Details" onClose={() => setViewItem(null)}>
+        {viewItem && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {viewItem.image && (
+              <img src={viewItem.image} alt={viewItem.title} style={{ width: '100%', height: 240, objectFit: 'cover', borderRadius: 16 }} />
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16 }}>
+              <div><strong>Title:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.title}</span></div>
+              <div><strong>Date:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.date}</span></div>
+              <div><strong>Status:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.status}</span></div>
+            </div>
+
+            <div>
+              <strong>Excerpt/Content:</strong>
+              <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
+                {viewItem.excerpt || 'No content provided.'}
+              </div>
+            </div>
+
+            <div className="form-actions" style={{ marginTop: 12, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
+              <button className="btn btn-outline" onClick={() => setViewItem(null)}>Close</button>
+            </div>
+          </div>
+        )}
       </Modal>
 
     </AdminLayout>
