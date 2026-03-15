@@ -6,7 +6,11 @@ export default async function handler(req, res) {
         if (req.method === 'GET') {
             try {
                 const settings = await storage.getSettings()
-                return res.json(settings || {})
+                const data = { 
+                    ...settings, 
+                    isGmailApiActive: !!process.env.GMAIL_CLIENT_SECRET 
+                }
+                return res.json(data)
             } catch (e) {
                 return res.status(500).json({ error: 'Failed to load settings' })
             }

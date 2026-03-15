@@ -11,7 +11,8 @@ export default function AdminSettings() {
         adminSmsNumber: '',
         supportPhone: '',
         headquarters: '',
-        featuredBrands: ''
+        featuredBrands: '',
+        isGmailApiActive: false
     })
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -45,7 +46,8 @@ export default function AdminSettings() {
                     adminSmsNumber: data.adminSmsNumber || '',
                     supportPhone: data.supportPhone || '',
                     headquarters: data.headquarters || '',
-                    featuredBrands: data.featuredBrands || ''
+                    featuredBrands: data.featuredBrands || '',
+                    isGmailApiActive: data.isGmailApiActive || false
                 })
             }
         } catch (e) {
@@ -103,7 +105,20 @@ export default function AdminSettings() {
                             <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(227, 6, 19, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', border: '1px solid var(--border)' }}>
                                 <Mail size={22} />
                             </div>
-                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Email Infrastructure</h3>
+                            <div style={{ flex: 1 }}>
+                                <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Email Infrastructure</h3>
+                                {settings.isGmailApiActive ? (
+                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 4, background: 'rgba(52, 199, 89, 0.1)', color: '#34C759', padding: '2px 8px', borderRadius: 6, fontSize: 11, fontWeight: 800, textTransform: 'uppercase' }}>
+                                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34C759' }}></div>
+                                        Gmail API Connected
+                                    </div>
+                                ) : (
+                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 4, background: 'rgba(255, 149, 0, 0.1)', color: '#FF9500', padding: '2px 8px', borderRadius: 6, fontSize: 11, fontWeight: 800, textTransform: 'uppercase' }}>
+                                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#FF9500' }}></div>
+                                        SMTP Fallback Active
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
@@ -159,6 +174,15 @@ export default function AdminSettings() {
                                 </span>
                             </div>
                         </div>
+
+                        {settings.isGmailApiActive && (
+                            <div style={{ marginTop: 24, padding: '12px 16px', background: 'var(--bg-card-light)', borderRadius: 12, border: '1px dashed var(--border)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                                <Info size={16} style={{ color: 'var(--text-muted)', marginTop: 2, flexShrink: 0 }} />
+                                <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                                    Gmail API is currently active. Secure credentials (Client ID/Secret) are managed via the server's environment configuration for maximum security.
+                                </p>
+                            </div>
+                        )}
                     </section>
 
                     {/* Communication Settings Section */}
