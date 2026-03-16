@@ -26,14 +26,16 @@ module.exports = async function handler(req, res) {
 
       // Trigger approval notifications if status changed to Approved
       if (next.status === "Approved" && current.status !== "Approved") {
+        console.log(`[Approval] Status changed to Approved for order ${id}. Triggering notifications...`);
         (async () => {
           try {
-            await Promise.allSettled([
+            const results = await Promise.allSettled([
               sendApprovalSms(next),
               sendApprovalEmail(next)
             ]);
+            console.log(`[Approval] Notification results for ${id}:`, JSON.stringify(results, null, 2));
           } catch (e) {
-            console.error("Approval notification error", e);
+            console.error(`[Approval] Notification error for ${id}:`, e);
           }
         })();
       }
