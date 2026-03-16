@@ -27,7 +27,6 @@ export default function ProductCard({ item }) {
             src={item.image}
             alt={item.name}
             className="card-img"
-            style={{ objectFit: 'cover' }}
           />
 
           {/* Badges Overlays */}
