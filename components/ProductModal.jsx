@@ -21,6 +21,22 @@ export default function ProductModal({ item, onClose }) {
           alt={item.name}
           style={{ width: '100%', borderRadius: '12px', marginBottom: '16px' }}
         />
+        
+        {Array.isArray(item.gallery) && item.gallery.length > 0 && (
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', marginBottom: 20, paddingBottom: 8 }}>
+            {[item.image, ...item.gallery].map((img, idx) => (
+              <img 
+                key={idx} 
+                src={img} 
+                alt={`${item.name} gallery ${idx}`} 
+                style={{ width: 100, height: 60, objectFit: 'cover', borderRadius: 8, cursor: 'pointer', border: '1px solid var(--border)' }}
+                onClick={() => {
+                  // Optional: could add logic to swap main image here
+                }}
+              />
+            ))}
+          </div>
+        )}
         <div>
           <h3>{item.name}</h3>
           <p>{item.desc}</p>

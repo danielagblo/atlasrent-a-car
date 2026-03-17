@@ -30,6 +30,7 @@ function empty() {
     zeroToSixtyUnit: 's',
     rate: '',
     features: '',
+    gallery: [],
     specs: {
       battery: '',
       drive: '',
@@ -122,6 +123,43 @@ export default function AdminModels() {
     }
   }
 
+  async function onGalleryFile(e) {
+    const files = e.target.files ? Array.from(e.target.files) : []
+    if (files.length === 0) return
+
+    const token = localStorage.getItem('admin_token')
+    
+    for (const file of files) {
+      try {
+        const formData = new FormData()
+        formData.append('image', file)
+        
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData
+        })
+
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Upload failed')
+
+        setForm(f => ({
+          ...f,
+          gallery: [...(f.gallery || []), data.url]
+        }))
+      } catch (err) {
+        setError('Gallery upload failed: ' + (err.message || String(err)))
+      }
+    }
+  }
+
+  function removeFromGallery(index) {
+    setForm(f => ({
+      ...f,
+      gallery: (f.gallery || []).filter((_, i) => i !== index)
+    }))
+  }
+
   function edit(item) {
     setForm({
       name: item.name || '',
@@ -145,7 +183,8 @@ export default function AdminModels() {
         transmission: item.specs?.transmission || '',
         fuelType: item.specs?.fuelType || ''
       },
-      features: Array.isArray(item.features) ? item.features.join(', ') : (item.features || '')
+      features: Array.isArray(item.features) ? item.features.join(', ') : (item.features || ''),
+      gallery: Array.isArray(item.gallery) ? item.gallery : []
     })
     setEditingId(item.id)
     setImagePreview(item.image || '')
@@ -278,13 +317,20 @@ export default function AdminModels() {
           {filtered.map(item => (
             <article key={item.id} className="model-card" style={{ padding: '20px 28px', background: 'var(--bg-card)', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 20 }}>
               <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 20 }}>
-                <CldOptimizedImage
-                  src={item.image || '/placeholder.png'}
-                  alt={item.name}
-                  width={100}
-                  height={64}
-                  style={{ width: 100, height: 64, borderRadius: 12, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
-                />
+                <div style={{ position: 'relative' }}>
+                  <CldOptimizedImage
+                    src={item.image || '/placeholder.png'}
+                    alt={item.name}
+                    width={100}
+                    height={64}
+                    style={{ width: 100, height: 64, borderRadius: 12, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
+                  />
+                  {Array.isArray(item.gallery) && item.gallery.length > 0 && (
+                    <div style={{ position: 'absolute', bottom: -6, right: -6, background: 'var(--primary)', color: '#fff', fontSize: 10, padding: '2px 6px', borderRadius: 6, fontWeight: 900, boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '2px solid var(--bg-card)' }}>
+                      +{item.gallery.length}
+                    </div>
+                  )}
+                </div>
                 <div className="card-info">
                   <div className="card-info-header" style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span className="card-name" style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)' }}>{item.name}</span>
@@ -461,20 +507,50 @@ export default function AdminModels() {
           </div>
 
           <div style={{ marginTop: 24, padding: 16, border: '1px solid var(--border)', borderRadius: 12, background: 'var(--glass)' }}>
-            <label className="field-label">Vehicle Image</label>
+            <label className="field-label">Primary Hero Image</label>
             <div className="input-group-row" style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
               <input name="image" placeholder="Image URL" value={form.image} onChange={onChange} style={{ flex: 1 }} />
               <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>or</span>
               <label className="btn btn-outline" style={{ margin: 0, height: 44, padding: '0 16px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                <span style={{ whiteSpace: 'nowrap' }}>Upload File</span>
+                <span style={{ whiteSpace: 'nowrap' }}>Upload Hero</span>
                 <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
               </label>
             </div>
             {imagePreview && (
-              <div style={{ width: '100%', height: 180, borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
+              <div style={{ position: 'relative', width: '100%', height: 180, borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 20 }}>
                 <img src={imagePreview} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button 
+                  type="button" 
+                  onClick={() => { setForm(f => ({ ...f, image: '' })); setImagePreview(''); }}
+                  style={{ position: 'absolute', top: 10, right: 10, padding: '6px 12px', borderRadius: 8, background: '#ef4444', color: '#fff', border: 'none', fontSize: 11, fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
+                >
+                  Remove Hero
+                </button>
               </div>
             )}
+
+            <label className="field-label" style={{ marginTop: 24 }}>Gallery Images (Multiple)</label>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 12, marginTop: 8 }}>
+              {(form.gallery || []).map((url, i) => (
+                <div key={i} style={{ position: 'relative', width: '100%', paddingTop: '66%', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)', background: '#000' }}>
+                  <img src={url} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} alt="gallery" />
+                  <button 
+                    type="button" 
+                    onClick={() => removeFromGallery(i)}
+                    style={{ position: 'absolute', top: 4, right: 4, width: 24, height: 24, borderRadius: 12, background: 'rgba(239, 68, 68, 0.95)', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 14, fontWeight: 900, boxShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <label className="btn btn-outline" style={{ width: '100%', height: 0, paddingTop: 'calc(66% - 2px)', position: 'relative', cursor: 'pointer', borderStyle: 'dashed', background: 'transparent' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                  <Plus size={20} />
+                  <span style={{ fontSize: 10 }}>Add</span>
+                </div>
+                <input type="file" multiple accept="image/*" onChange={onGalleryFile} style={{ display: 'none' }} />
+              </label>
+            </div>
           </div>
 
           <div className="form-actions" style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
@@ -512,6 +588,19 @@ export default function AdminModels() {
               <strong>Description:</strong>
               <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', whiteSpace: 'pre-wrap' }}>
                 {viewItem.desc || 'No description provided.'}
+              </div>
+            </div>
+
+            <div>
+              <strong>Gallery:</strong>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginTop: 8 }}>
+                {Array.isArray(viewItem.gallery) && viewItem.gallery.length > 0 ? (
+                  viewItem.gallery.map((g, i) => (
+                    <img key={i} src={g} style={{ width: '100%', height: 90, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }} alt="gallery" />
+                  ))
+                ) : (
+                  <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>No gallery images.</span>
+                )}
               </div>
             </div>
 
