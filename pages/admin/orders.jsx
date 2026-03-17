@@ -108,6 +108,7 @@ export default function AdminOrders() {
   }
   
   const deleteOrder = async (id) => {
+    console.log('Delete triggered for ID:', id)
     if (!window.confirm('Are you sure you want to delete this order? This action cannot be undone.')) return
     setUpdating(true)
     try {

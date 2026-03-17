@@ -46,12 +46,12 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "DELETE") {
     return verifyAdmin(req, res, async () => {
-      const orders = await storage.getOrders();
-      const filtered = orders.filter((o) => o.id !== id);
-      if (filtered.length === orders.length)
-        return res.status(404).json({ error: "Order not found" });
-      await storage.saveOrders(filtered);
-      return res.json({ ok: true });
+      try {
+        await storage.deleteOrder(id);
+        return res.json({ ok: true });
+      } catch (e) {
+        return res.status(500).json({ error: "Failed to delete order" });
+      }
     });
   }
 
