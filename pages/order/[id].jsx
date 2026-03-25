@@ -154,8 +154,9 @@ export default function OrderPage() {
       {/* Hero Section */}
       <div style={{
         position: 'relative',
-        height: isMobile ? '50vh' : '70vh',
-        minHeight: isMobile ? 350 : 500,
+        height: isMobile ? 'auto' : '70vh',
+        minHeight: isMobile ? '100vh' : 500,
+        padding: isMobile ? '100px 0 80px' : 0,
         background: `linear-gradient(rgba(0,0,0,0.65), rgba(16,24,40,0.92)), url(${getCldImageUrl(model.image, { width: 1920, height: 1080 })})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -239,20 +240,20 @@ export default function OrderPage() {
             {/* Quick Stats */}
             <div style={{
               display: 'flex',
-              gap: 40,
+              gap: isMobile ? 16 : 40,
               justifyContent: 'center',
               flexWrap: 'wrap',
-              marginTop: 40
+              marginTop: isMobile ? 24 : 40
             }}>
               <div style={{
-                padding: '16px 28px',
+                padding: isMobile ? '12px 16px' : '16px 28px',
                 background: 'rgba(0,0,0,0.7)',
                 backdropFilter: 'blur(20px)',
                 borderRadius: 16,
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {model.range}{model.rangeUnit && !String(model.range).includes(model.rangeUnit) ? ` ${model.rangeUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -260,14 +261,14 @@ export default function OrderPage() {
                 </div>
               </div>
               <div style={{
-                padding: '16px 28px',
+                padding: isMobile ? '12px 16px' : '16px 28px',
                 background: 'rgba(0,0,0,0.7)',
                 backdropFilter: 'blur(20px)',
                 borderRadius: 16,
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {model.zeroToSixty}{model.zeroToSixtyUnit && !String(model.zeroToSixty).includes(model.zeroToSixtyUnit) ? `${model.zeroToSixtyUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -275,14 +276,14 @@ export default function OrderPage() {
                 </div>
               </div>
               <div style={{
-                padding: '16px 28px',
+                padding: isMobile ? '12px 16px' : '16px 28px',
                 background: 'rgba(0,0,0,0.7)',
                 backdropFilter: 'blur(20px)',
                 borderRadius: 16,
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {model.topSpeed}{model.topSpeedUnit && !String(model.topSpeed).includes(model.topSpeedUnit) ? ` ${model.topSpeedUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -290,14 +291,14 @@ export default function OrderPage() {
                 </div>
               </div>
               <div style={{
-                padding: '16px 28px',
+                padding: isMobile ? '12px 16px' : '16px 28px',
                 background: 'rgba(212, 178, 106, 0.4)',
                 backdropFilter: 'blur(20px)',
                 borderRadius: 16,
                 border: '1px solid rgba(212, 178, 106, 0.6)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {model.rate}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
