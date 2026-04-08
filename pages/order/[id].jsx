@@ -346,7 +346,8 @@ export default function OrderPage() {
                 borderRadius: 20,
                 overflow: 'hidden',
                 marginBottom: 20,
-                boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+                aspectRatio: isMobile ? '16/9' : 'auto'
               }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
@@ -358,7 +359,7 @@ export default function OrderPage() {
                 height={500}
                 style={{
                   width: '100%',
-                  height: isMobile ? 280 : 480,
+                  height: isMobile ? '100%' : 480,
                   objectFit: 'cover',
                   display: 'block'
                 }}
