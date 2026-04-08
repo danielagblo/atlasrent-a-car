@@ -126,8 +126,8 @@ export default function Products({ limit }) {
           </button>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 24 }}>
-          {displayedItems.map(i => <ProductCard key={i.id} item={i} />)}
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit,minmax(320px,1fr))', gap: isMobile ? 12 : 24 }}>
+          {displayedItems.map(i => <ProductCard key={i.id} item={i} isMobile={isMobile} />)}
         </div>
       )}
 

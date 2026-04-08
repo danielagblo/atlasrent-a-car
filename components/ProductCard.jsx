@@ -5,7 +5,7 @@ import CldOptimizedImage from './CldOptimizedImage'
 import ProductModal from './ProductModal'
 import IMAGES from '../data/images'
 
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, isMobile }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
 
@@ -30,15 +30,15 @@ export default function ProductCard({ item }) {
           />
 
           {/* Badges Overlays */}
-          <div style={{ position: 'absolute', inset: 0, padding: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', inset: 0, padding: isMobile ? 8 : 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pointerEvents: 'none', gap: 4, flexWrap: 'wrap' }}>
             {item.category && (
               <div style={{
                 background: 'rgba(212, 175, 55, 0.9)',
                 color: '#000',
-                padding: '4px 12px',
+                padding: isMobile ? '2px 6px' : '4px 12px',
                 borderRadius: 999,
                 fontWeight: 800,
-                fontSize: 10,
+                fontSize: isMobile ? 9 : 10,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 boxShadow: '0 4px 12px rgba(212, 175, 55, 0.3)'
@@ -52,10 +52,10 @@ export default function ProductCard({ item }) {
                 backdropFilter: 'blur(8px)',
                 color: '#D4AF37',
                 border: '1px solid rgba(212, 175, 55, 0.3)',
-                padding: '4px 12px',
+                padding: isMobile ? '2px 6px' : '4px 12px',
                 borderRadius: 999,
                 fontWeight: 700,
-                fontSize: 10,
+                fontSize: isMobile ? 9 : 10,
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase'
               }}>
@@ -64,28 +64,28 @@ export default function ProductCard({ item }) {
             )}
           </div>
         </div>
-        <div className="card-body">
-          <h3 style={{ marginBottom: 12, color: 'var(--text)', fontSize: 24 }}>{item.name}</h3>
-          <p style={{ color: 'var(--muted)', margin: 0, fontSize: 15, lineHeight: 1.5 }}>{item.desc}</p>
-          <div className="card-footer">
+        <div className="card-body" style={{ padding: isMobile ? 12 : 24 }}>
+          <h3 style={{ marginBottom: isMobile ? 6 : 12, color: 'var(--text)', fontSize: isMobile ? 18 : 24 }}>{item.name}</h3>
+          <p style={{ color: 'var(--muted)', margin: 0, fontSize: isMobile ? 13 : 15, lineHeight: 1.5, ...(isMobile ? { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' } : {}) }}>{item.desc}</p>
+          <div className="card-footer" style={{ marginTop: isMobile ? 12 : 24, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? 12 : 0 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 800, color: '#D4AF37', fontSize: 20 }}>
+              <div style={{ fontWeight: 800, color: '#D4AF37', fontSize: isMobile ? 16 : 20 }}>
                 {item.price || item.rate} GHS
-                <span style={{ fontSize: 13, fontWeight: 500, opacity: 0.6, marginLeft: 4 }}>/day</span>
+                <span style={{ fontSize: isMobile ? 11 : 13, fontWeight: 500, opacity: 0.6, marginLeft: 2 }}>/day</span>
               </div>
-              <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8, display: 'flex', flexWrap: 'wrap', columnGap: 16, rowGap: 6 }}>
-                <span>{item.specs?.seats || '-'} Seats</span>
-                <span>{item.specs?.transmission || 'Automatic'}</span>
-                <span>{item.specs?.fuelType || 'Electric'}</span>
+              <div style={{ color: 'var(--muted)', fontSize: isMobile ? 11 : 13, marginTop: isMobile ? 4 : 8, display: 'flex', flexWrap: 'wrap', columnGap: isMobile ? 8 : 16, rowGap: 4 }}>
+                <span style={{ whiteSpace: 'nowrap' }}>{item.specs?.seats || '-'} Seats</span>
+                {(!isMobile || !item.specs?.fuelType) && <span style={{ whiteSpace: 'nowrap' }}>{item.specs?.transmission || 'Auto'}</span>}
+                <span style={{ whiteSpace: 'nowrap' }}>{item.specs?.fuelType || 'Electric'}</span>
               </div>
             </div>
             <div style={{
-              padding: '12px 24px',
+              padding: isMobile ? '8px 12px' : '12px 24px',
               background: 'linear-gradient(135deg, #E30613, #ff4444)',
               color: '#fff',
               borderRadius: 999,
               fontWeight: 800,
-              fontSize: 14,
+              fontSize: isMobile ? 12 : 14,
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               boxShadow: '0 8px 24px rgba(227, 6, 19, 0.4)',
@@ -93,7 +93,7 @@ export default function ProductCard({ item }) {
               cursor: 'pointer',
               flexShrink: 0,
               textAlign: 'center'
-            }}>Book Now</div>
+            }}>Book</div>
           </div>
         </div>
       </motion.article>
