@@ -136,7 +136,6 @@ export default function OrderPage() {
           }}>
             <strong style={{ color: 'var(--accent-2)' }}>Payment Notice:</strong> Payment will be collected upon vehicle delivery — no online payment required.
           </div>
-          <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center' }}>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
             <button className="small" onClick={() => navigate('/my-orders')}>View All Orders</button>
             <button className="primary" onClick={() => navigate('/models')}>Browse More Models</button>
