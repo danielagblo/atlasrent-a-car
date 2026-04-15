@@ -1,80 +1,57 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Moon, Sun } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const [isLight, setIsLight] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme')
-    if (saved === 'light') {
-      setIsLight(true)
-      document.documentElement.setAttribute('data-theme', 'light')
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
     }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  function toggleTheme() {
-    const next = !isLight
-    setIsLight(next)
-    if (next) {
-      document.documentElement.setAttribute('data-theme', 'light')
-      localStorage.setItem('theme', 'light')
-    } else {
-      document.documentElement.removeAttribute('data-theme')
-      localStorage.setItem('theme', 'dark')
-    }
-  }
-
   return (
-    <motion.header className="nav" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .45 }}>
+    <motion.header 
+      className="nav" 
+      initial={{ y: -40, opacity: 0 }} 
+      animate={{ y: 0, opacity: 1 }} 
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      style={{ padding: scrolled ? '16px 48px' : '24px 48px' }}
+    >
       <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <img
-            src="/logo-transparent.png"
-            alt="EKG Logistics and transport"
-            style={{
-              width: 64,
-              height: 64,
-              objectFit: 'contain',
-              background: 'transparent',
-              display: 'block',
-              transform: 'scale(1.6)',
-              transformOrigin: 'center center'
-            }}
-          />
           <div>
-            <div className="brand">EKG<span>Logistics and transport</span></div>
-            <div style={{ color: 'var(--muted)', fontSize: 12, lineHeight: 1 }}>Luxury Electric Vehicles</div>
+            <div className="brand">Atlas<span>Rent-A-Car</span></div>
           </div>
         </div>
       </Link>
-      <nav style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+
+      <nav style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
         <div className="links" aria-hidden={open}>
           <Link href="/" className={router.pathname === '/' ? 'active' : ''}>Home</Link>
+          <Link href="/models" className={router.pathname === '/models' ? 'active' : ''}>Vehicles</Link>
           <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>About</Link>
-          <Link href="/models" className={router.pathname === '/models' ? 'active' : ''}>Fleet</Link>
-          <Link href="/mission" className={router.pathname === '/mission' ? 'active' : ''}>Mission</Link>
-          <Link href="/contact" className="cta">Contact</Link>
+          <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Blog</Link>
+          <Link href="/faqs" className={router.pathname === '/faqs' ? 'active' : ''}>FAQs</Link>
+          <Link href="/contact" className="cta">Reserve Now</Link>
         </div>
 
-        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light mode">
-          {isLight ? <Moon size={22} /> : <Sun size={22} />}
+        <button 
+          className="theme-toggle" 
+          style={{ display: 'none' /* Will show via CSS media query on mobile */ }} 
+          aria-expanded={open} 
+          onClick={() => setOpen(v => !v)} 
+          aria-label="Toggle menu"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
-
-        <button className="nav-toggle" aria-expanded={open} onClick={() => setOpen(v => !v)} aria-label="Toggle menu">☰</button>
-        {open && (
-          <motion.div className="mobile-menu" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-            <Link href="/about" onClick={() => setOpen(false)}>About</Link>
-            <Link href="/models" onClick={() => setOpen(false)}>Fleet</Link>
-            <Link href="/mission" onClick={() => setOpen(false)}>Mission</Link>
-            <Link href="/contact" onClick={() => setOpen(false)} className="cta">Contact</Link>
-          </motion.div>
-        )}
       </nav>
     </motion.header>
   );

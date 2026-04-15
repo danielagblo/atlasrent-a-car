@@ -5,73 +5,91 @@ import IMAGES from '../data/images'
 import { motion } from 'framer-motion'
 import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
-import TrustBadges from '../components/TrustBadges'
 
+function PremiumServices() {
+  const services = [
+    { title: 'Chauffeur Services', desc: 'Elite, professionally trained drivers for a seamless experience.' },
+    { title: 'Airport Transfers', desc: 'Punctual VIP pickups from Kotoka International and beyond.' },
+    { title: 'Corporate Logistics', desc: 'Tailored mobility solutions for businesses and executives.' },
+  ]
+  return (
+    <section style={{ padding: '80px 48px', maxWidth: 1440, margin: '0 auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
+        {services.map((s, i) => (
+          <motion.div 
+            key={i} 
+            className="glass-panel hover-lift" 
+            style={{ padding: 40, textAlign: 'center' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.2 }}
+          >
+            <div style={{ width: 64, height: 64, margin: '0 auto 24px', background: '#fff', border: '3px solid #000', boxShadow: '4px 4px 0px 0px var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 style={{ fontSize: 22, marginBottom: 16 }}>{s.title}</h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>{s.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-function Testimonials({ testimonials }) {
-  const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 768)
+function Testimonials({ testimonials: apiTestimonials }) {
+  // Always ensure we have testimonials to display
+  const defaultTestimonials = [
+    { id: 1, quote: 'An absolutely flawless experience. The chauffeur was highly professional, and the vehicle was pristine. I highly recommend Atlas Rent-A-Car for executive travel.', name: 'Kwame Mensah', role: 'Chief Executive Officer', avatar: '' },
+    { id: 2, quote: 'Top-tier luxury and an incredibly smooth booking experience. They handled our corporate event fleet with remarkable precision and care.', name: 'Sarah Osei', role: 'Event Director', avatar: '' },
+    { id: 3, quote: 'Unmatched comfort level. When I land in Accra, I know my mobility is completely sorted with peace of mind. Simply the best.', name: 'David Adjei', role: 'International Diplomat', avatar: '' }
+  ];
 
-  React.useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  if (!testimonials || testimonials.length === 0) return null
+  const testimonials = apiTestimonials?.length > 0 ? apiTestimonials : defaultTestimonials;
 
   return (
-    <section style={{ padding: isMobile ? '80px 20px' : '120px 60px', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
-      {/* Background decoration */}
-      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 1000, height: '100%', background: 'radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+    <section style={{ padding: '120px 48px', position: 'relative', overflow: 'hidden' }}>
+      <div className="section-header">
+        <h2>Client Experiences</h2>
+        <p>Trusted by global organizations and executives.</p>
+      </div>
 
-      <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: 'center', marginBottom: isMobile ? 40 : 80 }}>
-          <div style={{ fontSize: 12, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 800, marginBottom: 12 }}>Client Experiences</div>
-          <h2 style={{ fontSize: isMobile ? 36 : 48, color: 'var(--text)', marginBottom: 20, letterSpacing: '-0.02em' }}>The Standard of Excellence</h2>
-          <p style={{ color: 'var(--muted)', fontSize: 18, maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>Trusted by executives and global organizations to deliver uncompromising quality in transport and logistics.</p>
-        </motion.div>
-
-        <div className="hide-scrollbar" style={{ display: 'flex', overflowX: 'auto', gap: isMobile ? 24 : 32, paddingBottom: 16, scrollSnapType: 'x mandatory' }}>
+      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+        <div style={{ display: 'flex', overflowX: 'auto', gap: 32, paddingBottom: 32, scrollSnapType: 'x mandatory' }}>
           {testimonials.map((t, i) => (
             <motion.div
               key={t.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              className="glass-panel"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -8, border: '1px solid rgba(212, 175, 55, 0.2)' }}
+              transition={{ delay: i * 0.1 }}
               style={{
-                position: 'relative',
-                padding: isMobile ? 32 : 48,
-                background: 'var(--glass)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: 24,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'border 0.3s ease',
-                width: isMobile ? '85vw' : 450,
-                flex: `0 0 ${isMobile ? '85vw' : '450px'}`,
-                scrollSnapAlign: 'start'
+                padding: 48,
+                minWidth: 400,
+                flex: '0 0 400px',
+                scrollSnapAlign: 'start',
+                position: 'relative'
               }}
             >
-              <div style={{ position: 'absolute', top: 30, right: 30, fontSize: 100, fontFamily: 'Georgia, serif', color: 'rgba(212,175,55,0.06)', lineHeight: 1, userSelect: 'none' }}>”</div>
-
-              <div style={{ position: 'relative', display: 'flex', gap: 6, marginBottom: 32 }}>
-                {[...Array(5)].map((_, star) => <span key={star} style={{ color: '#D4AF37', fontSize: 18 }}>★</span>)}
+              <div style={{ 
+                position: 'absolute', top: 20, right: 30, fontSize: 80, 
+                fontFamily: 'serif', color: 'var(--glass-border-highlight)', 
+                lineHeight: 1 
+              }}>”</div>
+              <div style={{ color: 'var(--accent)', marginBottom: 24, fontSize: 18 }}>
+                ★★★★★
               </div>
-
-              <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--text)', opacity: 0.85, fontStyle: 'italic', marginBottom: 40, position: 'relative', zIndex: 1, whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+              <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--text-primary)', marginBottom: 32, fontStyle: 'italic' }}>
                 "{t.quote}"
               </p>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, borderTop: '1px solid var(--glass-border)', paddingTop: 24 }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', background: 'rgba(212, 175, 55, 0.1)', padding: 2, flexShrink: 0 }}>
-                  <CldOptimizedImage src={t.avatar || t.image || IMAGES.hero} alt={t.name} width={56} height={56} crop="thumb" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-                </div>
-                <div style={{ minWidth: 0 }}>
-                  <h4 style={{ margin: '0 0 6px', fontSize: 16, color: 'var(--text)', fontWeight: 700, letterSpacing: '0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.name}</h4>
-                  <p style={{ margin: 0, fontSize: 12, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.role}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                {t.avatar && (
+                  <img src={t.avatar} alt={t.name} style={{ width: 48, height: 48, border: '2px solid #000', objectFit: 'cover' }} />
+                )}
+                <div>
+                  <h4 style={{ margin: 0, fontSize: 16 }}>{t.name}</h4>
+                  <p style={{ margin: 0, fontSize: 13, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -86,20 +104,20 @@ function News({ newsItems }) {
   if (!newsItems || newsItems.length === 0) return null
 
   return (
-    <section style={{ padding: '80px 64px', maxWidth: 1440, margin: '0 auto' }}>
-      <div style={{ marginBottom: 40 }}>
-        <h2 style={{ fontSize: 42, color: 'var(--text)', marginBottom: 12 }}>News & Updates</h2>
-        <div style={{ width: 60, height: 4, background: 'linear-gradient(90deg, var(--accent), transparent)' }}></div>
+    <section style={{ padding: '80px 48px', maxWidth: 1440, margin: '0 auto' }}>
+      <div className="section-header" style={{ textAlign: 'left' }}>
+        <h2>Latest Insights</h2>
+        <div style={{ width: 60, height: 6, background: 'var(--accent)' }}></div>
       </div>
 
-      <div className="hide-scrollbar" style={{ display: 'flex', overflowX: 'auto', gap: 24, paddingBottom: 16, scrollSnapType: 'x mandatory' }}>
+      <div style={{ display: 'flex', overflowX: 'auto', gap: 24, paddingBottom: 16, scrollSnapType: 'x mandatory' }}>
         {newsItems.map((n, i) => (
-          <article key={n.id} className="news-article" style={{ width: 400, flex: '0 0 900px', scrollSnapAlign: 'start' }}>
-            <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={140} height={100} crop="fill" style={{ width: 140, height: 100, flexShrink: 0, objectFit: 'cover', borderRadius: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} />
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: 'calc(100% - 160px)', minWidth: 0 }}>
-              <div style={{ fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 8, lineHeight: 1.3, whiteSpace: 'normal' }}>{n.title}</div>
-              <div style={{ color: 'var(--muted)', fontSize: 14, lineHeight: 1.5, whiteSpace: 'normal', overflowWrap: 'break-word' }}>{n.excerpt}</div>
+          <article key={n.id} style={{ minWidth: 340, flex: '0 0 340px', scrollSnapAlign: 'start' }}>
+            <div style={{ height: 200, border: '3px solid #000', overflow: 'hidden', marginBottom: 16 }}>
+              <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={340} height={200} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
             </div>
+            <h3 style={{ fontSize: 20, marginBottom: 12 }}>{n.title}</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6 }}>{n.excerpt}</p>
           </article>
         ))}
       </div>
@@ -113,25 +131,23 @@ export default function Home() {
 
   React.useEffect(() => {
     let mounted = true
-      ; (async () => {
-        const [t, n] = await Promise.all([
-          getTestimonials(),
-          getNews()
-        ])
-        if (!mounted) return
-        setTestimonials(t)
-        setNewsItems(n)
-      })()
+    ;(async () => {
+      const [t, n] = await Promise.all([
+        getTestimonials(),
+        getNews()
+      ])
+      if (!mounted) return
+      setTestimonials(t)
+      setNewsItems(n)
+    })()
     return () => { mounted = false }
   }, [])
 
   return (
     <>
       <Hero />
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
-        <TrustBadges />
-      </div>
-      <Products />
+      <PremiumServices />
+      <Products limit={6} />
       <Testimonials testimonials={testimonials} />
       <News newsItems={newsItems} />
     </>

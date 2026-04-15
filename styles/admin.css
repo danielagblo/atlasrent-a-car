@@ -18,7 +18,7 @@
 }
 
 /* Default Dark Theme (Cinematic) */
-:root {
+.admin-shell {
   --bg-main: #050505;
   --bg-card: #121212;
   --bg-sidebar: #000000;
@@ -58,15 +58,15 @@
   box-sizing: border-box;
 }
 
-body {
+/* Scoped admin body styles */
+.admin-shell {
   margin: 0;
   background: var(--bg-main);
   transition: background 0.3s ease, color 0.3s ease;
   font-size: 14px;
-  /* Slightly smaller base font */
 }
 
-.admin-shell {
+.admin-shell-wrapper {
   min-height: 100vh;
   background: var(--bg-main);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
