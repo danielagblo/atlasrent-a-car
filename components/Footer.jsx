@@ -20,8 +20,12 @@ export default function Footer() {
             The premium standard for luxury vehicle rentals and private mobility across Ghana.
             Experience unrivaled comfort, safety, and exclusivity.
           </p>
-          <div style={{ marginTop: 24 }}>
-            <span style={{ fontWeight: 700, color: 'var(--accent-gold)' }}>Accra, Takoradi, Kumasi</span>
+          <div style={{ marginTop: 24, display: 'flex', gap: 12, fontSize: 13, fontWeight: 700 }}>
+            <a href="https://www.google.com/maps/place/Atlas+Rent-A-Car/@5.5585689,-0.2655181,17z" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'none' }}>Accra</a>
+            <span style={{ color: 'var(--text-secondary)' }}>·</span>
+            <a href="https://www.google.com/maps/place/ATLAS+RENT+A+CAR/@4.8933068,-1.7617523,17z" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'none' }}>Takoradi</a>
+            <span style={{ color: 'var(--text-secondary)' }}>·</span>
+            <a href="https://www.google.com/maps/place/Atlas+Rent-A-Car/@6.6826469,-1.6038393,17z" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'none' }}>Kumasi</a>
           </div>
         </div>
 
