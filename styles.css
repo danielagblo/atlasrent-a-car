@@ -11,6 +11,24 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Custom Scrollbar for Editorial Content */
+.editorial-narrative-container::-webkit-scrollbar {
+  display: block !important;
+  width: 5px;
+}
+.editorial-narrative-container::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 10px;
+}
+.editorial-narrative-container::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 10px;
+}
+.editorial-narrative-container {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--accent-gold) #f8fafc !important;
+}
+
 :root {
   /* Elegant Blue, Black, and White Theme */
   

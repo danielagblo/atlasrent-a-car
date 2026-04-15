@@ -5,6 +5,7 @@ import IMAGES from '../data/images'
 import { motion, AnimatePresence } from 'framer-motion'
 import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
+import Link from 'next/link'
 import { Heart, Car, Flag, MessageCircle } from 'lucide-react'
 import { useInView } from 'framer-motion'
 
@@ -81,29 +82,23 @@ function Statistics() {
   )
 }
 
-function Testimonials({ testimonials: apiTestimonials }) {
+function Testimonials({ testimonials }) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  // Always ensure we have testimonials to display
-  const defaultTestimonials = [
-    { id: 1, quote: 'An absolutely flawless experience. The chauffeur was highly professional, and the vehicle was pristine. I highly recommend Atlas Rent-A-Car for executive travel.', name: 'Kwame Mensah', role: 'Chief Executive Officer', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
-    { id: 2, quote: 'Top-tier luxury and an incredibly smooth booking experience. They handled our corporate event fleet with remarkable precision and care.', name: 'Sarah Osei', role: 'Event Director', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' },
-    { id: 3, quote: 'Unmatched comfort level. When I land in Accra, I know my mobility is completely sorted with peace of mind. Simply the best.', name: 'David Adjei', role: 'International Diplomat', avatar: 'https://randomuser.me/api/portraits/men/46.jpg' }
-  ];
-
-  const testimonials = apiTestimonials?.length > 0 ? apiTestimonials : defaultTestimonials;
-
   React.useEffect(() => {
+    if (!testimonials || testimonials.length === 0) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [testimonials.length]);
+  }, [testimonials?.length]);
+
+  if (!testimonials || testimonials.length === 0) return null;
 
   return (
     <section style={{ padding: '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
       <div className="section-header" style={{ marginBottom: 64 }}>
-        <h2>Client Experiences</h2>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 44, fontWeight: 900 }}>Client Experiences</h2>
       </div>
 
       <div style={{ position: 'relative', width: '100%', maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
@@ -116,7 +111,7 @@ function Testimonials({ testimonials: apiTestimonials }) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 250 }}
           >
-            <div style={{ color: 'var(--accent)', fontSize: 24, marginBottom: 32 }}>
+            <div style={{ color: 'var(--accent-gold)', fontSize: 24, marginBottom: 32 }}>
               ★★★★★
             </div>
             <p style={{
@@ -125,16 +120,17 @@ function Testimonials({ testimonials: apiTestimonials }) {
               color: 'var(--text-primary)',
               fontWeight: 500,
               marginBottom: 48,
-              fontStyle: 'italic'
+              fontStyle: 'italic',
+              fontFamily: "'Playfair Display', serif"
             }}>
               "{testimonials[currentIndex].quote}"
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               {testimonials[currentIndex].avatar && (
-                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff' }} />
               )}
               <div style={{ textAlign: 'left' }}>
-                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>{testimonials[currentIndex].name}</h4>
+                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: 'var(--accent)' }}>{testimonials[currentIndex].name}</h4>
                 <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
               </div>
             </div>
@@ -168,21 +164,85 @@ function News({ newsItems }) {
   if (!newsItems || newsItems.length === 0) return null
 
   return (
-    <section style={{ padding: '80px 48px', maxWidth: 1440, margin: '0 auto' }}>
-      <div className="section-header" style={{ textAlign: 'left' }}>
-        <h2>Latest Insights</h2>
-        <div style={{ width: 60, height: 6, background: 'var(--accent)' }}></div>
+    <section style={{ padding: '120px 48px', maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ marginBottom: 64, display: 'flex', alignItems: 'center', gap: 24 }}>
+        <div style={{ width: 4, height: 40, background: 'var(--accent-gold)' }} />
+        <div>
+           <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 8 }}>The Atlas Journal</div>
+           <h2 style={{ fontSize: 48, fontWeight: 900, color: 'var(--accent)', margin: 0, letterSpacing: '-0.02em' }}>Latest Insights</h2>
+        </div>
       </div>
 
-      <div style={{ display: 'flex', overflowX: 'auto', gap: 24, paddingBottom: 16, scrollSnapType: 'x mandatory' }}>
-        {newsItems.map((n, i) => (
-          <article key={n.id} style={{ minWidth: 340, flex: '0 0 340px', scrollSnapAlign: 'start' }}>
-            <div style={{ height: 200, border: '3px solid #000', overflow: 'hidden', marginBottom: 16 }}>
-              <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={340} height={200} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-            </div>
-            <h3 style={{ fontSize: 20, marginBottom: 12 }}>{n.title}</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6 }}>{n.excerpt}</p>
-          </article>
+      <div style={{ 
+        display: 'flex', 
+        overflowX: 'auto', 
+        gap: 64, 
+        paddingBottom: 32, 
+        scrollSnapType: 'x mandatory',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none'
+      }}>
+        {newsItems.slice(0, 6).map((n, i) => (
+          <Link href={`/blog/${n.slug || n.id}`} key={n.id} style={{ textDecoration: 'none' }}>
+            <motion.article 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+              style={{ 
+                display: 'flex', 
+                gap: 24, 
+                alignItems: 'center', 
+                minWidth: 420, 
+                flex: '0 0 420px', 
+                scrollSnapAlign: 'start',
+                cursor: 'pointer' 
+              }}
+            >
+              {(n.image || n.img) && (
+                <div style={{ 
+                  width: 120, 
+                  height: 80, 
+                  flexShrink: 0, 
+                  borderRadius: 12, 
+                  overflow: 'hidden', 
+                  background: '#f1f5f9',
+                  border: '1px solid #e2e8f0'
+                }}>
+                   <img 
+                     src={n.image || n.img} 
+                     alt={n.title} 
+                     style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) brightness(0.9)', transition: '0.4s ease' }} 
+                   />
+                </div>
+              )}
+              <div style={{ flex: 1 }}>
+                 <div style={{ fontSize: 9, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>{n.category || 'Journal'}</div>
+                 <h3 style={{ 
+                   fontSize: 16, 
+                   fontWeight: 800, 
+                   color: 'var(--accent)', 
+                   marginBottom: 6, 
+                   lineHeight: 1.3,
+                   textDecoration: 'none',
+                   display: '-webkit-box', 
+                   WebkitLineClamp: 1, 
+                   WebkitBoxOrient: 'vertical', 
+                   overflow: 'hidden' 
+                 }}>{n.title}</h3>
+                 <p style={{ 
+                   color: '#64748b', 
+                   fontSize: 13, 
+                   lineHeight: 1.5, 
+                   margin: 0,
+                   display: '-webkit-box', 
+                   WebkitLineClamp: 2, 
+                   WebkitBoxOrient: 'vertical', 
+                   overflow: 'hidden' 
+                 }}>{n.excerpt || n.content}</p>
+              </div>
+            </motion.article>
+          </Link>
         ))}
       </div>
     </section>

@@ -4,41 +4,31 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import { CheckCircle2, MapPin, Users, Award, Shield } from 'lucide-react'
 
+import { getTeam } from '../lib/siteContentApi'
+
 export default function AboutPage() {
   const [isMobile, setIsMobile] = useState(false)
+  const [teamItems, setTeamItems] = useState([])
   
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768)
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
     window.addEventListener('resize', handleResize)
+    
+    // Fetch leadership data
+    ;(async () => {
+      const data = await getTeam()
+      setTeamItems(Array.isArray(data) ? data : [])
+    })()
+
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  const team = [
-    {
-      name: "Kenerick Akwasi Marfo",
-      role: "Founder & CEO",
-      img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
-      bio: "Kenerick is the visionary founder of Atlas, driven by a commitment to excellence and years of experience in the luxury hospitality and automotive sectors."
-    },
-    {
-      name: "David Williams",
-      role: "Kumasi Branch Manager",
-      img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop",
-      bio: "A dedicated leader in automotive management, David ensures the highest standards of service for our clients across the Kumasi region."
-    },
-    {
-      name: "Francis Nartey",
-      role: "Transport Manager",
-      img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop",
-      bio: "Francis oversees our elite fleet with a meticulous approach to maintenance, logistics, and uncompromising vehicle safety."
-    }
-  ]
 
   return (
     <Layout>
       <div style={{ background: '#fcfcfd', color: '#24276F' }}>
         
+        {/* ... Hero Section remains unchanged ... */}
         {/* Cinematic Hero */}
         <section style={{ 
           minHeight: '60vh',
@@ -136,38 +126,40 @@ export default function AboutPage() {
         </section>
 
         {/* The Team Section */}
-        <section style={{ padding: isMobile ? '80px 24px' : '120px 64px', background: '#f8fafc' }}>
-            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ textAlign: 'center', marginBottom: 64 }}>
-                <h2 style={{ fontSize: 36, fontWeight: 900, marginBottom: 16 }}>Meet Our <span className="gradient-text">Leadership</span></h2>
-                <p style={{ color: '#64748b' }}>The experts ensuring your safe and seamless travel in Ghana.</p>
-              </div>
+        {teamItems.length > 0 && (
+          <section style={{ padding: isMobile ? '80px 24px' : '120px 64px', background: '#f8fafc' }}>
+              <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: 64 }}>
+                  <h2 style={{ fontSize: 36, fontWeight: 900, marginBottom: 16 }}>Meet Our <span className="gradient-text">Leadership</span></h2>
+                  <p style={{ color: '#64748b' }}>The experts ensuring your safe and seamless travel in Ghana.</p>
+                </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
-                {team.map((person, i) => (
-                  <motion.div 
-                    key={i}
-                    whileHover={{ y: -10 }}
-                    style={{ 
-                      background: '#fff', 
-                      borderRadius: 24, 
-                      padding: 32, 
-                      boxShadow: '0 10px 30px rgba(36, 39, 111, 0.03)',
-                      border: '1px solid #f1f5f9',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px', border: '4px solid #f8fafc' }}>
-                      <img src={person.img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
-                    </div>
-                    <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 4 }}>{person.name}</h3>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>{person.role}</div>
-                    <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{person.bio}</p>
-                  </motion.div>
-                ))}
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
+                  {teamItems.map((person, i) => (
+                    <motion.div 
+                      key={person.id || i}
+                      whileHover={{ y: -10 }}
+                      style={{ 
+                        background: '#fff', 
+                        borderRadius: 24, 
+                        padding: 32, 
+                        boxShadow: '0 10px 30px rgba(36, 39, 111, 0.03)',
+                        border: '1px solid #f1f5f9',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px', border: '4px solid #f8fafc' }}>
+                        <img src={person.image || '/placeholder-avatar.png'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
+                      </div>
+                      <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 4 }}>{person.name}</h3>
+                      <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>{person.role}</div>
+                      <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{person.bio}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-        </section>
+          </section>
+        )}
 
         {/* Simple CTA */}
         <section style={{ padding: '100px 24px', background: '#fff', textAlign: 'center' }}>

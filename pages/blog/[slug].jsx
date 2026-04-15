@@ -138,7 +138,10 @@ export default function ArticlePage() {
             
             {/* Body */}
             <div>
-               <div style={{ fontSize: 18, color: '#64748b', lineHeight: 2, whiteSpace: 'pre-line', marginBottom: 80 }}>
+               <div className="editorial-narrative-container" style={{ 
+                 fontSize: 18, color: '#64748b', lineHeight: 2, whiteSpace: 'pre-line', 
+                 marginBottom: 80, maxHeight: '70vh', overflowY: 'auto', paddingRight: 24 
+               }}>
                   {post.content || post.excerpt}
                </div>
 
@@ -226,12 +229,48 @@ export default function ArticlePage() {
                       <Linkedin size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
                     </div>
                   </div>
-                  <div style={{ marginTop: 40, padding: 32, background: 'var(--accent)', borderRadius: 24, color: '#fff' }}>
-                     <h4 style={{ fontSize: 20, fontWeight: 900, marginBottom: 16 }}>Ready to Go?</h4>
-                     <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginBottom: 24, lineHeight: 1.6 }}>Book one of our elite vehicles for your next trip.</p>
+                  <div style={{ 
+                    marginTop: 40, 
+                    padding: '40px 32px', 
+                    background: '#f8fafc', 
+                    borderRadius: 32, 
+                    border: '1px solid #e2e8f0',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                     <div style={{ position: 'absolute', top: 0, left: 32, width: 40, height: 4, background: 'var(--accent-gold)' }} />
+                     <h4 style={{ 
+                       fontFamily: "'Playfair Display', serif", 
+                       fontSize: 24, 
+                       fontWeight: 900, 
+                       marginBottom: 16, 
+                       color: 'var(--accent)',
+                       letterSpacing: '-0.02em'
+                     }}>Ready to Go?</h4>
+                     <p style={{ fontSize: 15, color: '#64748b', marginBottom: 32, lineHeight: 1.6, fontWeight: 500 }}>
+                       Secure an elite vehicle from our curated collection for your next journey.
+                     </p>
                      <Link href="/vehicles">
-                        <button style={{ width: '100%', padding: '12px', background: 'var(--accent-gold)', color: '#fff', border: 'none', borderRadius: 12, fontWeight: 800, cursor: 'pointer' }}>
-                           Explore Fleet
+                        <button style={{ 
+                          width: '100%', 
+                          height: 52,
+                          padding: '0 24px', 
+                          background: 'var(--accent)', 
+                          color: '#fff', 
+                          border: 'none', 
+                          borderRadius: 14, 
+                          fontWeight: 800, 
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: 12,
+                          fontSize: 13,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.1em',
+                          boxShadow: '0 10px 20px rgba(36, 39, 111, 0.1)'
+                        }}>
+                           Explore The Collection
                         </button>
                      </Link>
                   </div>
