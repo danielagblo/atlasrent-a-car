@@ -3,13 +3,12 @@ import { useRouter } from 'next/router'
 import {
   Plus,
   Search,
-  Filter,
-  SlidersHorizontal,
   Edit2,
   Trash2,
   MessageSquare,
   User,
-  Eye
+  Eye,
+  CheckCircle2
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
@@ -27,8 +26,6 @@ export default function AdminTestimonials() {
   const [editingId, setEditingId] = React.useState(null)
   const [imagePreview, setImagePreview] = React.useState('')
   const [search, setSearch] = React.useState('')
-  const [filterStatus, setFilterStatus] = React.useState('all')
-  const [sortBy, setSortBy] = React.useState('newest')
   const [viewItem, setViewItem] = React.useState(null)
 
   React.useEffect(() => {
@@ -39,8 +36,7 @@ export default function AdminTestimonials() {
         try {
           const res = await fetch('/api/testimonials', { headers: { Authorization: `Bearer ${token}` } })
           if (res.status === 401) {
-            localStorage.removeItem('admin_token')
-            router.replace('/admin/login')
+            localStorage.removeItem('admin_token'); router.replace('/admin/login')
             return
           }
           if (!res.ok) throw new Error('Failed to load testimonials')
@@ -49,10 +45,6 @@ export default function AdminTestimonials() {
         } catch (e) { if (mounted) setError(e.message || String(e)) }
         if (mounted) setLoading(false)
       })()
-    // listen to header search
-    const onHeaderSearch = (e) => setSearch(String(e.detail || ''))
-    window.addEventListener('admin:search', onHeaderSearch)
-    return () => { mounted = false; window.removeEventListener('admin:search', onHeaderSearch) }
   }, [router])
 
   function onChange(e) { setForm(f => ({ ...f, [e.target.name]: e.target.value })) }
@@ -60,42 +52,20 @@ export default function AdminTestimonials() {
   async function onImageFile(e) {
     const file = e.target.files && e.target.files[0]
     if (!file) return
-
-    const reader = new FileReader()
-    reader.onload = () => setImagePreview(reader.result)
-    reader.readAsDataURL(file)
-
+    const reader = new FileReader(); reader.onload = () => setImagePreview(reader.result); reader.readAsDataURL(file)
     try {
-      const formData = new FormData()
-      formData.append('image', file)
+      const formData = new FormData(); formData.append('image', file)
       const token = localStorage.getItem('admin_token')
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData
-      })
-
+      const res = await fetch('/api/upload', { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: formData })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
-
       setForm(f => ({ ...f, avatar: data.url }))
-    } catch (err) {
-      setError('Image upload failed: ' + (err.message || String(err)))
-    }
+    } catch (err) { setError('Image upload failed: ' + err.message) }
   }
 
   function edit(item) {
-    setForm({
-      name: item.name || '',
-      role: item.role || '',
-      quote: item.quote || '',
-      status: item.status || 'active',
-      avatar: item.avatar || ''
-    })
-    setEditingId(item.id)
-    setImagePreview(item.avatar || '')
-    setShowCreate(true)
+    setForm({ name: item.name || '', role: item.role || '', quote: item.quote || '', status: item.status || 'active', avatar: item.avatar || '' })
+    setEditingId(item.id); setImagePreview(item.avatar || ''); setShowCreate(true)
   }
 
   async function handleSubmit(e) {
@@ -104,32 +74,21 @@ export default function AdminTestimonials() {
     const token = localStorage.getItem('admin_token')
     const method = editingId ? 'PUT' : 'POST'
     const url = editingId ? `/api/testimonials/${editingId}` : '/api/testimonials'
-
     try {
       const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(form)
       })
-      if (!res.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'}`)
+      if (!res.ok) throw new Error('Failed to save')
       const item = await res.json()
-
-      if (editingId) {
-        setItems(s => s.map(i => i.id === editingId ? item : i))
-      } else {
-        setItems(s => [item, ...s])
-      }
-
-      setForm(empty())
-      setEditingId(null)
-      setImagePreview('')
-      setShowCreate(false)
+      if (editingId) setItems(s => s.map(i => i.id === editingId ? item : i))
+      else setItems(s => [item, ...s])
+      setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(false)
     } catch (e) { setError(e.message || String(e)) }
   }
 
   async function remove(id) {
     if (!confirm('Delete this testimonial?')) return
-    setError('')
     const token = localStorage.getItem('admin_token')
     try {
       const res = await fetch(`/api/testimonials/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
@@ -140,207 +99,128 @@ export default function AdminTestimonials() {
 
   const filtered = items.filter(i => {
     const q = search.trim().toLowerCase()
-    if (q && !(`${i.name} ${i.role} ${i.quote}`.toLowerCase()).includes(q)) return false
-    if (filterStatus !== 'all' && (i.status || 'active') !== filterStatus) return false
-    return true
-  }).sort((a, b) => {
-    if (sortBy === 'newest') return (b.id || 0).toString().localeCompare((a.id || 0).toString())
-    if (sortBy === 'oldest') return (a.id || 0).toString().localeCompare((b.id || 0).toString())
-    if (sortBy === 'name') return (a.name || '').localeCompare(b.name || '')
-    return 0
+    return q ? (`${i.name} ${i.role} ${i.quote}`.toLowerCase()).includes(q) : true
   })
 
   return (
-    <AdminLayout title="Testimonials">
-      <div className="page-header">
-        <h1 className="page-title">Manage Testimonials</h1>
-        <p className="page-subtitle">/testimonials</p>
+    <AdminLayout title="Client Endorsements">
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        marginBottom: 48
+      }}>
+        <div style={{ position: 'relative', flex: 1, maxWidth: 360 }}>
+          <Search size={16} style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
+          <input
+            placeholder="Search endorsements..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              width: '100%', height: 40, padding: '0 0 0 28px', borderRadius: 0,
+              border: 'none', borderBottom: '1px solid #E2E8F0', background: 'transparent', outline: 'none', fontSize: 14, color: '#0F172A'
+            }}
+          />
+        </div>
+        <button
+          onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
+          style={{ height: 44, padding: '0 24px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10 }}
+        >
+          <Plus size={18} /> New Entry
+        </button>
       </div>
 
-      <div className="toolbar-row">
-        <div className="toolbar-left">
-          <div className="search-field">
-            <Search className="search-icon" size={18} />
-            <input
-              className="models-search"
-              placeholder="Search testimonials..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <select
-            className="btn btn-outline"
-            value={filterStatus}
-            onChange={e => setFilterStatus(e.target.value)}
-            style={{ width: 'auto' }}
-          >
-            <option value="all">All Status</option>
-            <option value="active">Active</option>
-            <option value="hidden">Hidden</option>
-          </select>
-        </div>
-        <div className="toolbar-right">
-          <select
-            className="btn btn-outline"
-            value={sortBy}
-            onChange={e => setSortBy(e.target.value)}
-            style={{ width: 'auto' }}
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="name">Name A-Z</option>
-          </select>
-          <button className="btn btn-primary" onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}>
-            <Plus size={20} />
-            <span>Create</span>
-          </button>
-        </div>
-      </div>
-
-      {loading && <div style={{ padding: 40, textAlign: 'center', color: '#64748B' }}>Loading Testimonials...</div>}
-      {error && <div className="danger" style={{ marginBottom: 16, padding: 12, background: '#FEF2F2', border: '1px solid #FCA5A5', borderRadius: 8 }}>{error}</div>}
-
-      {!loading && filtered.length === 0 && (
-        <div className="empty-state" style={{ padding: '48px 32px', background: 'var(--bg-card)', borderRadius: 24, border: '1px solid var(--border)' }}>
-          <MessageSquare size={60} style={{ color: 'var(--text-muted)', marginBottom: 20, opacity: 0.2 }} />
-          <h3 className="empty-title" style={{ fontSize: 20, fontWeight: 900, color: 'var(--text-primary)' }}>No testimonies found</h3>
-          <p className="empty-subtitle" style={{ fontSize: 14, color: 'var(--text-muted)' }}>Try adjusting your filters or create a new entry</p>
-          <button className="btn btn-primary" onClick={() => setShowCreate(true)} style={{ marginTop: 24, height: 44 }}>Add First Testimony</button>
-        </div>
-      )}
+      {loading && <div style={{ padding: 120, textAlign: 'center', color: '#64748B', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2 }}>Synchronizing Content...</div>}
+      {error && <div className="login-error" style={{ marginBottom: 32 }}>{error}</div>}
 
       {!loading && filtered.length > 0 && (
-        <div className="card-grid">
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* List Header */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '64px 1.5fr 3fr 120px',
+            gap: 32,
+            padding: '16px 0',
+            borderBottom: '1px solid #E2E8F0',
+            color: '#64748B',
+            fontSize: 10,
+            fontWeight: 800,
+            textTransform: 'uppercase',
+            letterSpacing: 1.5
+          }}>
+            <span>Patron</span>
+            <span>Identity</span>
+            <span>Testimonial</span>
+            <span style={{ textAlign: 'right' }}>Actions</span>
+          </div>
+
           {filtered.map(item => (
-            <article key={item.id} className="model-card" style={{ padding: '24px 32px', background: 'var(--bg-card)', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 24 }}>
-              <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
-                {(item.avatar || item.image) && (
-                  <div style={{ position: 'relative' }}>
-                    <CldOptimizedImage
-                      src={item.avatar || item.image}
-                      alt={item.name}
-                      width={64}
-                      height={64}
-                      style={{ width: 64, height: 64, borderRadius: 16, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
-                    />
-                    <div style={{ position: 'absolute', bottom: -5, right: -5, width: 22, height: 22, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '3px solid var(--bg-card)' }}>
-                      <MessageSquare size={8} color="white" />
-                    </div>
-                  </div>
-                )}
-                <div className="card-info" style={{ flex: 1 }}>
-                  <div className="card-info-header" style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span className="card-name" style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)' }}>{item.name}</span>
-                    <span className="id-pill" style={{ background: 'var(--glass)', color: 'var(--text-muted)', padding: '2px 10px', fontSize: 10, fontWeight: 700, borderRadius: 99 }}>{item.role || 'PARTNER'}</span>
-                  </div>
-                  <div className="card-description" style={{ color: 'var(--text-secondary)', fontSize: 13, fontStyle: 'italic', lineHeight: 1.5, maxWidth: 600 }}>
-                    "{item.quote || 'No content provided'}"
-                  </div>
-                </div>
+            <div key={item.id} style={{
+              padding: '28px 0',
+              display: 'grid',
+              gridTemplateColumns: '64px 1.5fr 3fr 120px',
+              gap: 32,
+              alignItems: 'center',
+              borderBottom: '1px solid #F8FAFC'
+            }}>
+              <div style={{ width: 44, height: 44, borderRadius: '50%', overflow: 'hidden', border: '1px solid #E2E8F0' }}>
+                <CldOptimizedImage src={item.avatar || item.image || '/placeholder-avatar.png'} alt={item.name} width={44} height={44} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
 
-              <div className="card-actions" style={{ display: 'flex', gap: 12 }}>
-                <button
-                  className="btn btn-edit"
-                  onClick={() => setViewItem(item)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="View Details"
-                >
-                  <Eye size={18} />
-                </button>
-                <button
-                  className="btn btn-edit"
-                  onClick={() => edit(item)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="Edit"
-                >
-                  <Edit2 size={18} />
-                </button>
-                <button
-                  className="btn btn-delete"
-                  onClick={() => remove(item.id)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="Delete"
-                >
-                  <Trash2 size={18} />
-                </button>
+              <div>
+                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#0F172A' }}>{item.name}</h3>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#475569', marginTop: 2 }}>{item.role || 'Verified Patron'}</div>
               </div>
-            </article>
+
+              <div style={{ color: '#334155', fontSize: 14, lineHeight: 1.6, fontStyle: 'italic', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                "{item.quote}"
+              </div>
+
+              <div style={{ display: 'flex', gap: 16, justifyContent: 'flex-end' }}>
+                <button onClick={() => edit(item)} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer', padding: 0 }} title="Edit"><Edit2 size={16} strokeWidth={2} /></button>
+                <button onClick={() => remove(item.id)} style={{ background: 'none', border: 'none', color: '#F87171', cursor: 'pointer', padding: 0 }} title="Delete"><Trash2 size={16} strokeWidth={2} /></button>
+              </div>
+            </div>
           ))}
         </div>
       )}
 
-      <Modal open={showCreate} title={editingId ? "Edit Testimonial" : "Create Testimonial"} onClose={() => setShowCreate(false)}>
-        <form onSubmit={handleSubmit} className="form-grid">
-          <div className="form-col">
-            <label className="field-label">Name</label>
-            <input name="name" placeholder="Author name" value={form.name} onChange={onChange} required />
-
-            <label className="field-label">Role / Company</label>
-            <input name="role" placeholder="e.g. CEO, G-Logistics" value={form.role} onChange={onChange} />
-
-            <label className="field-label">Quote</label>
-            <textarea name="quote" placeholder="Testimonial text" value={form.quote} onChange={onChange} style={{ minHeight: 100 }} required />
+      <Modal open={showCreate} title={editingId ? "Edit Endorsement" : "New Endorsement"} onClose={() => setShowCreate(false)}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 32, padding: '12px 0' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+            <div className="field-group">
+              <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Patron Name</label>
+              <input name="name" placeholder="Full Identity" value={form.name} onChange={onChange} required style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+            </div>
+            <div className="field-group">
+              <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Designation</label>
+              <input name="role" placeholder="e.g. Executive Partner" value={form.role} onChange={onChange} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+            </div>
           </div>
-
-          <div className="form-col">
-            <label className="field-label">Avatar</label>
-            <div className="input-group-row">
-              <input name="avatar" placeholder="Avatar URL" value={form.avatar} onChange={onChange} style={{ flex: 1 }} />
-              <span style={{ fontSize: 12, color: '#94A3B8' }}>or</span>
-              <label className="btn btn-outline" style={{ margin: 0, height: 44, cursor: 'pointer' }}>
-                <span>Upload</span>
+          <div className="field-group">
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Client Quote</label>
+            <textarea name="quote" placeholder="Statement of excellence..." value={form.quote} onChange={onChange} required style={{ width: '100%', minHeight: 120, borderRadius: 8, border: '1px solid #E2E8F0', padding: '12px', outline: 'none', resize: 'vertical', fontSize: 14, fontWeight: 500 }} />
+          </div>
+          <div className="field-group">
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Media Asset</label>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <input name="avatar" placeholder="Source URL" value={form.avatar} onChange={onChange} style={{ flex: 1, height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+              <label style={{ height: 44, padding: '0 20px', background: '#F8FAFC', color: '#24276F', borderRadius: 8, display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: '1px solid #E2E8F0' }}>
+                BROWSE
                 <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
               </label>
             </div>
-
-            <div className="image-preview-box" style={{ borderRadius: '50%', width: 100, height: 100, margin: '12px auto 0' }}>
-              {imagePreview ? (
-                <img src={imagePreview} alt="preview" style={{ borderRadius: '50%' }} />
-              ) : (
-                <div className="preview-placeholder" style={{ borderRadius: '50%' }}>
-                  <User size={32} />
-                </div>
-              )}
-            </div>
           </div>
-
-          <div className="form-actions" style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid #F1F5F9' }}>
-            <button className="btn btn-primary" type="submit">
-              {editingId ? 'Update Testimonial' : 'Create Testimonial'}
+          {imagePreview && (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
+              <img src={imagePreview} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid #E2E8F0' }} />
+            </div>
+          )}
+          <div style={{ marginTop: 12 }}>
+            <button type="submit" style={{ width: '100%', height: 48, borderRadius: 12, border: 'none', background: '#24276F', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
+              {editingId ? 'Update Endorsement' : 'Publish Entry'}
             </button>
-            <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
           </div>
         </form>
       </Modal>
-
-      <Modal open={!!viewItem} title="Testimonial Details" onClose={() => setViewItem(null)}>
-        {viewItem && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {viewItem.avatar && (
-              <img src={viewItem.avatar} alt={viewItem.name} style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '50%' }} />
-            )}
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16 }}>
-              <div><strong>Name:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.name}</span></div>
-              <div><strong>Role / Company:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.role}</span></div>
-              <div><strong>Status:</strong> <span style={{ color: 'var(--text-secondary)' }}>{viewItem.status}</span></div>
-            </div>
-
-            <div>
-              <strong>Quote:</strong>
-              <div style={{ color: 'var(--text-secondary)', marginTop: 8, padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--border)', fontStyle: 'italic', whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
-                "{viewItem.quote || 'No content provided.'}"
-              </div>
-            </div>
-
-            <div className="form-actions" style={{ marginTop: 12, paddingTop: 16, borderTop: '1px solid var(--border)' }}>
-              <button className="btn btn-outline" onClick={() => setViewItem(null)}>Close</button>
-            </div>
-          </div>
-        )}
-      </Modal>
-
     </AdminLayout>
   )
 }

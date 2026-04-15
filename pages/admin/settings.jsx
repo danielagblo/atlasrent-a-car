@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import AdminLayout from '../../components/AdminLayout'
-import { Save, Mail, Phone, BellRing, Info } from 'lucide-react'
+import { Save, Mail, Phone, BellRing, Info, ShieldCheck, Globe } from 'lucide-react'
 
 export default function AdminSettings() {
     const router = useRouter()
@@ -20,24 +20,15 @@ export default function AdminSettings() {
 
     useEffect(() => {
         const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
-        if (!token) {
-            router.replace('/admin/login')
-            return
-        }
+        if (!token) { router.replace('/admin/login'); return }
         fetchSettings()
     }, [router])
 
     async function fetchSettings() {
         const token = localStorage.getItem('admin_token')
         try {
-            const res = await fetch('/api/admin/settings', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-            if (res.status === 401) {
-                localStorage.removeItem('admin_token')
-                router.replace('/admin/login')
-                return
-            }
+            const res = await fetch('/api/admin/settings', { headers: { 'Authorization': `Bearer ${token}` } })
+            if (res.status === 401) { localStorage.removeItem('admin_token'); router.replace('/admin/login'); return }
             if (res.ok) {
                 const data = await res.json()
                 setSettings({
@@ -50,294 +41,112 @@ export default function AdminSettings() {
                     isGmailApiActive: data.isGmailApiActive || false
                 })
             }
-        } catch (e) {
-            console.error('Failed to fetch settings', e)
-        } finally {
-            setLoading(false)
-        }
+        } catch (e) { console.error('Failed to fetch settings', e) } finally { setLoading(false) }
     }
 
     async function handleSubmit(e) {
         if (e) e.preventDefault()
-        setSaving(true)
-        setMessage(null)
-
+        setSaving(true); setMessage(null)
         try {
             const res = await fetch('/api/admin/settings', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-                },
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` },
                 body: JSON.stringify(settings)
             })
-
-            if (res.status === 401) {
-                localStorage.removeItem('admin_token')
-                router.replace('/admin/login')
-                return
-            }
-
-            if (res.ok) {
-                setMessage({ type: 'success', text: 'Settings updated successfully!' })
-            } else {
-                setMessage({ type: 'error', text: 'Failed to update settings.' })
-            }
-        } catch (e) {
-            setMessage({ type: 'error', text: 'An error occurred.' })
-        } finally {
-            setSaving(false)
-        }
+            if (res.status === 401) { localStorage.removeItem('admin_token'); router.replace('/admin/login'); return }
+            if (res.ok) setMessage({ type: 'success', text: 'Configuration synchronized successfully.' })
+            else setMessage({ type: 'error', text: 'Failed to update configuration.' })
+        } catch (e) { setMessage({ type: 'error', text: 'An unexpected error occurred.' }) } finally { setSaving(false) }
     }
 
-    if (loading) return <AdminLayout title="Settings">
-        <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>Loading system configuration...</div>
-    </AdminLayout>
-
     return (
-        <AdminLayout title="Global Settings">
-            <div style={{ maxWidth: 840 }}>
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+        <AdminLayout title="Core Configuration">
 
-                    {/* Email Settings Section */}
-                    <section style={{ background: 'var(--bg-card)', padding: 40, borderRadius: 28, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32 }}>
-                            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(227, 6, 19, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', border: '1px solid var(--border)' }}>
-                                <Mail size={22} />
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Email Infrastructure</h3>
-                                {settings.isGmailApiActive ? (
-                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 4, background: 'rgba(52, 199, 89, 0.1)', color: '#34C759', padding: '2px 8px', borderRadius: 6, fontSize: 11, fontWeight: 800, textTransform: 'uppercase' }}>
-                                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34C759' }}></div>
-                                        Gmail API Connected
-                                    </div>
-                                ) : (
-                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 4, background: 'rgba(255, 149, 0, 0.1)', color: '#FF9500', padding: '2px 8px', borderRadius: 6, fontSize: 11, fontWeight: 800, textTransform: 'uppercase' }}>
-                                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#FF9500' }}></div>
-                                        SMTP Fallback Active
-                                    </div>
-                                )}
-                            </div>
+            {loading ? (
+                <div style={{ padding: 120, textAlign: 'center', color: '#64748B', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2 }}>Synchronizing System State...</div>
+            ) : (
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 64, maxWidth: 800 }}>
+
+                    {/* Section: Communication */}
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+                            <Mail size={18} strokeWidth={2} style={{ color: '#64748B' }} />
+                            <h3 style={{ margin: 0, fontSize: 13, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1.5 }}>Communication Channels</h3>
                         </div>
 
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
-                            <div>
-                                <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                    Recipient Address
-                                </label>
-                                <input
-                                    type="email"
-                                    value={settings.adminEmail}
-                                    onChange={(e) => setSettings({ ...settings, adminEmail: e.target.value })}
-                                    placeholder="admin@ekgsite.com"
-                                    style={{
-                                        width: '100%',
-                                        padding: '16px 20px',
-                                        borderRadius: 16,
-                                        border: '1px solid var(--border)',
-                                        background: 'var(--input-bg)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: 15,
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
-                                />
-                                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                    Order alerts will be routed here.
-                                </span>
+                            <div className="field-group">
+                                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Administrative Inbox</label>
+                                <input type="email" value={settings.adminEmail} onChange={e => setSettings({ ...settings, adminEmail: e.target.value })} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                             </div>
-
-                            <div>
-                                <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                    Outbound Alias
-                                </label>
-                                <input
-                                    type="email"
-                                    value={settings.fromEmail}
-                                    onChange={(e) => setSettings({ ...settings, fromEmail: e.target.value })}
-                                    placeholder="no-reply@ekgsite.com"
-                                    style={{
-                                        width: '100%',
-                                        padding: '16px 20px',
-                                        borderRadius: 16,
-                                        border: '1px solid var(--border)',
-                                        background: 'var(--input-bg)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: 15,
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
-                                />
-                                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                    Sender identity for customer emails.
-                                </span>
+                            <div className="field-group">
+                                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Dispatch Alias (From)</label>
+                                <input type="email" value={settings.fromEmail} onChange={e => setSettings({ ...settings, fromEmail: e.target.value })} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                             </div>
                         </div>
 
                         {settings.isGmailApiActive && (
-                            <div style={{ marginTop: 24, padding: '12px 16px', background: 'var(--bg-card-light)', borderRadius: 12, border: '1px dashed var(--border)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                                <Info size={16} style={{ color: 'var(--text-muted)', marginTop: 2, flexShrink: 0 }} />
-                                <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                                    Gmail API is currently active. Secure credentials (Client ID/Secret) are managed via the server's environment configuration for maximum security.
-                                </p>
+                            <div style={{ marginTop: 24, display: 'flex', alignItems: 'center', gap: 8, color: '#059669', fontSize: 12, fontWeight: 800 }}>
+                                <ShieldCheck size={16} strokeWidth={2.5} /> Gmail API Integration Active
                             </div>
                         )}
-                    </section>
+                    </div>
 
-                    {/* Communication Settings Section */}
-                    <section style={{ background: 'var(--bg-card)', padding: 40, borderRadius: 28, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32 }}>
-                            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(227, 6, 19, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', border: '1px solid var(--border)' }}>
-                                <Phone size={22} />
-                            </div>
-                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Support & Alerts</h3>
+                    {/* Section: Support */}
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+                            <Phone size={18} strokeWidth={2} style={{ color: '#64748B' }} />
+                            <h3 style={{ margin: 0, fontSize: 13, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1.5 }}>Client Support & Presence</h3>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
-                            <div>
-                                <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                    Admin Alert Line
-                                </label>
-                                <input
-                                    type="tel"
-                                    value={settings.adminSmsNumber}
-                                    onChange={(e) => setSettings({ ...settings, adminSmsNumber: e.target.value })}
-                                    placeholder="+233..."
-                                    style={{
-                                        width: '100%',
-                                        padding: '16px 20px',
-                                        borderRadius: 16,
-                                        border: '1px solid var(--border)',
-                                        background: 'var(--input-bg)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: 15,
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
-                                />
-                                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                    Mobile alerts for instant order tracking.
-                                </span>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 32 }}>
+                            <div className="field-group">
+                                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>SMS Notification Line</label>
+                                <input type="tel" value={settings.adminSmsNumber} onChange={e => setSettings({ ...settings, adminSmsNumber: e.target.value })} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                             </div>
-
-                            <div>
-                                <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                    24/7 Duty Line
-                                </label>
-                                <input
-                                    type="tel"
-                                    value={settings.supportPhone}
-                                    onChange={(e) => setSettings({ ...settings, supportPhone: e.target.value })}
-                                    placeholder="+233 (0)501 326 989"
-                                    style={{
-                                        width: '100%',
-                                        padding: '16px 20px',
-                                        borderRadius: 16,
-                                        border: '1px solid var(--border)',
-                                        background: 'var(--input-bg)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: 15,
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
-                                />
-                                <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                    Displayed on public invoices and booking.
-                                </span>
+                            <div className="field-group">
+                                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>24/7 Support Line</label>
+                                <input type="tel" value={settings.supportPhone} onChange={e => setSettings({ ...settings, supportPhone: e.target.value })} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                             </div>
                         </div>
 
-                        <div style={{ marginTop: 32 }}>
-                            <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                Headquarters / Physical Address
-                            </label>
-                            <input
-                                type="text"
-                                value={settings.headquarters}
-                                onChange={(e) => setSettings({ ...settings, headquarters: e.target.value })}
-                                placeholder="Accra, Ghana"
-                                style={{
-                                    width: '100%',
-                                    padding: '16px 20px',
-                                    borderRadius: 16,
-                                    border: '1px solid var(--border)',
-                                    background: 'var(--input-bg)',
-                                    color: 'var(--text-primary)',
-                                    fontSize: 15,
-                                    outline: 'none',
-                                    transition: 'all 0.3s ease'
-                                }}
-                            />
-                            <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                Official address shown on the contact page.
-                            </span>
+                        <div className="field-group">
+                            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Global Headquarters Address</label>
+                            <input type="text" value={settings.headquarters} onChange={e => setSettings({ ...settings, headquarters: e.target.value })} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                         </div>
-                    </section>
+                    </div>
 
-                    {/* Fleet Branding Section */}
-                    <section style={{ background: 'var(--bg-card)', padding: 40, borderRadius: 28, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32 }}>
-                            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--glass)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', border: '1px solid var(--border)' }}>
-                                <Info size={22} />
-                            </div>
-                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Fleet Management</h3>
+                    {/* Section: Branding */}
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+                            <Globe size={18} strokeWidth={2} style={{ color: '#64748B' }} />
+                            <h3 style={{ margin: 0, fontSize: 13, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1.5 }}>Brand Identity</h3>
                         </div>
 
-                        <div>
-                            <label style={{ display: 'block', marginBottom: 12, fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                                Core Partners & Brands
-                            </label>
-                            <input
-                                type="text"
-                                value={settings.featuredBrands}
-                                onChange={(e) => setSettings({ ...settings, featuredBrands: e.target.value })}
-                                placeholder="Toyota, Honda, Nissan, Hyundai"
-                                style={{
-                                    width: '100%',
-                                    padding: '16px 20px',
-                                    borderRadius: 16,
-                                    border: '1px solid var(--border)',
-                                    background: 'var(--input-bg)',
-                                    color: 'var(--text-primary)',
-                                    fontSize: 15,
-                                    outline: 'none',
-                                    transition: 'all 0.3s ease'
-                                }}
-                            />
-                            <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, display: 'block', opacity: 0.6 }}>
-                                Brands listed in the public About page footer.
-                            </span>
+                        <div className="field-group">
+                            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Featured Brand Partners</label>
+                            <input type="text" value={settings.featuredBrands} onChange={e => setSettings({ ...settings, featuredBrands: e.target.value })} placeholder="Rolls Royce, Bentley, Mercedes-Benz" style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', background: 'transparent', fontSize: 14, fontWeight: 500 }} />
                         </div>
-                    </section>
+                    </div>
 
                     {message && (
                         <div style={{
-                            padding: '16px 24px',
-                            borderRadius: 16,
-                            fontSize: 14,
-                            fontWeight: 700,
-                            background: message.type === 'success' ? 'rgba(52, 199, 89, 0.1)' : 'rgba(255, 59, 48, 0.1)',
-                            border: `1px solid ${message.type === 'success' ? 'rgba(52, 199, 89, 0.2)' : 'rgba(255, 59, 48, 0.2)'}`,
-                            color: message.type === 'success' ? '#34C759' : '#FF3B30'
-                        }}>
-                            {message.text}
-                        </div>
+                            fontSize: 12, fontWeight: 800, textAlign: 'center',
+                            color: message.type === 'success' ? '#059669' : '#DC2626'
+                        }}>{message.text}</div>
                     )}
 
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: 20 }}>
+                    <div style={{ paddingTop: 24 }}>
                         <button
                             type="submit"
-                            className="btn btn-primary"
                             disabled={saving}
-                            style={{ height: 56, padding: '0 40px', fontSize: 16, fontWeight: 900 }}
+                            style={{ height: 48, padding: '0 40px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontSize: 13, fontWeight: 700, cursor: 'pointer', transition: '0.3s' }}
                         >
-                            <Save size={20} />
-                            {saving ? 'UPDATING...' : 'SAVE CONFIGURATION'}
+                            {saving ? 'Synchronizing...' : 'Save Configuration'}
                         </button>
                     </div>
                 </form>
-            </div>
+            )}
         </AdminLayout>
     )
 }

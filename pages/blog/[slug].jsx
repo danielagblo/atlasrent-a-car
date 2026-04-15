@@ -32,7 +32,7 @@ export default function ArticlePage() {
       // Fetch all posts and find the one with matching slug
       const pRes = await fetch('/api/news')
       const posts = await pRes.json()
-      const currentPost = posts.find(p => p.slug === slug)
+      const currentPost = posts.find(p => (p.slug === slug) || (String(p.id) === String(slug)));
       
       if (currentPost) {
         setPost(currentPost)
@@ -124,11 +124,13 @@ export default function ArticlePage() {
         </section>
 
         {/* Feature Image */}
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '0 24px' : '0 64px', marginTop: -40 }}>
-           <div style={{ height: isMobile ? 300 : 600, borderRadius: 32, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.1)' }}>
-              <img src={post.image || post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-           </div>
-        </div>
+        {(post.image || post.img) && (
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '0 24px' : '0 64px', marginTop: -40 }}>
+             <div style={{ height: isMobile ? 300 : 600, borderRadius: 32, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.1)' }}>
+                <img src={post.image || post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+             </div>
+          </div>
+        )}
 
         {/* Article Content */}
         <section style={{ padding: isMobile ? '60px 24px' : '100px 64px' }}>
@@ -137,7 +139,7 @@ export default function ArticlePage() {
             {/* Body */}
             <div>
                <div style={{ fontSize: 18, color: '#64748b', lineHeight: 2, whiteSpace: 'pre-line', marginBottom: 80 }}>
-                  {post.content}
+                  {post.content || post.excerpt}
                </div>
 
                {/* Comments Section */}

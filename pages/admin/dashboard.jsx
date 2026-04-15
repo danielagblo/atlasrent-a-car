@@ -64,121 +64,101 @@ export default function AdminDashboard() {
 
   const stats = [
     { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: 'var(--primary-gold)', bg: 'rgba(223,151,56,0.1)', href: '/admin/orders', trend: '+12%', up: true },
-    { label: 'Fleet Vehicles', value: counts.vehicles, icon: <Box size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/vehicles', trend: '+2', up: true },
-    { label: 'Blog Posts', value: counts.news, icon: <Newspaper size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/news', trend: 'Updated', up: true },
+    { label: 'Total Inventory', value: counts.vehicles, icon: <Box size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/vehicles', trend: '+2', up: true },
+    { label: 'Executive Blog', value: counts.news, icon: <Newspaper size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/blog', trend: 'Latest Dispatch', up: true },
     { label: 'Client Reviews', value: counts.testimonials, icon: <MessageSquare size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/testimonials', trend: 'Active', up: true }
   ]
 
   return (
-    <AdminLayout title="Dashboard Overview">
-      <div style={{ padding: '0 0 40px' }}>
-        <div style={{ display: 'flex', gap: 32, alignItems: 'center', marginBottom: 12 }}>
-           <div style={{ width: 4, height: 48, background: 'var(--primary-gold)' }} />
-           <div>
-              <h1 style={{ fontSize: 32, fontWeight: 900, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>Welcome, Administrator</h1>
-              <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: 14, fontWeight: 600 }}>Command center for Atlas Rent-A-Car Global Headquarters.</p>
-           </div>
-        </div>
-      </div>
-
-      {loading && <div style={{ padding: 80, textAlign: 'center', color: '#94a3b8', fontWeight: 700 }}>Archiving system metrics...</div>}
-      {error && <div style={{ color: '#FF3B30', background: 'rgba(255,59,48,0.05)', padding: 20, borderRadius: 12, border: '1px solid rgba(255,59,48,0.1)', marginBottom: 32 }}>{error}</div>}
+    <AdminLayout title="System Overview">
+      {loading && <div style={{ padding: 120, textAlign: 'center', color: '#64748B', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2 }}>Synchronizing Data...</div>}
+      {error && <div className="login-error" style={{ marginBottom: 32 }}>{error}</div>}
 
       {!loading && !error && (
-        <div style={{ display: 'grid', gap: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 64 }}>
           
-          {/* Stats Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+          {/* Metrics Ledger */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 40 }}>
             {stats.map((stat, i) => (
               <div
                 key={i}
                 onClick={() => router.push(stat.href)}
                 style={{
-                  padding: 32,
-                  borderRadius: 24,
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border)',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: 'var(--shadow-sm)'
+                  borderTop: '2px solid #F1F5F9',
+                  paddingTop: 24,
+                  transition: '0.3s'
                 }}
-                className="hover-card"
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-                  <div style={{ width: 52, height: 52, borderRadius: 12, background: stat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: stat.color }}>
-                    {stat.icon}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: stat.up ? '#10b981' : '#ef4444', fontSize: 12, fontWeight: 900, background: 'var(--sidebar-active)', padding: '6px 12px', borderRadius: 99 }}>
-                    {stat.up ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-                    {stat.trend}
-                  </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                   <div style={{ fontSize: 11, color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5 }}>{stat.label}</div>
+                   <div style={{ color: '#059669', fontSize: 12, fontWeight: 800 }}>{stat.trend}</div>
                 </div>
-                <div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: 8 }}>{stat.label}</div>
-                  <div style={{ fontSize: 32, fontWeight: 900, color: 'var(--text-primary)' }}>{stat.value}</div>
-                </div>
+                <div style={{ fontSize: 42, fontWeight: 700, color: '#24276F', letterSpacing: '-0.02em' }}>{stat.value}</div>
               </div>
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 32 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 80 }}>
             
-            {/* Recent Ledger */}
-            <div style={{ padding: 40, background: 'var(--bg-card)', borderRadius: 32, border: '1px solid var(--border)' }}>
+            {/* Activity Ledger */}
+            <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <Activity size={22} style={{ color: 'var(--primary-gold)' }} />
-                  <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: 'var(--text-primary)' }}>System Activity</h3>
-                </div>
-                <button style={{ fontSize: 13, fontWeight: 900, color: 'var(--primary-gold)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-                   VIEW ALL <ChevronRight size={14} />
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.01em' }}>Recent Activity</h3>
+                <button 
+                  onClick={() => router.push('/admin/orders')}
+                  style={{ fontSize: 11, fontWeight: 800, color: '#24276F', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textTransform: 'uppercase', letterSpacing: 1 }}>
+                   General Ledger
                 </button>
               </div>
               
-              <div style={{ display: 'grid', gap: 0 }}>
-                {[1, 2, 3].map(i => (
-                  <div key={i} style={{ display: 'flex', gap: 20, alignItems: 'center', padding: '24px 0', borderBottom: i === 3 ? 'none' : '1px solid var(--border)' }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--sidebar-active)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Calendar size={18} style={{ color: 'var(--text-muted)' }} />
-                    </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {[
+                  { text: 'Reservation confirmed for John Doe', time: '12m ago' },
+                  { text: 'Fleet unit status updated: Rolls Royce Ghost', time: '1h ago' },
+                  { text: 'Editorial draft published by Content Team', time: '3h ago' },
+                  { text: 'Client testimonial verified and approved', time: '5h ago' }
+                ].map((log, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 24, alignItems: 'center', padding: '24px 0', borderBottom: '1px solid #F8FAFC' }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E2E8F0' }} />
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>New lease inquiry for Range Rover Autobiography</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>{i * 2}h ago • Customer ID: #ATL-{i}92</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: '#334155' }}>{log.text}</div>
+                      <div style={{ fontSize: 12, color: '#64748B', marginTop: 4, fontWeight: 500 }}>{log.time}</div>
                     </div>
-                    <ArrowRight size={18} style={{ color: '#e2e8f0' }} />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Network Health */}
-            <div style={{ padding: 40, background: 'var(--primary)', borderRadius: 32, color: '#fff', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}>
-                <Zap size={22} style={{ color: 'var(--primary-gold)' }} />
-                <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: '#fff' }}>Core Systems</h3>
+            {/* Core Status */}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.01em' }}>Core Configuration</h3>
               </div>
               
-              <div style={{ display: 'grid', gap: 20 }}>
-                <div style={{ background: 'rgba(255,255,255,0.05)', padding: 24, borderRadius: 20, border: '1px solid rgba(255,255,255,0.1)' }}>
-                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 12 }}>API Status</div>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)' }} />
-                      <span style={{ fontSize: 16, fontWeight: 800 }}>Primary Node Active</span>
-                   </div>
-                </div>
-
-                <div style={{ background: 'rgba(255,255,255,0.05)', padding: 24, borderRadius: 20, border: '1px solid rgba(255,255,255,0.1)' }}>
-                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 12 }}>Cloud Database</div>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)' }} />
-                      <span style={{ fontSize: 16, fontWeight: 800 }}>Atlas Cluster Synced</span>
-                   </div>
-                </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+                {[
+                  { label: 'Cloud Infrastructure', value: 'Healthy' },
+                  { label: 'Booking Engine', value: 'Operational' },
+                  { label: 'Global API', value: 'Optimized' }
+                ].map((core, i) => (
+                  <div key={i}>
+                    <div style={{ fontSize: 10, color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 12 }}>{core.label}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                       <span style={{ fontSize: 16, fontWeight: 700, color: '#24276F' }}>{core.value}</span>
+                    </div>
+                  </div>
+                ))}
 
                 <button 
                   onClick={() => router.push('/admin/settings')}
-                  style={{ width: '100%', padding: '16px', background: 'var(--primary-gold)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 900, fontSize: 14, cursor: 'pointer', marginTop: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
-                   Global Settings
+                  style={{ 
+                     width: 'fit-content', padding: '14px 28px', background: '#24276F', 
+                     color: '#fff', border: 'none', borderRadius: 12, 
+                     fontWeight: 700, fontSize: 12, cursor: 'pointer', marginTop: 16, transition: '0.3s'
+                  }}
+                >
+                   System Settings
                 </button>
               </div>
             </div>

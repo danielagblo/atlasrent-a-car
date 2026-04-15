@@ -1,26 +1,194 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import ProductCard from './ProductCard'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 
 const CATEGORIES = ['Business Cars', 'Economic Cars', 'Luxury Cars', 'Premium Cars']
-const ALL_CATEGORIES = ['All', ...CATEGORIES]
 
-export default function Products({ limit }) {
-  const [items, setItems] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [sortBy, setSortBy] = useState('featured')
+function HeritageShowcase({ items }) {
+  const [activeCategory, setActiveCategory] = useState('Premium Cars')
+  const [activeVehicleId, setActiveVehicleId] = useState(null)
+  const [activeImgIdx, setActiveImgIdx] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    const handleResize = () => setIsMobile(window.innerWidth <= 1024)
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  const categoryItems = items.filter(item => item.category === activeCategory)
+  
+  useEffect(() => {
+    if (categoryItems.length > 0) {
+      if (!activeVehicleId || !categoryItems.find(i => i.id === activeVehicleId)) {
+        setActiveVehicleId(categoryItems[0].id)
+        setActiveImgIdx(0)
+      }
+    }
+  }, [activeCategory, categoryItems, activeVehicleId])
+
+  const current = categoryItems.find(i => i.id === activeVehicleId) || categoryItems[0]
+  const gallery = current?.gallery?.length > 0 ? current.gallery : [current?.image]
+
+  return (
+    <section className="collection-showcase" style={{ background: '#fff', padding: isMobile ? '60px 0' : '160px 0' }}>
+      <div style={{ maxWidth: 1440, margin: '0 auto', padding: isMobile ? '0 24px' : '0 48px' }}>
+        
+        {/* Heritage Header */}
+        <div style={{ textAlign: 'center', marginBottom: 100 }}>
+           <div style={{ fontSize: 13, fontWeight: 800, color: '#DF9738', textTransform: 'uppercase', letterSpacing: '0.5em', marginBottom: 24 }}>The Sovereign Selection</div>
+           <h2 style={{ 
+             fontSize: isMobile ? 36 : 64, 
+             fontWeight: 400, 
+             color: '#24276F', 
+             fontFamily: 'serif', 
+             letterSpacing: '-0.02em',
+             fontStyle: 'italic'
+           }}>
+             The Atlas <span style={{ color: '#000' }}>Collection.</span>
+           </h2>
+        </div>
+
+        {/* Ghost Category Navigation */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center',
+          gap: isMobile ? 20 : 60,
+          marginBottom: 100,
+          borderBottom: '1px solid #f1f5f9'
+        }} className="no-scrollbar">
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat} onClick={() => setActiveCategory(cat)}
+              style={{
+                padding: '24px 0', background: 'none', border: 'none', cursor: 'pointer',
+                color: activeCategory === cat ? '#24276F' : '#cbd5e1',
+                fontSize: 14, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.2em',
+                transition: 'all 0.4s ease', position: 'relative'
+              }}
+            >
+              {cat}
+              {activeCategory === cat && <div style={{ position: 'absolute', bottom: -1, left: '50%', transform: 'translateX(-50%)', width: 40, height: 1, background: '#DF9738' }} />}
+            </button>
+          ))}
+        </div>
+
+        {/* Heritage Boutique Layout */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isMobile ? '1fr' : '240px 1fr 300px', 
+          gap: 100,
+          alignItems: 'center'
+        }}>
+          
+          {/* Sidebar: Lowercase & Spaced */}
+          {!isMobile && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {categoryItems.map(item => (
+                <button
+                  key={item.id} onClick={() => setActiveVehicleId(item.id)}
+                  style={{
+                    textAlign: 'left', padding: '12px 0', cursor: 'pointer', border: 'none', background: 'none',
+                    color: activeVehicleId === item.id ? '#24276F' : '#94a3b8',
+                    fontSize: 15, fontWeight: 700,
+                    transition: 'all 0.3s',
+                    display: 'flex', alignItems: 'center', gap: 16
+                  }}
+                >
+                  <div style={{ 
+                    width: 6, height: 6, 
+                    transform: 'rotate(45deg)', 
+                    background: activeVehicleId === item.id ? '#DF9738' : 'transparent', 
+                    transition: '0.4s' 
+                  }} />
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Cinematic Image Stage */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: 60 }}>
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={`${activeVehicleId}-${activeImgIdx}`}
+                  initial={{ opacity: 0, scale: 0.99 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  src={gallery[activeImgIdx]} 
+                  style={{ maxWidth: '100%', maxHeight: 400, objectFit: 'contain' }} 
+                />
+              </AnimatePresence>
+            </div>
+            
+            {/* Heritage Pagers */}
+            {gallery.length > 1 && (
+              <div style={{ display: 'flex', gap: 24 }}>
+                {gallery.map((_, i) => (
+                  <button 
+                    key={i} onClick={() => setActiveImgIdx(i)}
+                    style={{ 
+                      width: 50, height: 1, padding: 0, cursor: 'pointer',
+                      border: 'none', background: activeImgIdx === i ? '#DF9738' : '#e2e8f0',
+                      transition: '0.6s'
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Detail Architecture */}
+          <div>
+            <div style={{ marginBottom: 60 }}>
+               <div style={{ 
+                 fontSize: 56, 
+                 fontWeight: 400, 
+                 color: '#24276F', 
+                 fontFamily: 'serif',
+                 letterSpacing: '-0.02em',
+                 marginBottom: 8
+               }}>
+                  <span style={{ fontSize: 24, verticalAlign: 'top', color: '#DF9738', marginRight: 4 }}>₵</span>
+                  {current?.price || current?.rate}
+               </div>
+               <div style={{ fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.3em' }}>Daily Sovereign Rate</div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginBottom: 60, paddingBottom: 40, borderBottom: '1px solid #f8fafc' }}>
+              {(current?.features || []).slice(0, 5).map((feat, i) => (
+                <div key={i} style={{ fontSize: 13, fontWeight: 700, color: '#64748b', display: 'flex', alignItems: 'center', gap: 14 }}>
+                   <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#DF9738' }} />
+                   {feat}
+                </div>
+              ))}
+            </div>
+
+            <Link href={`/vehicles/${current?.id}`}>
+               <button style={{ 
+                 width: '100%', padding: '24px', background: '#24276f', color: '#fff', 
+                 border: 'none', borderRadius: 4, fontWeight: 800, fontSize: 13, 
+                 textTransform: 'uppercase', letterSpacing: '0.3em', cursor: 'pointer',
+                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                 boxShadow: '0 20px 40px rgba(36, 39, 111, 0.1)'
+               }}>
+                 RESERVE NOW <ChevronRight size={16} />
+               </button>
+            </Link>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function Products({ limit }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch('/api/vehicles')
@@ -34,142 +202,17 @@ export default function Products({ limit }) {
       .finally(() => setLoading(false))
   }, [])
 
-  const filteredItems = items
-    .filter(item => {
-      const matchCategory = selectedCategory === 'All' || item.category === selectedCategory
-      const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
-      return matchCategory && matchSearch
-    })
-    .sort((a, b) => {
-      if (sortBy === 'price-low') return parseFloat(a.price || a.rate) - parseFloat(b.price || b.rate)
-      if (sortBy === 'price-high') return parseFloat(b.price || b.rate) - parseFloat(a.price || a.rate)
-      return 0
-    })
+  if (loading) return null
 
-  const displayedItems = limit ? items.slice(0, limit) : filteredItems
-
-  if (loading) {
-    return (
-      <section style={{ textAlign: 'center', padding: '100px 0' }}>
-        <p style={{ color: 'var(--text-muted)' }}>Preparing the collection...</p>
-      </section>
-    )
+  if (limit) {
+    return <HeritageShowcase items={items} />
   }
 
   return (
-    <section className="fleet-section" style={{ background: '#fff', padding: limit ? '100px 0' : '150px 0 100px' }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto', padding: isMobile ? '0 24px' : '0 48px' }}>
-        
-        {/* Simple Editorial Header for Homepage */}
-        {limit && (
-           <div style={{ display: 'flex', gap: 40, alignItems: 'center', marginBottom: 60 }}>
-              <div style={{ width: 4, height: 80, background: 'var(--accent-gold)' }} />
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Elite Showcase</div>
-                <h2 style={{ fontSize: isMobile ? 36 : 56, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1, margin: 0 }}>
-                  The Atlas <br/> <span style={{ color: 'var(--accent-gold)' }}>Vehicles.</span>
-                </h2>
-              </div>
-           </div>
-        )}
-
-        {/* Filters shown only on main vehicles page (no limit) */}
-        {!limit && (
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: isMobile ? 'column' : 'row', 
-            justifyContent: 'space-between', 
-            alignItems: isMobile ? 'stretch' : 'center', 
-            gap: 24,
-            marginBottom: 48
-          }}>
-            <div className="no-scrollbar" style={{ display: 'flex', gap: 24, overflowX: 'auto', paddingBottom: 8 }}>
-              {ALL_CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: '8px 0',
-                    color: selectedCategory === cat ? 'var(--accent)' : 'var(--text-muted)',
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {cat}
-                  {selectedCategory === cat && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'var(--accent-gold)' }} />}
-                </button>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-              <input 
-                type="text" 
-                placeholder="Search vehicles..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ padding: '12px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: 14, width: isMobile ? '100%' : '240px', outline: 'none' }}
-              />
-              <select 
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                style={{ padding: '12px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: 14, background: '#fff', outline: 'none', cursor: 'pointer' }}
-              >
-                <option value="featured">Featured First</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
-            </div>
-          </div>
-        )}
-
-        {!limit && (
-          <div style={{ marginBottom: 32, fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>
-            {filteredItems.length} vehicles found matching your criteria.
-          </div>
-        )}
-
-        {displayedItems.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '100px 20px', border: '1px dashed #e2e8f0', borderRadius: 16 }}>
-            <h3 style={{ fontSize: 24, marginBottom: 8 }}>No vehicles found</h3>
-            <p style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or search terms.</p>
-          </div>
-        ) : (
-          <div className="product-grid" style={{ padding: '0 0 60px' }}>
-            {displayedItems.map(i => <ProductCard key={i.id} item={i} />)}
-          </div>
-        )}
-
-        {limit && (
-           <div style={{ textAlign: 'center', marginTop: 40 }}>
-              <Link href="/vehicles">
-                 <button style={{ 
-                   padding: '18px 48px', 
-                   background: 'var(--accent)', 
-                   color: '#fff', 
-                   borderRadius: 999, 
-                   border: 'none', 
-                   fontWeight: 800, 
-                   cursor: 'pointer', 
-                   display: 'inline-flex', 
-                   alignItems: 'center', 
-                   gap: 12,
-                   fontSize: 14,
-                   textTransform: 'uppercase',
-                   letterSpacing: '0.1em'
-                 }}>
-                   Explore Full Collection <ArrowRight size={18} color="var(--accent-gold)" />
-                 </button>
-              </Link>
-           </div>
-        )}
-      </div>
-    </section>
+     <section style={{ background: '#fff', padding: '120px 48px' }}>
+       <div className="product-grid" style={{ maxWidth: 1440, margin: '0 auto' }}>
+          {items.map(i => <ProductCard key={i.id} item={i} />)}
+       </div>
+     </section>
   )
 }

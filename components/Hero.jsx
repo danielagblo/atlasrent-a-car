@@ -29,81 +29,76 @@ export default function Hero() {
   return (
     <section className="hero-section">
       <motion.img
-        initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.8 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
+        initial={{ scale: 1.05 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10, ease: 'easeOut' }}
         src={heroBgUrl}
-        alt="Luxury Fleet"
+        alt="The Sovereign Collection"
         className="hero-video-bg"
       />
 
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to right, #080814 20%, rgba(8, 8, 20, 0.8) 50%, transparent 100%)',
-        zIndex: 2,
+        background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%)',
+        zIndex: -1,
         pointerEvents: 'none'
       }}></div>
 
-      <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-        <div className="hero-content" style={{ padding: 0 }}>
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-              <div style={{ width: 40, height: 2, background: 'var(--accent-gold)' }}></div>
-              <span style={{ color: 'var(--accent-gold)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.3em', fontSize: 12 }}>Atlas Luxury Fleet</span>
-            </div>
-            
-            <h1>
-              Elevate Your <br />
-              <span className="gradient-gold">Journey.</span>
-            </h1>
+      <div className="hero-content">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Premium Vehicles, <br />
+          <span style={{ color: 'var(--accent-gold)' }}>Exceptional Service.</span>
+        </motion.h1>
 
-            <p>
-              Experience the pinnacle of private mobility. Premium vehicles, elite chauffeurs, and 24/7 bespoke service across Ghana.
-            </p>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 concierge service across Ghana.
+        </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="hero-booking-widget"
-            >
-              <div className="booking-field-group">
-                <label>Arrival City</label>
-                <select defaultValue="">
-                  <option value="" disabled>Select Location</option>
-                  <option value="accra">Accra (HQ)</option>
-                  <option value="takoradi">Takoradi</option>
-                  <option value="kumasi">Kumasi</option>
-                </select>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="hero-booking-widget"
+        >
+          <div className="booking-field-group">
+            <label>Pick-up Location</label>
+            <select defaultValue="">
+              <option value="" disabled>Select City</option>
+              <option value="accra">Accra (HQ)</option>
+              <option value="takoradi">Takoradi</option>
+              <option value="kumasi">Kumasi</option>
+            </select>
+          </div>
 
-              <div className="booking-field-group">
-                <label>Service Date</label>
-                <input type="date" />
-              </div>
+          <div className="booking-field-group">
+            <label>Pick-up Date</label>
+            <input type="date" />
+          </div>
 
-              <div className="booking-field-group">
-                <label>Vehicle Class</label>
-                <select defaultValue="">
-                  <option value="" disabled>Select Class</option>
-                  <option value="Business Cars">Business Cars</option>
-                  <option value="Economic Cars">Economic Cars</option>
-                  <option value="Luxury Cars">Luxury Cars</option>
-                  <option value="Premium Cars">Premium Cars</option>
-                </select>
-              </div>
+          <div className="booking-field-group">
+            <label>Vehicle Type</label>
+            <select defaultValue="">
+              <option value="" disabled>Select Class</option>
+              <option value="Business Cars">Business Cars</option>
+              <option value="Economic Cars">Economic Cars</option>
+              <option value="Luxury Cars">Luxury Cars</option>
+              <option value="Premium Cars">Premium Cars</option>
+            </select>
+          </div>
 
-              <button className="premium-btn premium-btn-gold" onClick={() => router.push('/vehicles')}>
-                Reserve Now
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
+          <button className="btn-premium" onClick={() => router.push('/models')}>
+            Find Car
+          </button>
+        </motion.div>
       </div>
 
       {!isMobile && (
@@ -115,15 +110,10 @@ export default function Hero() {
             bottom: 40,
             left: '50%',
             transform: 'translateX(-50%)',
-            color: 'rgba(255,255,255,0.3)',
-            fontSize: 11,
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            zIndex: 10
+            color: 'var(--text-secondary)'
           }}
         >
-          Explore the collection
+          Scroll to explore
         </motion.div>
       )}
     </section>

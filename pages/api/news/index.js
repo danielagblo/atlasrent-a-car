@@ -12,12 +12,20 @@ export default async function handler(req, res) {
       const title = req.body?.title || "";
       if (!title.trim())
         return res.status(400).json({ error: "News title is required" });
+      
       const id = req.body?.id || `n-${Date.now().toString(36)}`;
+      const slug = (req.body?.slug || title)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '');
+
       const item = {
         id,
+        slug,
         title,
         date: req.body?.date || new Date().toISOString().slice(0, 10),
         excerpt: req.body?.excerpt || "",
+        content: req.body?.content || "",
         image: req.body?.image || "",
         status: req.body?.status || "active",
       };

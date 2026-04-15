@@ -5,8 +5,12 @@ import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
+import { useRouter } from 'next/router'
+
 export default function App({ Component, pageProps }) {
-  const hideLayout = Component.noLayout === true
+  const router = useRouter()
+  const isAdmin = router.pathname.startsWith('/admin')
+  const hideLayout = Component.noLayout === true || isAdmin
 
   return (
     <div className="app-root">

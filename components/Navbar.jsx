@@ -19,50 +19,36 @@ export default function Navbar() {
 
   return (
     <motion.header
-      className={`nav ${scrolled ? 'scrolled' : ''}`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      style={{
-        marginTop: scrolled ? 0 : 20,
-        width: scrolled ? '100%' : 'calc(100% - 40px)',
-        left: scrolled ? 0 : '20px',
-        borderRadius: scrolled ? 0 : '24px',
-        background: scrolled ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.02)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: scrolled ? '1px solid var(--border-color)' : '1px solid rgba(255,255,255,0.1)'
-      }}
+      className="nav"
+      initial={{ y: -40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      style={{ padding: scrolled ? '16px 48px' : '24px 48px' }}
     >
       <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{
-            fontSize: 20,
-            fontWeight: 950,
-            letterSpacing: '0.1em',
-            color: scrolled ? 'var(--text-primary)' : '#fff'
-          }}>
-            ATLAS <span style={{ color: 'var(--accent-gold)', fontWeight: 400 }}>RENT</span>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/favicon.png" alt="Atlas Rent-A-Car Logo" style={{ height: 48, objectFit: 'contain' }} />
         </div>
       </Link>
 
-      <nav style={{ display: 'flex', alignItems: 'center', gap: 48 }}>
-        <div className="links" style={{ color: scrolled ? 'var(--text-primary)' : '#fff' }}>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+        <div className="links" aria-hidden={open}>
           <Link href="/" className={router.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link href="/vehicles" className={router.pathname === '/vehicles' ? 'active' : ''}>Fleet</Link>
-          <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>Heritage</Link>
-          <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Journal</Link>
-          <Link href="/contact" className="cta">Book Now</Link>
+          <Link href="/vehicles" className={router.pathname === '/vehicles' ? 'active' : ''}>Vehicles</Link>
+          <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>About</Link>
+          <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Blog</Link>
+          <Link href="/faqs" className={router.pathname === '/faqs' ? 'active' : ''}>FAQs</Link>
+          <Link href="/contact" className="cta">Contact Us</Link>
         </div>
 
         <button
           className="theme-toggle"
+          style={{ display: 'none' /* Will show via CSS media query on mobile */ }}
           aria-expanded={open}
           onClick={() => setOpen(v => !v)}
           aria-label="Toggle menu"
-          style={{ color: scrolled ? 'var(--text-primary)' : '#fff' }}
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
     </motion.header>

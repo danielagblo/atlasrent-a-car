@@ -17,6 +17,10 @@ module.exports = async function handler(req, res) {
       if (idx === -1)
         return res.status(404).json({ error: "News item not found" });
       const next = { ...items[idx], ...req.body, id };
+      if ((req.body.title || next.title) && !next.slug) {
+        const source = req.body.title || next.title;
+        next.slug = source.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      }
       items[idx] = next;
       await storage.saveNews(items);
       return res.json(next);

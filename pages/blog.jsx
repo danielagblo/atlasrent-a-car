@@ -81,21 +81,23 @@ export default function BlogPage() {
                     viewport={{ once: true }}
                     style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: 100 }}
                   >
-                    <Link href={`/blog/${post.slug}`}>
-                      <div style={{ 
-                        height: isMobile ? 250 : 450, 
-                        borderRadius: 32, 
-                        overflow: 'hidden', 
-                        background: '#f1f5f9',
-                        position: 'relative',
-                        cursor: 'pointer'
-                      }}>
-                        <img src={post.image || post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <div style={{ position: 'absolute', top: 32, left: 32, padding: '8px 16px', background: 'var(--accent-gold)', color: '#fff', fontSize: 11, fontWeight: 900, textTransform: 'uppercase', borderRadius: 999 }}>
-                          {post.category}
+                    {(post.image || post.img) && (
+                      <Link href={`/blog/${post.slug || post.id}`}>
+                        <div style={{ 
+                          height: isMobile ? 250 : 450, 
+                          borderRadius: 32, 
+                          overflow: 'hidden', 
+                          background: '#f1f5f9',
+                          position: 'relative',
+                          cursor: 'pointer'
+                        }}>
+                          <img src={post.image || post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <div style={{ position: 'absolute', top: 32, left: 32, padding: '8px 16px', background: 'var(--accent-gold)', color: '#fff', fontSize: 11, fontWeight: 900, textTransform: 'uppercase', borderRadius: 999 }}>
+                            {post.category || 'Article'}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    )}
                     
                     <div style={{ marginTop: 40 }}>
                       <div style={{ display: 'flex', gap: 24, marginBottom: 16, color: '#94a3b8', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -103,14 +105,14 @@ export default function BlogPage() {
                          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><User size={14} /> {post.author}</span>
                          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><MessageSquare size={14} /> {post.comments || 0} Comments</span>
                       </div>
-                      <Link href={`/blog/${post.slug}`}>
+                      <Link href={`/blog/${post.slug || post.id}`}>
                         <h2 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 900, color: 'var(--accent)', marginBottom: 20, lineHeight: 1.2, cursor: 'pointer' }}>{post.title}</h2>
                       </Link>
-                      <p style={{ fontSize: 18, color: '#64748b', lineHeight: 1.8, marginBottom: 32 }}>{post.excerpt}</p>
-                      <div style={{ padding: 24, borderLeft: '3px solid var(--accent-gold)', background: '#f8fafc', marginBottom: 32 }}>
-                         <p style={{ fontSize: 16, color: 'var(--accent)', fontStyle: 'italic', margin: 0, lineHeight: 1.7 }}>{post.content}</p>
-                      </div>
-                      <Link href={`/blog/${post.slug}`}>
+                      <p style={{ 
+                        fontSize: 18, color: '#64748b', lineHeight: 1.8, marginBottom: 32,
+                        display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                      }}>{post.excerpt || post.content}</p>
+                      <Link href={`/blog/${post.slug || post.id}`}>
                         <button style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, fontWeight: 800, color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                           Read Continued <ArrowRight size={18} color="var(--accent-gold)" />
                         </button>

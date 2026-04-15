@@ -19,9 +19,28 @@
   --radius-xl: 24px;
 }
 
-/* Default Dark Theme (Cinematic) */
+/* Default Theme: Professional Elegant (Light-First) */
 .admin-shell {
-  --bg-main: #0B0B14; /* Deep Navy Black */
+  --bg-main: #F8FAFC; /* Clean Off-white */
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #24276F; /* Deep Navy Sidebar */
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --sidebar-active: rgba(223, 151, 56, 0.15);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --border: #E2E8F0;
+  --divider: #F1F5F9;
+  --glass: rgba(255, 255, 255, 0.8);
+  --input-bg: #FFFFFF;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 16px 40px -12px rgba(0, 0, 0, 0.08);
+  --shadow-accent: 0 10px 40px rgba(36, 39, 111, 0.1);
+}
+
+/* Dark Theme Overrides (Optional Toggle) */
+[data-theme='dark'] {
+  --bg-main: #0B0B14;
   --bg-card: #151525;
   --bg-sidebar: #080810;
   --header-bg: rgba(11, 11, 20, 0.85);
@@ -31,29 +50,9 @@
   --text-muted: rgba(255, 255, 255, 0.4);
   --border: rgba(255, 255, 255, 0.08);
   --divider: rgba(255, 255, 255, 0.05);
-  --glass: rgba(255, 255, 255, 0.03);
   --input-bg: rgba(255, 255, 255, 0.05);
   --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 20px 50px rgba(0, 0, 0, 0.7);
-  --shadow-accent: 0 10px 40px rgba(36, 39, 111, 0.3);
-}
-
-/* Light Theme Overrides */
-[data-theme='light'] {
-  --bg-main: #F4F7FA;
-  --bg-card: #FFFFFF;
-  --bg-sidebar: #FFFFFF;
-  --header-bg: rgba(255, 255, 255, 0.9);
-  --sidebar-active: #F1F5F9;
-  --text-primary: #1A1C1E;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --border: #E2E8F0;
-  --divider: #F1F5F9;
-  --glass: rgba(0, 0, 0, 0.015);
-  --input-bg: #F8FAFC;
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 16px 32px -12px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -540,9 +539,9 @@ select {
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  background: var(--primary-gold-hover);
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(227, 6, 19, 0.4);
+  box-shadow: 0 15px 40px rgba(223, 151, 56, 0.3);
 }
 
 .btn-outline {
