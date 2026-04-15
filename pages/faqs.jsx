@@ -1,9 +1,72 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Layout from '../components/Layout'
+import { Search, Phone, Mail, ChevronDown, HelpCircle } from 'lucide-react'
+
+const FAQ_DATA = [
+  { q: "What happens if I return the car late?", a: "Late returns may incur additional charges. Please notify us in advance if you need to extend your rental." },
+  { q: "Where can I pick up and drop off the car?", a: "You can pick up and drop off the car at our office or choose a delivery option for an additional fee." },
+  { q: "Can I return the car to a different location?", a: "One-way rentals are available for an additional fee. Contact us for details." },
+  { q: "What types of cars do you offer for rent?", a: "We offer a wide range of vehicles, including sedans, SUVs, vans, and luxury cars. Check our fleet page for details." },
+  { q: "How do I make a reservation?", a: "You can book online through our website, via phone, or in person at our office." },
+  { q: "Can I modify or cancel my reservation?", a: "Yes, you can modify or cancel your reservation online or by contacting our customer service team." },
+  { q: "Is there a minimum rental period?", a: "The minimum rental period is 24 hours. Longer rentals may qualify for discounts." },
+  { q: "Do you offer long-term rentals?", a: "Yes, we offer discounts for long-term rentals. Contact us for more details." },
+  { q: "What is included in the rental price?", a: "The rental price includes the base rate, taxes, and standard insurance. Additional fees may apply for extras like GPS or child seats." },
+  { q: "Are there any hidden fees?", a: "No, all fees are transparent and listed during the booking process." },
+  { q: "What payment methods do you accept?", a: "We accept card payments, Momo and bank transfers." },
+  { q: "Do you offer discounts or promotions?", a: "Yes, we regularly offer discounts and promotions. Check our website or subscribe to our newsletter for updates." },
+  { q: "Can I drive the rental car outside the city or country?", a: "Yes, but additional fees or restrictions may apply. Contact us for details." },
+  { q: "What should I do in case of an accident or breakdown?", a: "In case of an accident or breakdown, contact our emergency hotline immediately. We’ll assist you with the next steps." },
+  { q: "Is there a mileage limit?", a: "Most rentals include unlimited mileage. Check your rental agreement for details." },
+  { q: "Can I drive myself?", a: "Yes, but only with certain cars, other cars require a driver. Contact us for more information." },
+  { q: "How can I contact customer support?", a: "You can reach us by phone, email, or through the contact form on our website. Our support team is available 24/7." },
+  { q: "Can I rent a car for a special event?", a: "Yes, we offer special rates for events like weddings, corporate functions, and more. Contact us for details." }
+]
+
+function Accordion({ question, answer, isOpen, onClick }) {
+  return (
+    <div style={{ borderBottom: '1px solid #f1f5f9', overflow: 'hidden' }}>
+      <button 
+        onClick={onClick}
+        style={{ 
+          width: '100%', 
+          padding: '24px 0', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          background: 'none', 
+          border: 'none', 
+          cursor: 'pointer',
+          textAlign: 'left'
+        }}
+      >
+        <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--accent)', paddingRight: 20 }}>{question}</span>
+        <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
+          <ChevronDown size={20} color="var(--accent-gold)" />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            style={{ overflow: 'hidden' }}
+          >
+            <p style={{ paddingBottom: 24, margin: 0, color: '#64748b', lineHeight: 1.7, fontSize: 15 }}>{answer}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export default function FAQPage() {
   const [isMobile, setIsMobile] = useState(false)
+  const [search, setSearch] = useState('')
+  const [openIndex, setOpenIndex] = useState(null)
+
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768)
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
@@ -11,35 +74,131 @@ export default function FAQPage() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const faqs = [
-    { q: 'How do I book a vehicle?', a: 'You can browse our fleet in the "Vehicles" section and click "Book Now" to fill in the rental form.' },
-    { q: 'Is Chauffeur service included?', a: 'All our executive rentals come with a professionally trained chauffeur as part of the service.' },
-    { q: 'What is your fuel policy?', a: 'Vehicles are provided with a certain level of fuel; clients are expected to signing log sheets and verify fuel levels daily.' }
-  ]
+  const filteredFaqs = FAQ_DATA.filter(f => 
+    f.q.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <Layout>
-      <section style={{ padding: isMobile ? '120px 24px' : '160px 64px 80px', background: '#fff' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{ color: 'var(--accent-gold)', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Client Services</div>
-          <h1 style={{ fontSize: isMobile ? 40 : 56, fontWeight: 900, color: 'var(--accent)', marginBottom: 48 }}>Common <span className="gradient-text">Questions</span></h1>
-          
-          <div style={{ display: 'grid', gap: 24 }}>
-            {faqs.map((f, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                style={{ padding: 32, border: '1px solid #f1f5f9', borderRadius: 24 }}
-              >
-                <h3 style={{ fontSize: 18, fontWeight: 800, marginBottom: 12, color: 'var(--accent)' }}>{f.q}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>{f.a}</p>
-              </motion.div>
-            ))}
+      <div style={{ background: '#fff', minHeight: '100vh' }}>
+        
+        {/* Header Section - Redesigned for Elite Professionalism */}
+        <section style={{ padding: isMobile ? '120px 24px 60px' : '160px 64px 80px', background: '#f8fafc' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: 40, marginBottom: 48 }}>
+              <div style={{ width: 4, height: 80, background: 'var(--accent-gold)', display: isMobile ? 'none' : 'block' }} />
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Atlas Help Center</div>
+                <h1 style={{ fontSize: isMobile ? 36 : 64, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                  Frequently Asked <br/> <span style={{ color: 'var(--accent-gold)' }}>Questions</span>.
+                </h1>
+              </div>
+            </div>
+            
+            {/* Search Bar - Refined */}
+            <div style={{ position: 'relative', maxWidth: 650 }}>
+               <Search style={{ position: 'absolute', left: 24, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={20} />
+               <input 
+                 type="text" 
+                 placeholder="Search for answers..."
+                 value={search}
+                 onChange={(e) => setSearch(e.target.value)}
+                 style={{ 
+                   width: '100%', 
+                   padding: '20px 24px 20px 64px', 
+                   borderRadius: 999, 
+                   border: '1px solid #e2e8f0', 
+                   background: '#fff',
+                   fontSize: 16,
+                   boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                   outline: 'none'
+                 }} 
+               />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Content Section */}
+        <section style={{ padding: isMobile ? '60px 24px' : '100px 64px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2.5fr 1fr', gap: 80 }}>
+            
+            {/* FAQ List */}
+            <div>
+              {filteredFaqs.length > 0 ? (
+                filteredFaqs.map((faq, i) => (
+                  <Accordion 
+                    key={i} 
+                    question={faq.q} 
+                    answer={faq.a} 
+                    isOpen={openIndex === i}
+                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  />
+                ))
+              ) : (
+                <div style={{ textAlign: 'center', padding: '100px 0', color: '#94a3b8' }}>
+                  <HelpCircle size={40} style={{ marginBottom: 16, opacity: 0.5 }} />
+                  <p>No matching questions found.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar Contact - Redesigned for Elite Professionalism */}
+            <aside>
+               <div style={{ 
+                 background: '#fff', 
+                 borderRadius: 0, 
+                 padding: '40px 0', 
+                 position: 'sticky', 
+                 top: 120,
+                 borderTop: '4px solid var(--accent-gold)'
+               }}>
+                  <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Official Support</div>
+                  <h3 style={{ fontSize: 24, fontWeight: 900, color: 'var(--accent)', marginBottom: 20, letterSpacing: '-0.02em' }}>Need Personal <br/> Assistance?</h3>
+                  <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.8, marginBottom: 40, borderLeft: '2px solid #f1f5f9', paddingLeft: 20 }}>
+                    Contact us if you need help with anything. We are always available to help you out!
+                  </p>
+                  
+                  <div style={{ display: 'grid', gap: 0 }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 24, 
+                      padding: '24px 0',
+                      borderBottom: '1px solid #f1f5f9'
+                    }}>
+                      <Phone size={20} color="var(--accent-gold)" />
+                      <div>
+                        <div style={{ fontSize: 10, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 4 }}>Call Us</div>
+                        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>+233 30 230 1081</div>
+                      </div>
+                    </div>
+
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 24, 
+                      padding: '24px 0'
+                    }}>
+                      <Mail size={20} color="var(--accent-gold)" />
+                      <div>
+                        <div style={{ fontSize: 10, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 4 }}>Email Support</div>
+                        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>contact@atlasrent-a-car.com</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: 40, padding: 32, background: '#f8fafc', borderRadius: 24 }}>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>Available 24/7</div>
+                    <p style={{ fontSize: 13, color: '#64748b', margin: 0, lineHeight: 1.6 }}>Our executive support team is standing by to ensure your journey is seamless.</p>
+                  </div>
+               </div>
+            </aside>
+
+          </div>
+        </section>
+
+      </div>
     </Layout>
   )
 }
