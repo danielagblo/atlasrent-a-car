@@ -6,7 +6,7 @@ export default function ProductCard({ item }) {
   const router = useRouter()
 
   return (
-    <article className="product-card" onClick={() => router.push(`/order/${item.id}`)} style={{ cursor: 'pointer' }}>
+    <article className="product-card" onClick={() => router.push(`/reservation/${item.id}`)} style={{ cursor: 'pointer' }}>
       <div className="product-card-img-wrap">
         <CldOptimizedImage
           width={600}

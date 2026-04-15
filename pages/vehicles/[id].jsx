@@ -80,7 +80,7 @@ export default function VehicleDetail() {
               <div style={{ color: 'var(--muted)' }}>{model.price}</div>
             </div>
             <div>
-              <button className="primary" onClick={() => navigate(`/order/${model.id}`)} style={{
+              <button className="primary" onClick={() => navigate(`/reservation/${model.id}`)} style={{
                 padding: '12px 24px',
                 fontSize: 15,
                 fontWeight: 700,

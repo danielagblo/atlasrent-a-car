@@ -5,9 +5,9 @@ import { getLinkedContacts, saveContact } from '../lib/orders'
 import Layout from '../components/Layout'
 import { motion } from 'framer-motion'
 
-export default function MyOrders() {
+export default function MyReservations() {
     const [seeds, setSeeds] = useState([])
-    const [orders, setOrders] = useState(null)
+    const [reservations, setReservations] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [inputValue, setInputValue] = useState('')
@@ -17,10 +17,10 @@ export default function MyOrders() {
         setSeeds(getLinkedContacts())
     }, [])
 
-    // The core fetcher that finds all linked orders
-    const refreshOrders = useCallback(async (currentSeeds) => {
+    // The core fetcher that finds all linked rentals
+    const refreshReservations = useCallback(async (currentSeeds) => {
         if (!currentSeeds || currentSeeds.length === 0) {
-            setOrders([])
+            setReservations([])
             return
         }
 
@@ -28,8 +28,8 @@ export default function MyOrders() {
         setError('')
 
         let processedSeeds = [...currentSeeds]
-        let allOrders = []
-        let seenOrderIds = new Set()
+        let allReservations = []
+        let seenRentalIds = new Set()
         let iteration = 0
         let hasNewSeeds = true
 
@@ -45,19 +45,19 @@ export default function MyOrders() {
                 )
 
                 const flat = results.flat()
-                flat.forEach(o => {
-                    if (!seenOrderIds.has(o.id)) {
-                        allOrders.push(o)
-                        seenOrderIds.add(o.id)
+                flat.forEach(r => {
+                    if (!seenRentalIds.has(r.id)) {
+                        allReservations.push(r)
+                        seenRentalIds.add(r.id)
 
-                        // Link discovery: if this order has an email/phone we don't know, add it
-                        if (o.email && !processedSeeds.includes(o.email)) {
-                            processedSeeds.push(o.email)
-                            saveContact(o.email)
+                        // Link discovery: if this rental has an email/phone we don't know, add it
+                        if (r.email && !processedSeeds.includes(r.email)) {
+                            processedSeeds.push(r.email)
+                            saveContact(r.email)
                             hasNewSeeds = true
                         }
-                        if (o.phone && !processedSeeds.includes(o.phone)) {
-                            const cleanPhone = o.phone.replace(/\s+/g, '')
+                        if (r.phone && !processedSeeds.includes(r.phone)) {
+                            const cleanPhone = r.phone.replace(/\s+/g, '')
                             if (!processedSeeds.includes(cleanPhone)) {
                                 processedSeeds.push(cleanPhone)
                                 saveContact(cleanPhone)
@@ -69,7 +69,7 @@ export default function MyOrders() {
             }
 
             setSeeds(processedSeeds)
-            setOrders(allOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))
+            setReservations(allReservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))
         } catch (err) {
             setError('System unavailable. Please try again later.')
         } finally {
@@ -79,10 +79,10 @@ export default function MyOrders() {
 
     // Fetch when seeds change (on mount or after new search)
     useEffect(() => {
-        if (seeds.length > 0 && orders === null) {
-            refreshOrders(seeds)
+        if (seeds.length > 0 && reservations === null) {
+            refreshReservations(seeds)
         }
-    }, [seeds, orders, refreshOrders])
+    }, [seeds, reservations, refreshReservations])
 
     const handleManualAdd = (e) => {
         if (e) e.preventDefault()
@@ -93,7 +93,7 @@ export default function MyOrders() {
             const newSeeds = [...seeds, val]
             saveContact(val)
             setSeeds(newSeeds)
-            refreshOrders(newSeeds)
+            refreshReservations(newSeeds)
         }
         setInputValue('')
     }
@@ -104,13 +104,13 @@ export default function MyOrders() {
             localStorage.setItem('atlas_linked_contacts_v1', JSON.stringify(newSeeds))
         }
         setSeeds(newSeeds)
-        setOrders(null)
+        setReservations(null)
     }
 
     return (
         <Layout>
             <Head>
-                <title>Exhibitions | Atlas Luxury Rentals</title>
+                <title>Reservations | Atlas Luxury Rentals</title>
             </Head>
 
             <div className="my-orders-page" style={{
@@ -284,15 +284,15 @@ export default function MyOrders() {
                             {error && <div style={{ color: '#ff4444', textAlign: 'center', padding: 20 }}>{error}</div>}
 
                             {/* Results */}
-                            {orders && orders.length > 0 && (
+                            {reservations && reservations.length > 0 && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     style={{ display: 'grid', gap: 24 }}
                                 >
-                                    {orders.map((order, idx) => (
+                                    {reservations.map((res, idx) => (
                                         <motion.div
-                                            key={order.id}
+                                            key={res.id}
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: idx * 0.1 }}
@@ -328,9 +328,9 @@ export default function MyOrders() {
 
                                             <div style={{ marginBottom: 32 }}>
                                                 <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>
-                                                    Order Reference <span style={{ color: 'var(--text)' }}>#{order.id}</span>
+                                                    Rental Reference <span style={{ color: 'var(--text)' }}>#{res.id}</span>
                                                 </div>
-                                                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.01em' }}>{order.productName || 'Executive Transport'}</h3>
+                                                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.01em' }}>{res.productName || 'Executive Transport'}</h3>
                                             </div>
 
                                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
@@ -338,10 +338,10 @@ export default function MyOrders() {
                                                     <h4 style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Contact Record</h4>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--text)' }}>
-                                                            <Mail size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{order.email}</span>
+                                                            <Mail size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{res.email}</span>
                                                         </div>
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--text)' }}>
-                                                            <Phone size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{order.phone}</span>
+                                                            <Phone size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{res.phone}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -350,16 +350,16 @@ export default function MyOrders() {
                                                     <div style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.6 }}>
                                                         <div style={{ marginBottom: 6 }}>
                                                             <Calendar size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: 'middle' }} />
-                                                            {order.start} to {order.end}
+                                                            {res.start} to {res.end}
                                                         </div>
                                                         <div style={{ fontSize: 13, color: 'var(--muted)' }}>
-                                                            📍 {order.location || 'Accra Metropolitan Area'}
+                                                            📍 {res.location || 'Accra Metropolitan Area'}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                                                     <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 4, fontWeight: 600 }}>Total Value</div>
-                                                    <div style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--text)', fontStyle: 'italic' }}> ${order.price}</div>
+                                                    <div style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--text)', fontStyle: 'italic' }}> ${res.price}</div>
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -368,7 +368,7 @@ export default function MyOrders() {
                             )}
 
                             {/* Empty Search results */}
-                            {orders && orders.length === 0 && seeds.length > 0 && !loading && (
+                            {reservations && reservations.length === 0 && seeds.length > 0 && !loading && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}

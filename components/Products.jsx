@@ -175,7 +175,7 @@ function HeritageShowcase({ items }) {
               ))}
             </div>
 
-            <Link href={`/vehicles/${current?.id}`}>
+            <Link href={`/reservation/${current?.id}`}>
                <button style={{ 
                  width: '100%', padding: '20px', background: '#24276f', color: '#fff', 
                  border: 'none', borderRadius: 12, fontWeight: 800, fontSize: 13, 
