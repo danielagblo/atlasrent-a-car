@@ -34,10 +34,10 @@ export default function Navbar() {
       <nav style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
         <div className="links" aria-hidden={open}>
           <Link href="/" className={router.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link href="/models" className={router.pathname === '/models' ? 'active' : ''}>Vehicles</Link>
+          <Link href="/vehicles" className={router.pathname === '/vehicles' ? 'active' : ''}>Vehicles</Link>
           <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>About</Link>
-          <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Blog</Link>
-          <Link href="/faqs" className={router.pathname === '/faqs' ? 'active' : ''}>FAQs</Link>
+          <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Journal</Link>
+          <Link href="/faqs" className={router.pathname === '/faqs' ? 'active' : ''}>Help Center</Link>
           <Link href="/contact" className="cta">Contact Us</Link>
         </div>
 

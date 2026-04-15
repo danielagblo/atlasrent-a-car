@@ -173,7 +173,7 @@ export default function AboutPage() {
         <section style={{ padding: '100px 24px', background: '#fff', textAlign: 'center' }}>
           <div style={{ maxWidth: 600, margin: '0 auto' }}>
              <h2 style={{ fontSize: 32, fontWeight: 900, marginBottom: 24 }}>Ready for your next journey?</h2>
-             <Link href="/models" className="cta" style={{ display: 'inline-block', background: 'var(--accent)', color: '#fff', padding: '16px 40px', borderRadius: 999, fontWeight: 700, textDecoration: 'none' }}>
+             <Link href="/vehicles" className="cta" style={{ display: 'inline-block', background: 'var(--accent)', color: '#fff', padding: '16px 40px', borderRadius: 999, fontWeight: 700, textDecoration: 'none' }}>
                Browse Collection
              </Link>
           </div>

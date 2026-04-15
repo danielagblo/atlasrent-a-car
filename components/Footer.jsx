@@ -20,7 +20,7 @@ export default function Footer() {
           <h5>Quick Links</h5>
           <ul>
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/models">Vehicles</Link></li>
+            <li><Link href="/vehicles">Vehicles</Link></li>
             <li><Link href="/about">About Atlas</Link></li>
             <li><Link href="/contact">Contact</Link></li>
             <li><Link href="/reservations">My Reservations</Link></li>

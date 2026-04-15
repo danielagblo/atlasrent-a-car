@@ -1,12 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { getModels } from '../../lib/modelsApi'
+import { getVehicles } from '../../lib/vehiclesApi'
 
-export default function ModelDetail() {
+export default function VehicleDetail() {
   const router = useRouter()
   const { id } = router.query || {}
   const navigate = (to) => router.push(to)
-  const [models, setModels] = React.useState([])
+  const [vehicles, setVehicles] = React.useState([])
   const [loading, setLoading] = React.useState(true)
   const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 768)
 
@@ -19,20 +19,20 @@ export default function ModelDetail() {
   React.useEffect(() => {
     let mounted = true
       ; (async () => {
-        const data = await getModels()
+        const data = await getVehicles()
         if (mounted) {
-          setModels(data)
+          setVehicles(data)
           setLoading(false)
         }
       })()
     return () => { mounted = false }
   }, [])
 
-  const model = models.find(m => String(m.id) === String(id))
+  const model = vehicles.find(m => String(m.id) === String(id))
 
-  if (loading) return <section style={{ padding: 60 }}>Loading model...</section>
+  if (loading) return <section style={{ padding: 60 }}>Loading vehicle...</section>
 
-  if (!model) return <section style={{ padding: 60 }}>Model not found</section>
+  if (!model) return <section style={{ padding: 60 }}>Vehicle not found</section>
 
   return (
     <section style={{ padding: isMobile ? 20 : 60, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 420px', gap: isMobile ? 20 : 28 }}>

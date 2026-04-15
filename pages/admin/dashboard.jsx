@@ -63,7 +63,7 @@ export default function AdminDashboard() {
 
   const stats = [
     { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: 'var(--primary)', bg: 'rgba(227, 6, 19, 0.15)', href: '/admin/orders', trend: '+12%', up: true },
-    { label: 'Fleet Models', value: counts.models, icon: <Box size={24} />, color: 'var(--text-primary)', bg: 'var(--glass)', href: '/admin/models', trend: '+2', up: true },
+    { label: 'Fleet Vehicles', value: counts.models, icon: <Box size={24} />, color: 'var(--text-primary)', bg: 'var(--glass)', href: '/admin/vehicles', trend: '+2', up: true },
     { label: 'News Articles', value: counts.news, icon: <Newspaper size={24} />, color: 'var(--text-primary)', bg: 'var(--glass)', href: '/admin/news', trend: 'Updated', up: true },
     { label: 'Testimonials', value: counts.testimonials, icon: <MessageSquare size={24} />, color: 'var(--text-primary)', bg: 'var(--glass)', href: '/admin/testimonials', trend: 'Active', up: true }
   ]

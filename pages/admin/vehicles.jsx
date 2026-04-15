@@ -42,7 +42,7 @@ function empty() {
   }
 }
 
-export default function AdminModels() {
+export default function AdminVehicles() {
   const router = useRouter()
   const [editingId, setEditingId] = React.useState(null)
   const [items, setItems] = React.useState([])
@@ -256,10 +256,10 @@ export default function AdminModels() {
   })
 
   return (
-    <AdminLayout title="Models">
+    <AdminLayout title="Vehicles">
       <div className="page-header">
-        <h1 className="page-title">Manage Models</h1>
-        <p className="page-subtitle">/models</p>
+        <h1 className="page-title">Manage Vehicles</h1>
+        <p className="page-subtitle">/vehicles</p>
       </div>
 
       <div className="toolbar-row">
@@ -379,7 +379,7 @@ export default function AdminModels() {
         </div>
       )}
 
-      <Modal open={showCreate} title={editingId ? "Edit Model" : "Create Model"} onClose={() => setShowCreate(false)}>
+      <Modal open={showCreate} title={editingId ? "Edit Vehicle" : "Create Vehicle"} onClose={() => setShowCreate(false)}>
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-col">
@@ -556,13 +556,13 @@ export default function AdminModels() {
           <div className="form-actions" style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
             <button className="btn btn-outline" type="button" onClick={() => setShowCreate(false)}>Cancel</button>
             <button className="btn btn-primary" type="submit">
-              {editingId ? 'Save Changes' : 'Create Model'}
+              {editingId ? 'Save Changes' : 'Create Vehicle'}
             </button>
           </div>
         </form>
       </Modal>
 
-      <Modal open={!!viewItem} title="Model Details" onClose={() => setViewItem(null)}>
+      <Modal open={!!viewItem} title="Vehicle Details" onClose={() => setViewItem(null)}>
         {viewItem && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {viewItem.image && (

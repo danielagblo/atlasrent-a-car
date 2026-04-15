@@ -53,7 +53,7 @@ export default function OrderPage() {
     return (
       <section style={{ padding: 60 }}>
         <h2>Model not found</h2>
-        <button onClick={() => navigate('/models')}>Back to Models</button>
+        <button onClick={() => navigate('/vehicles')}>Back to Vehicles</button>
       </section>
     )
   }
@@ -138,7 +138,7 @@ export default function OrderPage() {
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
             <button className="small" onClick={() => navigate('/reservations')}>My Reservations</button>
-            <button className="primary" onClick={() => navigate('/models')}>Browse More Models</button>
+            <button className="primary" onClick={() => navigate('/vehicles')}>Browse More Vehicles</button>
           </div>
         </div>
       </motion.section>
