@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ProductCard from './ProductCard'
 import Link from 'next/link'
 
-const CATEGORIES = ['All', 'Luxury', 'Executive', 'Sport', 'Economy']
+const CATEGORIES = ['All', 'Business Cars', 'Economic Cars', 'Luxury Cars', 'Premium Cars']
 
 function ProfessionalShowcase({ items }) {
   const [currentIndex, setCurrentIndex] = useState(0)

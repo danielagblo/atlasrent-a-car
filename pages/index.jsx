@@ -2,34 +2,40 @@ import React from 'react'
 import Hero from '../components/Hero'
 import Products from '../components/Products'
 import IMAGES from '../data/images'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
+import { Heart, Car, Flag, MessageCircle } from 'lucide-react'
 
-function PremiumServices() {
-  const services = [
-    { title: 'Chauffeur Services', desc: 'Elite, professionally trained drivers for a seamless experience.' },
-    { title: 'Airport Transfers', desc: 'Punctual VIP pickups from Kotoka International and beyond.' },
-    { title: 'Corporate Logistics', desc: 'Tailored mobility solutions for businesses and executives.' },
-  ]
+function Statistics() {
+  const stats = [
+    { icon: <Heart size={56} strokeWidth={1.5} />, value: '5657', label: 'HAPPY CUSTOMERS' },
+    { icon: <Car size={56} strokeWidth={1.5} />, value: '657', label: 'TOTAL CAR COUNT' },
+    { icon: <Flag size={56} strokeWidth={1.5} />, value: '1.255.657', label: 'TOTAL KM/MIL' },
+    { icon: <MessageCircle size={56} strokeWidth={1.5} />, value: '1255', label: 'CALL CENTER SOLUTIONS' },
+  ];
+
   return (
-    <section style={{ padding: '80px 48px', maxWidth: 1440, margin: '0 auto' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
-        {services.map((s, i) => (
-          <motion.div 
-            key={i} 
-            className="glass-panel hover-lift" 
-            style={{ padding: 40, textAlign: 'center' }}
-            initial={{ opacity: 0, y: 20 }}
+    <section style={{ padding: '100px 48px', backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+      <div style={{ maxWidth: 1440, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
+        {stats.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.2 }}
+            transition={{ delay: i * 0.15 }}
+            style={{ textAlign: 'center', color: 'var(--text-secondary)' }}
           >
-            <div style={{ width: 64, height: 64, margin: '0 auto 24px', background: '#fff', border: '3px solid #000', boxShadow: '4px 4px 0px 0px var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)' }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center', color: '#94a3b8' }}>
+              {s.icon}
             </div>
-            <h3 style={{ fontSize: 22, marginBottom: 16 }}>{s.title}</h3>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>{s.desc}</p>
+            <div style={{ fontSize: 36, fontWeight: 900, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.02em' }}>
+              {s.value}
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              {s.label}
+            </div>
           </motion.div>
         ))}
       </div>
@@ -38,61 +44,81 @@ function PremiumServices() {
 }
 
 function Testimonials({ testimonials: apiTestimonials }) {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
   // Always ensure we have testimonials to display
   const defaultTestimonials = [
-    { id: 1, quote: 'An absolutely flawless experience. The chauffeur was highly professional, and the vehicle was pristine. I highly recommend Atlas Rent-A-Car for executive travel.', name: 'Kwame Mensah', role: 'Chief Executive Officer', avatar: '' },
-    { id: 2, quote: 'Top-tier luxury and an incredibly smooth booking experience. They handled our corporate event fleet with remarkable precision and care.', name: 'Sarah Osei', role: 'Event Director', avatar: '' },
-    { id: 3, quote: 'Unmatched comfort level. When I land in Accra, I know my mobility is completely sorted with peace of mind. Simply the best.', name: 'David Adjei', role: 'International Diplomat', avatar: '' }
+    { id: 1, quote: 'An absolutely flawless experience. The chauffeur was highly professional, and the vehicle was pristine. I highly recommend Atlas Rent-A-Car for executive travel.', name: 'Kwame Mensah', role: 'Chief Executive Officer', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
+    { id: 2, quote: 'Top-tier luxury and an incredibly smooth booking experience. They handled our corporate event fleet with remarkable precision and care.', name: 'Sarah Osei', role: 'Event Director', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' },
+    { id: 3, quote: 'Unmatched comfort level. When I land in Accra, I know my mobility is completely sorted with peace of mind. Simply the best.', name: 'David Adjei', role: 'International Diplomat', avatar: 'https://randomuser.me/api/portraits/men/46.jpg' }
   ];
 
   const testimonials = apiTestimonials?.length > 0 ? apiTestimonials : defaultTestimonials;
 
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
+
   return (
-    <section style={{ padding: '120px 48px', position: 'relative', overflow: 'hidden' }}>
-      <div className="section-header">
+    <section style={{ padding: '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
+      <div className="section-header" style={{ marginBottom: 64 }}>
         <h2>Client Experiences</h2>
-        <p>Trusted by global organizations and executives.</p>
       </div>
 
-      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-        <div style={{ display: 'flex', overflowX: 'auto', gap: 32, paddingBottom: 32, scrollSnapType: 'x mandatory' }}>
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.id}
-              className="glass-panel"
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+      <div style={{ position: 'relative', width: '100%', maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 250 }}
+          >
+            <div style={{ color: 'var(--accent)', fontSize: 24, marginBottom: 32 }}>
+              ★★★★★
+            </div>
+            <p style={{
+              fontSize: 28,
+              lineHeight: 1.6,
+              color: 'var(--text-primary)',
+              fontWeight: 500,
+              marginBottom: 48,
+              fontStyle: 'italic'
+            }}>
+              "{testimonials[currentIndex].quote}"
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              {testimonials[currentIndex].avatar && (
+                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }} />
+              )}
+              <div style={{ textAlign: 'left' }}>
+                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>{testimonials[currentIndex].name}</h4>
+                <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 64 }}>
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
               style={{
-                padding: 48,
-                minWidth: 400,
-                flex: '0 0 400px',
-                scrollSnapAlign: 'start',
-                position: 'relative'
+                width: idx === currentIndex ? 32 : 12,
+                height: 12,
+                borderRadius: 999,
+                background: idx === currentIndex ? 'var(--accent)' : 'var(--border-color)',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
               }}
-            >
-              <div style={{ 
-                position: 'absolute', top: 20, right: 30, fontSize: 80, 
-                fontFamily: 'serif', color: 'var(--glass-border-highlight)', 
-                lineHeight: 1 
-              }}>”</div>
-              <div style={{ color: 'var(--accent)', marginBottom: 24, fontSize: 18 }}>
-                ★★★★★
-              </div>
-              <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--text-primary)', marginBottom: 32, fontStyle: 'italic' }}>
-                "{t.quote}"
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                {t.avatar && (
-                  <img src={t.avatar} alt={t.name} style={{ width: 48, height: 48, border: '2px solid #000', objectFit: 'cover' }} />
-                )}
-                <div>
-                  <h4 style={{ margin: 0, fontSize: 16 }}>{t.name}</h4>
-                  <p style={{ margin: 0, fontSize: 13, color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t.role}</p>
-                </div>
-              </div>
-            </motion.div>
+              aria-label={`Go to slide ${idx + 1}`}
+            />
           ))}
         </div>
       </div>
@@ -131,22 +157,22 @@ export default function Home() {
 
   React.useEffect(() => {
     let mounted = true
-    ;(async () => {
-      const [t, n] = await Promise.all([
-        getTestimonials(),
-        getNews()
-      ])
-      if (!mounted) return
-      setTestimonials(t)
-      setNewsItems(n)
-    })()
+      ; (async () => {
+        const [t, n] = await Promise.all([
+          getTestimonials(),
+          getNews()
+        ])
+        if (!mounted) return
+        setTestimonials(t)
+        setNewsItems(n)
+      })()
     return () => { mounted = false }
   }, [])
 
   return (
     <>
       <Hero />
-      <PremiumServices />
+      <Statistics />
       <Products limit={6} />
       <Testimonials testimonials={testimonials} />
       <News newsItems={newsItems} />

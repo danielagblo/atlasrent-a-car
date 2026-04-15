@@ -51,8 +51,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Unrivaled Luxury, <br/>
-          <span className="gradient-text">At Your Command.</span>
+          Premium Vehicles, <br/>
+          <span className="gradient-text">Exceptional Service.</span>
         </motion.h1>
         
         <motion.p
@@ -88,9 +88,10 @@ export default function Hero() {
             <label>Vehicle Type</label>
             <select defaultValue="">
               <option value="" disabled>Select Class</option>
-              <option value="luxury">Luxury Sedan</option>
-              <option value="suv">Premium SUV</option>
-              <option value="business">Business Class</option>
+              <option value="Business Cars">Business Cars</option>
+              <option value="Economic Cars">Economic Cars</option>
+              <option value="Luxury Cars">Luxury Cars</option>
+              <option value="Premium Cars">Premium Cars</option>
             </select>
           </div>
 

@@ -26,10 +26,8 @@ export default function Navbar() {
       style={{ padding: scrolled ? '16px 48px' : '24px 48px' }}
     >
       <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div>
-            <div className="brand">Atlas<span>Rent-A-Car</span></div>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/favicon.png" alt="Atlas Rent-A-Car Logo" style={{ height: 48, objectFit: 'contain' }} />
         </div>
       </Link>
 

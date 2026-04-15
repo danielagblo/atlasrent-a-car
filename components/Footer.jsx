@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-grid">
         <div className="footer-brand">
-          <h4>Atlas<span style={{ fontWeight: 300, color: 'var(--text-muted)' }}>Rent-A-Car</span></h4>
+          <img src="/favicon.png" alt="Atlas Rent-A-Car Logo" style={{ height: 48, objectFit: 'contain', marginBottom: 16 }} />
           <p>
             The premium standard for luxury vehicle rentals and private mobility across Ghana.
             Experience unrivaled comfort, safety, and exclusivity.
@@ -68,9 +68,9 @@ export default function Footer() {
         </div>
         
         <div style={{ display: 'flex', gap: 24, fontSize: 13 }}>
-          <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Instagram</a>
-          <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Twitter</a>
-          <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Facebook</a>
+          <a href="https://www.instagram.com/atlasghana/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Instagram</a>
+          <a href="https://x.com/atlasghana" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Twitter</a>
+          <a href="https://www.facebook.com/AtlasGhana/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Facebook</a>
         </div>
         
         <div style={{ fontSize: 13 }}>

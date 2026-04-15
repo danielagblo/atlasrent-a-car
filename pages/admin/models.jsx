@@ -391,12 +391,10 @@ export default function AdminModels() {
               <label className="field-label">Category</label>
               <select name="category" value={form.category} onChange={onChange}>
                 <option value="">Select a category</option>
-                <option value="Luxury">Luxury (Elite)</option>
-                <option value="Executive">Executive</option>
-                <option value="Sport">Sport</option>
-                <option value="Economy">Economy</option>
-                <option value="Cargo">Cargo/Utility</option>
-                <option value="Motorcycle">Motorcycle</option>
+                <option value="Business Cars">Business Cars</option>
+                <option value="Economic Cars">Economic Cars</option>
+                <option value="Luxury Cars">Luxury Cars</option>
+                <option value="Premium Cars">Premium Cars</option>
               </select>
 
               <label className="field-label">Daily Price (GHS)</label>

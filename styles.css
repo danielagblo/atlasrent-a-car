@@ -12,13 +12,15 @@
   --text-muted: #94a3b8;
   --text-inverse: #ffffff;
   
-  --accent: #22A7F0;
-  --accent-hover: #1b8fcfa;
+  --accent: #24276F;
+  --accent-hover: #1b1e5a;
+  --accent-gold: #DF9738;
+  --accent-gold-hover: #c9822a;
   
   --border-color: #e2e8f0;
   --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
-  --shadow-glow: 0 10px 30px rgba(34, 167, 240, 0.25);
+  --shadow-glow: 0 10px 30px rgba(223, 151, 56, 0.25);
   
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.4);
@@ -79,7 +81,10 @@ h1, h2, h3, h4 {
 }
 
 .gradient-text {
-  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent); /* Fallback */
 }
 
 .hover-lift {
@@ -140,11 +145,11 @@ h1, h2, h3, h4 {
 }
 
 .nav .links a.active, .nav .links a:hover {
-  color: var(--accent);
+  color: var(--accent-gold);
 }
 
 .nav .links a.cta {
-  background: var(--accent);
+  background: var(--accent-gold);
   color: #fff;
   padding: 12px 28px;
   border-radius: 999px;
@@ -155,7 +160,8 @@ h1, h2, h3, h4 {
 
 .nav .links a.cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(34, 167, 240, 0.4);
+  background: var(--accent-gold-hover);
+  box-shadow: 0 14px 40px rgba(212, 175, 55, 0.4);
 }
 
 .theme-toggle {
@@ -276,7 +282,7 @@ main {
 }
 
 .btn-premium {
-  background: var(--accent);
+  background: var(--accent-gold);
   color: #fff;
   font-weight: 700;
   text-transform: uppercase;
@@ -292,8 +298,8 @@ main {
 
 .btn-premium:hover {
   transform: translateY(-2px);
-  background: #1e99dc;
-  box-shadow: 0 14px 30px rgba(34, 167, 240, 0.4);
+  background: var(--accent-gold-hover);
+  box-shadow: 0 14px 30px rgba(212, 175, 55, 0.4);
 }
 
 /* =========================================
