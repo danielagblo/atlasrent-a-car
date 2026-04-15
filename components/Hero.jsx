@@ -60,7 +60,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 concierge service across Ghana.
+          Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 elite assistance across Ghana.
         </motion.p>
 
         <motion.div

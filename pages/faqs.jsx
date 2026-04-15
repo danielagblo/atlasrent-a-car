@@ -82,23 +82,23 @@ export default function FAQPage() {
     <Layout>
       <div style={{ background: '#fff', minHeight: '100vh' }}>
         
-        {/* Header Section - Redesigned for Elite Professionalism */}
-        <section style={{ padding: isMobile ? '120px 24px 60px' : '160px 64px 80px', background: '#f8fafc' }}>
+        {/* Header Section */}
+        <section style={{ padding: isMobile ? '100px 20px 40px' : '160px 64px 80px', background: '#f8fafc' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             
-            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: 40, marginBottom: 48 }}>
-              <div style={{ width: 4, height: 80, background: 'var(--accent-gold)', display: isMobile ? 'none' : 'block' }} />
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? 20 : 40, marginBottom: isMobile ? 32 : 48 }}>
+              <div style={{ width: 4, height: isMobile ? 40 : 80, background: 'var(--accent-gold)' }} />
               <div>
-                <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Atlas Help Center</div>
-                <h1 style={{ fontSize: isMobile ? 36 : 64, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 12 }}>Atlas Help Center</div>
+                <h1 style={{ fontSize: isMobile ? 32 : 64, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
                   Frequently Asked <br/> <span style={{ color: 'var(--accent-gold)' }}>Questions</span>.
                 </h1>
               </div>
             </div>
             
-            {/* Search Bar - Refined */}
+            {/* Search Bar */}
             <div style={{ position: 'relative', maxWidth: 650 }}>
-               <Search style={{ position: 'absolute', left: 24, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={20} />
+               <Search style={{ position: 'absolute', left: 24, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={18} />
                <input 
                  type="text" 
                  placeholder="Search for answers..."
@@ -106,11 +106,11 @@ export default function FAQPage() {
                  onChange={(e) => setSearch(e.target.value)}
                  style={{ 
                    width: '100%', 
-                   padding: '20px 24px 20px 64px', 
+                   padding: isMobile ? '16px 20px 16px 56px' : '20px 24px 20px 64px', 
                    borderRadius: 999, 
                    border: '1px solid #e2e8f0', 
                    background: '#fff',
-                   fontSize: 16,
+                   fontSize: isMobile ? 15 : 16,
                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
                    outline: 'none'
                  }} 
@@ -120,8 +120,8 @@ export default function FAQPage() {
         </section>
 
         {/* Content Section */}
-        <section style={{ padding: isMobile ? '60px 24px' : '100px 64px' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2.5fr 1fr', gap: 80 }}>
+        <section style={{ padding: isMobile ? '40px 20px' : '100px 64px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2.5fr 1fr', gap: isMobile ? 60 : 80 }}>
             
             {/* FAQ List */}
             <div>
@@ -136,60 +136,48 @@ export default function FAQPage() {
                   />
                 ))
               ) : (
-                <div style={{ textAlign: 'center', padding: '100px 0', color: '#94a3b8' }}>
-                  <HelpCircle size={40} style={{ marginBottom: 16, opacity: 0.5 }} />
-                  <p>No matching questions found.</p>
+                <div style={{ textAlign: 'center', padding: '60px 0', color: '#94a3b8' }}>
+                  <HelpCircle size={32} style={{ marginBottom: 16, opacity: 0.5 }} />
+                  <p style={{ fontSize: 14 }}>No matching questions found.</p>
                 </div>
               )}
             </div>
 
-            {/* Sidebar Contact - Redesigned for Elite Professionalism */}
+            {/* Support Sidebar */}
             <aside>
                <div style={{ 
                  background: '#fff', 
-                 borderRadius: 0, 
-                 padding: '40px 0', 
-                 position: 'sticky', 
+                 padding: isMobile ? '40px 0 0' : '40px 0', 
+                 position: isMobile ? 'relative' : 'sticky', 
                  top: 120,
                  borderTop: '4px solid var(--accent-gold)'
                }}>
-                  <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Official Support</div>
-                  <h3 style={{ fontSize: 24, fontWeight: 900, color: 'var(--accent)', marginBottom: 20, letterSpacing: '-0.02em' }}>Need Personal <br/> Assistance?</h3>
-                  <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.8, marginBottom: 40, borderLeft: '2px solid #f1f5f9', paddingLeft: 20 }}>
-                    Contact us if you need help with anything. We are always available to help you out!
+                  <div style={{ fontSize: 10, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Official Support</div>
+                  <h3 style={{ fontSize: isMobile ? 22 : 24, fontWeight: 900, color: 'var(--accent)', marginBottom: 16, letterSpacing: '-0.02em' }}>Need Personal Assistance?</h3>
+                  <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.7, marginBottom: 32, borderLeft: '2px solid #f1f5f9', paddingLeft: 20 }}>
+                     Contact us if you need help with anything. Our team is standing by.
                   </p>
                   
                   <div style={{ display: 'grid', gap: 0 }}>
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: 24, 
-                      padding: '24px 0',
-                      borderBottom: '1px solid #f1f5f9'
-                    }}>
-                      <Phone size={20} color="var(--accent-gold)" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '20px 0', borderBottom: '1px solid #f1f5f9' }}>
+                      <Phone size={18} color="var(--accent-gold)" />
                       <div>
-                        <div style={{ fontSize: 10, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 4 }}>Call Us</div>
-                        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>+233 30 230 1081</div>
+                        <div style={{ fontSize: 9, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 2 }}>Call Us</div>
+                        <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>+233 30 230 1081</div>
                       </div>
                     </div>
 
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: 24, 
-                      padding: '24px 0'
-                    }}>
-                      <Mail size={20} color="var(--accent-gold)" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '20px 0' }}>
+                      <Mail size={18} color="var(--accent-gold)" />
                       <div>
-                        <div style={{ fontSize: 10, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 4 }}>Email Support</div>
-                        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>contact@atlasrent-a-car.com</div>
+                        <div style={{ fontSize: 9, color: '#94a3b8', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '0.1em', marginBottom: 2 }}>Email Support</div>
+                        <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>contact@atlasrent-a-car.com</div>
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ marginTop: 40, padding: 32, background: '#f8fafc', borderRadius: 24 }}>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>Available 24/7</div>
+                  <div style={{ marginTop: 32, padding: 24, background: '#f8fafc', borderRadius: 20 }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>Available 24/7</div>
                     <p style={{ fontSize: 13, color: '#64748b', margin: 0, lineHeight: 1.6 }}>Our executive support team is standing by to ensure your journey is seamless.</p>
                   </div>
                </div>

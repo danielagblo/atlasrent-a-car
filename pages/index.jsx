@@ -82,7 +82,7 @@ function Statistics() {
   )
 }
 
-function Testimonials({ testimonials }) {
+function Testimonials({ testimonials, isMobile }) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   React.useEffect(() => {
@@ -96,9 +96,9 @@ function Testimonials({ testimonials }) {
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section style={{ padding: '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
-      <div className="section-header" style={{ marginBottom: 64 }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 44, fontWeight: 900 }}>Client Experiences</h2>
+    <section style={{ padding: isMobile ? '80px 0' : '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
+      <div className="section-header" style={{ marginBottom: isMobile ? 40 : 64 }}>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 32 : 44, fontWeight: 900 }}>Client Experiences</h2>
       </div>
 
       <div style={{ position: 'relative', width: '100%', maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
@@ -109,17 +109,17 @@ function Testimonials({ testimonials }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 250 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: isMobile ? 320 : 250 }}
           >
-            <div style={{ color: 'var(--accent-gold)', fontSize: 24, marginBottom: 32 }}>
+            <div style={{ color: 'var(--accent-gold)', fontSize: isMobile ? 18 : 24, marginBottom: isMobile ? 20 : 32 }}>
               ★★★★★
             </div>
             <p style={{
-              fontSize: 28,
+              fontSize: isMobile ? 20 : 28,
               lineHeight: 1.6,
               color: 'var(--text-primary)',
               fontWeight: 500,
-              marginBottom: 48,
+              marginBottom: isMobile ? 32 : 48,
               fontStyle: 'italic',
               fontFamily: "'Playfair Display', serif"
             }}>
@@ -127,24 +127,24 @@ function Testimonials({ testimonials }) {
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               {testimonials[currentIndex].avatar && (
-                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff' }} />
+                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: isMobile ? 48 : 64, height: isMobile ? 48 : 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff' }} />
               )}
               <div style={{ textAlign: 'left' }}>
-                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: 'var(--accent)' }}>{testimonials[currentIndex].name}</h4>
-                <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
+                <h4 style={{ margin: 0, fontSize: isMobile ? 15 : 18, fontWeight: 800, color: 'var(--accent)' }}>{testimonials[currentIndex].name}</h4>
+                <p style={{ margin: 0, fontSize: isMobile ? 11 : 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 64 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: isMobile ? 40 : 64 }}>
           {testimonials.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               style={{
-                width: idx === currentIndex ? 32 : 12,
-                height: 12,
+                width: idx === currentIndex ? (isMobile ? 24 : 32) : (isMobile ? 8 : 12),
+                height: isMobile ? 8 : 12,
                 borderRadius: 999,
                 background: idx === currentIndex ? 'var(--accent)' : 'var(--border-color)',
                 border: 'none',
@@ -160,24 +160,24 @@ function Testimonials({ testimonials }) {
   )
 }
 
-function News({ newsItems }) {
+function News({ newsItems, isMobile }) {
   if (!newsItems || newsItems.length === 0) return null
 
   return (
-    <section style={{ padding: '120px 48px', maxWidth: 1200, margin: '0 auto' }}>
-      <div style={{ marginBottom: 64, display: 'flex', alignItems: 'center', gap: 24 }}>
-        <div style={{ width: 4, height: 40, background: 'var(--accent-gold)' }} />
+    <section style={{ padding: isMobile ? '80px 24px' : '120px 48px', maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ marginBottom: isMobile ? 40 : 64, display: 'flex', alignItems: 'center', gap: isMobile ? 16 : 24 }}>
+        <div style={{ width: 4, height: isMobile ? 32 : 40, background: 'var(--accent-gold)' }} />
         <div>
-           <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 8 }}>The Atlas Journal</div>
-           <h2 style={{ fontSize: 48, fontWeight: 900, color: 'var(--accent)', margin: 0, letterSpacing: '-0.02em' }}>Latest Insights</h2>
+           <div style={{ fontSize: isMobile ? 9 : 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 4 }}>The Atlas Journal</div>
+           <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: 'var(--accent)', margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>Latest Insights</h2>
         </div>
       </div>
 
-      <div style={{ 
+      <div className="custom-horizontal-scroll" style={{ 
         display: 'flex', 
         overflowX: 'auto', 
-        gap: 64, 
-        paddingBottom: 32, 
+        gap: isMobile ? 24 : 64, 
+        paddingBottom: 24, 
         scrollSnapType: 'x mandatory',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none'
@@ -191,20 +191,20 @@ function News({ newsItems }) {
               viewport={{ once: true }}
               style={{ 
                 display: 'flex', 
-                gap: 24, 
+                gap: isMobile ? 16 : 24, 
                 alignItems: 'center', 
-                minWidth: 420, 
-                flex: '0 0 420px', 
+                minWidth: isMobile ? 280 : 420, 
+                flex: `0 0 ${isMobile ? '280px' : '420px'}`, 
                 scrollSnapAlign: 'start',
                 cursor: 'pointer' 
               }}
             >
               {(n.image || n.img) && (
                 <div style={{ 
-                  width: 120, 
-                  height: 80, 
+                  width: isMobile ? 90 : 120, 
+                  height: isMobile ? 60 : 80, 
                   flexShrink: 0, 
-                  borderRadius: 12, 
+                  borderRadius: 8, 
                   overflow: 'hidden', 
                   background: '#f1f5f9',
                   border: '1px solid #e2e8f0'
@@ -217,29 +217,31 @@ function News({ newsItems }) {
                 </div>
               )}
               <div style={{ flex: 1 }}>
-                 <div style={{ fontSize: 9, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>{n.category || 'Journal'}</div>
+                 <div style={{ fontSize: isMobile ? 8 : 9, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{n.category || 'Journal'}</div>
                  <h3 style={{ 
-                   fontSize: 16, 
+                   fontSize: isMobile ? 14 : 16, 
                    fontWeight: 800, 
                    color: 'var(--accent)', 
-                   marginBottom: 6, 
+                   marginBottom: 4, 
                    lineHeight: 1.3,
                    textDecoration: 'none',
                    display: '-webkit-box', 
-                   WebkitLineClamp: 1, 
+                   WebkitLineClamp: isMobile ? 2 : 1, 
                    WebkitBoxOrient: 'vertical', 
                    overflow: 'hidden' 
                  }}>{n.title}</h3>
-                 <p style={{ 
-                   color: '#64748b', 
-                   fontSize: 13, 
-                   lineHeight: 1.5, 
-                   margin: 0,
-                   display: '-webkit-box', 
-                   WebkitLineClamp: 2, 
-                   WebkitBoxOrient: 'vertical', 
-                   overflow: 'hidden' 
-                 }}>{n.excerpt || n.content}</p>
+                 {!isMobile && (
+                   <p style={{ 
+                     color: '#64748b', 
+                     fontSize: 13, 
+                     lineHeight: 1.5, 
+                     margin: 0,
+                     display: '-webkit-box', 
+                     WebkitLineClamp: 2, 
+                     WebkitBoxOrient: 'vertical', 
+                     overflow: 'hidden' 
+                   }}>{n.excerpt || n.content}</p>
+                 )}
               </div>
             </motion.article>
           </Link>
@@ -252,8 +254,13 @@ function News({ newsItems }) {
 export default function Home() {
   const [testimonials, setTestimonials] = React.useState([])
   const [newsItems, setNewsItems] = React.useState([])
+  const [isMobile, setIsMobile] = React.useState(false)
 
   React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
     let mounted = true
       ; (async () => {
         const [t, n] = await Promise.all([
@@ -264,16 +271,20 @@ export default function Home() {
         setTestimonials(t)
         setNewsItems(n)
       })()
-    return () => { mounted = false }
+    
+    return () => { 
+      mounted = false
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   return (
     <>
       <Hero />
-      <Statistics />
-      <Products limit={6} />
-      <Testimonials testimonials={testimonials} />
-      <News newsItems={newsItems} />
+      <Statistics isMobile={isMobile} />
+      <Products limit={6} isMobile={isMobile} />
+      <Testimonials testimonials={testimonials} isMobile={isMobile} />
+      <News newsItems={newsItems} isMobile={isMobile} />
     </>
   )
 }

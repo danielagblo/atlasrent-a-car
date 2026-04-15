@@ -105,17 +105,17 @@ export default function ArticlePage() {
       <div style={{ background: '#fff', minHeight: '100vh' }}>
         
         {/* Article Header */}
-        <section style={{ padding: isMobile ? '120px 24px 60px' : '160px 64px 80px', background: '#f8fafc' }}>
+        <section style={{ padding: isMobile ? '100px 20px 40px' : '160px 64px 80px', background: '#f8fafc' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto' }}>
             <Link href="/blog">
-              <button style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', color: 'var(--accent-gold)', fontWeight: 800, cursor: 'pointer', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 32 }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', color: 'var(--accent-gold)', fontWeight: 800, cursor: 'pointer', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: isMobile ? 20 : 32 }}>
                 <ArrowLeft size={16} /> Back to Journal
               </button>
             </Link>
-            <h1 style={{ fontSize: isMobile ? 32 : 56, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1, marginBottom: 32 }}>
+            <h1 style={{ fontSize: isMobile ? 32 : 56, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1, marginBottom: isMobile ? 24 : 32 }}>
               {post.title}
             </h1>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, color: '#94a3b8', fontSize: 13, fontWeight: 700, textTransform: 'uppercase' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? 16 : 32, color: '#94a3b8', fontSize: isMobile ? 11 : 13, fontWeight: 700, textTransform: 'uppercase' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Calendar size={14} /> {post.date}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><User size={14} /> {post.author}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><MessageSquare size={14} /> {comments.length} Comments</span>
@@ -125,39 +125,39 @@ export default function ArticlePage() {
 
         {/* Feature Image */}
         {(post.image || post.img) && (
-          <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '0 24px' : '0 64px', marginTop: -40 }}>
-             <div style={{ height: isMobile ? 300 : 600, borderRadius: 32, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.1)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '0 20px' : '0 64px', marginTop: -40 }}>
+             <div style={{ height: isMobile ? 320 : 600, borderRadius: isMobile ? 16 : 32, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.1)' }}>
                 <img src={post.image || post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
              </div>
           </div>
         )}
 
         {/* Article Content */}
-        <section style={{ padding: isMobile ? '60px 24px' : '100px 64px' }}>
-          <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 280px', gap: 80 }}>
+        <section style={{ padding: isMobile ? '40px 20px' : '100px 64px' }}>
+          <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 280px', gap: isMobile ? 60 : 80 }}>
             
             {/* Body */}
             <div>
                <div className="editorial-narrative-container" style={{ 
-                 fontSize: 18, color: '#64748b', lineHeight: 2, whiteSpace: 'pre-line', 
-                 marginBottom: 80, maxHeight: '70vh', overflowY: 'auto', paddingRight: 24 
+                 fontSize: isMobile ? 17 : 18, color: '#64748b', lineHeight: isMobile ? 1.8 : 2, whiteSpace: 'pre-line', 
+                 marginBottom: isMobile ? 60 : 80, maxHeight: isMobile ? 'none' : '70vh', overflowY: isMobile ? 'visible' : 'auto', paddingRight: isMobile ? 0 : 24 
                }}>
                   {post.content || post.excerpt}
                </div>
 
                {/* Comments Section */}
-               <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: 80 }}>
-                  <h3 style={{ fontSize: 32, fontWeight: 900, color: 'var(--accent)', marginBottom: 40 }}>Leave a Reply</h3>
-                  <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 32 }}>Your email address will not be published. Required fields are marked *</p>
+               <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: isMobile ? 60 : 80 }}>
+                  <h3 style={{ fontSize: isMobile ? 28 : 32, fontWeight: 900, color: 'var(--accent)', marginBottom: isMobile ? 24 : 40 }}>Leave a Reply</h3>
+                  <p style={{ fontSize:isMobile ? 13 : 14, color: '#94a3b8', marginBottom: 24 }}>Your email address will not be published. Required fields are marked *</p>
                   
-                  <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 24 }}>
+                  <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20 }}>
                      <div style={{ gridColumn: 'span 2' }}>
                         <textarea 
                           required
                           value={commentForm.content}
                           onChange={(e) => setCommentForm({...commentForm, content: e.target.value})}
                           placeholder="Your Comment*" 
-                          rows={8} 
+                          rows={isMobile ? 5 : 8} 
                           style={{ width: '100%', padding: '20px', borderRadius: 16, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none', fontSize: 15 }}
                         ></textarea>
                      </div>
@@ -181,26 +181,26 @@ export default function ArticlePage() {
                         <button 
                           disabled={submitting}
                           type="submit"
-                          style={{ padding: '18px 48px', background: 'var(--accent)', color: '#fff', borderRadius: 999, border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: 14, transition: 'transform 0.2s', opacity: submitting ? 0.7 : 1 }}>
+                          style={{ width: isMobile ? '100%' : 'auto', padding: '18px 48px', background: 'var(--accent)', color: '#fff', borderRadius: 999, border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: 14, transition: 'transform 0.2s', opacity: submitting ? 0.7 : 1 }}>
                            {submitting ? 'Posting...' : 'Post Comment'}
                         </button>
                      </div>
                   </form>
 
-                  <div style={{ marginTop: 80 }}>
-                     <h4 style={{ fontSize: 24, fontWeight: 900, color: 'var(--accent)', marginBottom: 40 }}>{comments.length} Comments</h4>
-                     <div style={{ display: 'grid', gap: 40 }}>
+                  <div style={{ marginTop: isMobile ? 60 : 80 }}>
+                     <h4 style={{ fontSize: isMobile ? 20 : 24, fontWeight: 900, color: 'var(--accent)', marginBottom: 32 }}>{comments.length} Comments</h4>
+                     <div style={{ display: 'grid', gap: 32 }}>
                         {comments.length === 0 ? (
-                           <div style={{ padding: 40, border: '1px dashed #e2e8f0', borderRadius: 24, textAlign: 'center' }}>
+                           <div style={{ padding: 32, border: '1px dashed #e2e8f0', borderRadius: 24, textAlign: 'center' }}>
                               <MessageSquare size={32} color="#94a3b8" style={{ marginBottom: 16, opacity: 0.5 }} />
                               <p style={{ color: '#94a3b8', margin: 0, fontSize: 14 }}>Be the first to share your thoughts!</p>
                            </div>
                         ) : (
                            comments.map((c, i) => (
-                              <div key={c.id || i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: 32 }}>
-                                 <div style={{ fontWeight: 900, color: 'var(--accent)', marginBottom: 8, fontSize: 16 }}>{c.author}</div>
-                                 <div style={{ fontSize: 12, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 16, fontWeight: 700 }}>{new Date(c.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
-                                 <p style={{ fontSize: 16, color: '#64748b', lineHeight: 1.7, margin: 0 }}>{c.content}</p>
+                              <div key={c.id || i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: 24 }}>
+                                 <div style={{ fontWeight: 900, color: 'var(--accent)', marginBottom: 8, fontSize: 15 }}>{c.author}</div>
+                                 <div style={{ fontSize: 11, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 16, fontWeight: 700 }}>{new Date(c.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+                                 <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.7, margin: 0 }}>{c.content}</p>
                               </div>
                            ))
                         )}
@@ -212,17 +212,17 @@ export default function ArticlePage() {
 
             {/* Meta Sidebar */}
             <aside>
-               <div style={{ position: 'sticky', top: 120, display: 'grid', gap: 48 }}>
+               <div style={{ position: 'relative', top: isMobile ? 0 : 120, display: 'grid', gap: isMobile ? 32 : 48 }}>
                   <div>
-                    <h4 style={{ fontSize: 12, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 16 }}>Published By</h4>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>{post.author}</div>
+                    <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Published By</h4>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>{post.author}</div>
                   </div>
                   <div>
-                    <h4 style={{ fontSize: 12, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 16 }}>Category</h4>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)' }}>{post.category}</div>
+                    <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Category</h4>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>{post.category}</div>
                   </div>
                   <div>
-                    <h4 style={{ fontSize: 12, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 16 }}>Share This</h4>
+                    <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Share This</h4>
                     <div style={{ display: 'flex', gap: 16 }}>
                       <Facebook size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
                       <Twitter size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
@@ -230,10 +230,10 @@ export default function ArticlePage() {
                     </div>
                   </div>
                   <div style={{ 
-                    marginTop: 40, 
-                    padding: '40px 32px', 
+                    marginTop: isMobile ? 24 : 40, 
+                    padding: isMobile ? '32px 24px' : '40px 32px', 
                     background: '#f8fafc', 
-                    borderRadius: 32, 
+                    borderRadius: 24, 
                     border: '1px solid #e2e8f0',
                     position: 'relative',
                     overflow: 'hidden'
@@ -241,13 +241,13 @@ export default function ArticlePage() {
                      <div style={{ position: 'absolute', top: 0, left: 32, width: 40, height: 4, background: 'var(--accent-gold)' }} />
                      <h4 style={{ 
                        fontFamily: "'Playfair Display', serif", 
-                       fontSize: 24, 
+                       fontSize: 22, 
                        fontWeight: 900, 
-                       marginBottom: 16, 
+                       marginBottom: 12, 
                        color: 'var(--accent)',
                        letterSpacing: '-0.02em'
                      }}>Ready to Go?</h4>
-                     <p style={{ fontSize: 15, color: '#64748b', marginBottom: 32, lineHeight: 1.6, fontWeight: 500 }}>
+                     <p style={{ fontSize: 14, color: '#64748b', marginBottom: 24, lineHeight: 1.6, fontWeight: 500 }}>
                        Secure an elite vehicle from our curated collection for your next journey.
                      </p>
                      <Link href="/vehicles">

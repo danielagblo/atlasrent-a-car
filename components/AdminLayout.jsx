@@ -100,7 +100,7 @@ export default function AdminLayout({ title, children }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ width: 28, height: 28, background: '#F8FAFC', borderRadius: '50%', border: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, color: '#24276F' }}>A</div>
-                <span style={{ fontSize: 12, fontWeight: 700, color: '#24276F' }}>Concierge</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#24276F' }}>Executive</span>
              </div>
           </div>
         </header>

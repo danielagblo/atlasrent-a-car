@@ -601,8 +601,50 @@ main {
 }
 
 @media (max-width: 768px) {
-  .nav .links { display: none; }
-  .nav { padding: 16px 24px; }
+  .nav { padding: 16px 20px; }
+  .nav .links { 
+    display: none; 
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    padding: 100px 32px;
+    gap: 32px;
+    z-index: 98;
+    align-items: flex-start;
+    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .nav .links.mobile-open {
+    display: flex;
+  }
+  .nav .links a {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .nav .links a.cta {
+    width: 100%;
+    text-align: center;
+    padding: 18px;
+    margin-top: 12px;
+    font-size: 15px;
+  }
+  .theme-toggle { 
+    display: flex; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    z-index: 100;
+  }
+  
   .hero-content h1 { font-size: 38px; }
   .hero-section { padding: 120px 24px 60px; min-height: auto; }
   .fleet-section { padding: 80px 24px; }
