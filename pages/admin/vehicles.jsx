@@ -256,19 +256,22 @@ export default function AdminVehicles() {
   })
 
   return (
-    <AdminLayout title="Vehicles">
-      <div className="page-header">
-        <h1 className="page-title">Manage Vehicles</h1>
-        <p className="page-subtitle">/vehicles</p>
+    <AdminLayout title="Fleet Management">
+      <div style={{ display: 'flex', gap: 32, alignItems: 'center', marginBottom: 60 }}>
+        <div style={{ width: 4, height: 64, background: '#DF9738' }} />
+        <div>
+          <h1 style={{ fontSize: 32, fontWeight: 900, color: '#24276F', margin: 0, letterSpacing: '-0.02em' }}>Manage Vehicles</h1>
+          <p style={{ margin: 0, color: '#94a3b8', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Global Fleet Directory</p>
+        </div>
       </div>
 
       <div className="toolbar-row">
         <div className="toolbar-left">
-          <div className="search-field">
-            <Search className="search-icon" size={18} />
+          <div style={{ position: 'relative', flex: 1 }}>
+            <Search style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={16} />
             <input
-              className="models-search"
-              placeholder="Search models..."
+              style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: 12, border: '1px solid #e2e8f0', background: '#fff', outline: 'none', fontSize: 13, fontWeight: 600 }}
+              placeholder="Search collective..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -295,9 +298,12 @@ export default function AdminVehicles() {
             <option value="oldest">Oldest First</option>
             <option value="name">Name A-Z</option>
           </select>
-          <button className="btn btn-primary" onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}>
-            <Plus size={20} />
-            <span>Create</span>
+          <button 
+            style={{ background: '#24276F', color: '#fff', border: 'none', height: 48, padding: '0 28px', borderRadius: 12, fontWeight: 900, display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}
+            onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
+          >
+            <Plus size={18} color="#DF9738" />
+            <span>Add Vehicle</span>
           </button>
         </div>
       </div>
@@ -317,59 +323,58 @@ export default function AdminVehicles() {
       {!loading && filtered.length > 0 && (
         <div className="card-grid">
           {filtered.map(item => (
-            <article key={item.id} className="model-card" style={{ padding: '20px 28px', background: 'var(--bg-card)', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 20 }}>
-              <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 20 }}>
+            <article key={item.id} style={{ padding: '24px 32px', background: '#fff', borderRadius: 20, border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 24, transition: 'all 0.2s ease' }}>
+              <div className="card-content-left" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
                 <div style={{ position: 'relative' }}>
                   <CldOptimizedImage
                     src={item.image || '/placeholder.png'}
                     alt={item.name}
-                    width={100}
-                    height={64}
-                    style={{ width: 100, height: 64, borderRadius: 12, objectFit: 'cover', background: '#000', border: '1px solid var(--border)' }}
+                    width={110}
+                    height={70}
+                    style={{ width: 110, height: 70, borderRadius: 12, objectFit: 'cover', background: '#0a0a0c', border: '1px solid #f1f5f9' }}
                   />
                   {Array.isArray(item.gallery) && item.gallery.length > 0 && (
-                    <div style={{ position: 'absolute', bottom: -6, right: -6, background: 'var(--primary)', color: '#fff', fontSize: 10, padding: '2px 6px', borderRadius: 6, fontWeight: 900, boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '2px solid var(--bg-card)' }}>
+                    <div style={{ position: 'absolute', bottom: -6, right: -6, background: '#DF9738', color: '#fff', fontSize: 10, padding: '2px 8px', borderRadius: 6, fontWeight: 900, border: '2px solid #fff' }}>
                       +{item.gallery.length}
                     </div>
                   )}
                 </div>
                 <div className="card-info">
-                  <div className="card-info-header" style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span className="card-name" style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)' }}>{item.name}</span>
-                    <span className={`status-pill status-${item.status || 'active'}`} style={{ fontSize: 10 }}>{item.status || 'Active'}</span>
+                  <div className="card-info-header" style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <span style={{ fontSize: 17, fontWeight: 900, color: '#24276F' }}>{item.name}</span>
+                    <div style={{ display: 'inline-flex', padding: '6px 14px', borderRadius: 8, fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.5, background: item.status === 'active' ? 'rgba(16,185,129,0.1)' : '#f8fafc', color: item.status === 'active' ? '#10b981' : '#94a3b8' }}>
+                      {item.status}
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 12, alignItems: 'center', color: 'var(--text-muted)', fontSize: 12 }}>
-                    <span style={{ color: 'var(--primary)', fontWeight: 800 }}>{item.price || item.rate} GHS</span>
-                    <span style={{ opacity: 0.4 }}>•</span>
-                    <span>{item.category || 'Luxury'}</span>
-                    <span style={{ opacity: 0.4 }}>•</span>
-                    <span className="id-pill" style={{ background: 'var(--glass)', color: 'var(--text-muted)', padding: '2px 8px', fontSize: 10, borderRadius: 99 }}>#{item.id}</span>
+                  <div style={{ display: 'flex', gap: 16, alignItems: 'center', color: '#64748b', fontSize: 12, fontWeight: 700 }}>
+                    <span style={{ color: '#DF9738', fontWeight: 900, fontSize: 13 }}>{item.price || item.rate} GHS</span>
+                    <span style={{ opacity: 0.3, width: 1, height: 12, background: '#64748b' }}></span>
+                    <span style={{ textTransform: 'uppercase', letterSpacing: 1 }}>{item.category || 'Luxury'}</span>
+                    <span style={{ opacity: 0.3, width: 1, height: 12, background: '#64748b' }}></span>
+                    <span style={{ background: '#f8fafc', color: '#94a3b8', padding: '4px 10px', borderRadius: 6, fontSize: 10 }}>ID: {item.id}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="card-actions" style={{ display: 'flex', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 12 }}>
                 <button
-                  className="btn btn-edit"
                   onClick={() => setViewItem(item)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="View Details"
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', border: '1px solid #e2e8f0', color: '#24276F', cursor: 'pointer' }}
+                  title="View Vehicle"
                 >
                   <Eye size={18} />
                 </button>
                 <button
-                  className="btn btn-edit"
                   onClick={() => edit(item)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="Edit Model"
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', border: '1px solid #e2e8f0', color: '#24276F', cursor: 'pointer' }}
+                  title="Edit Vehicle"
                 >
                   <Edit2 size={18} />
                 </button>
                 <button
-                  className="btn btn-delete"
                   onClick={() => remove(item.id)}
-                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  title="Delete Model"
+                  style={{ width: 44, height: 44, padding: 0, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', color: '#ef4444', cursor: 'pointer' }}
+                  title="Delete Vehicle"
                 >
                   <Trash2 size={18} />
                 </button>
@@ -622,4 +627,4 @@ export default function AdminVehicles() {
   )
 }
 
-AdminModels.noLayout = true
+AdminVehicles.noLayout = true

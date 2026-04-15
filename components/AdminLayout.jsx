@@ -43,18 +43,18 @@ export default function AdminLayout({ title, children }) {
   const nav = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
     { href: '/admin/orders', label: 'Orders', icon: <ShoppingCart size={20} /> },
-    { href: '/admin/models', label: 'Models', icon: <Box size={20} /> },
-    { href: '/admin/news', label: 'News', icon: <Newspaper size={20} /> },
-    { href: '/admin/testimonials', label: 'Testimonials', icon: <MessageSquare size={20} /> },
+    { href: '/admin/vehicles', label: 'Vehicles', icon: <Box size={20} /> },
+    { href: '/admin/news', label: 'Blog Feed', icon: <Newspaper size={20} /> },
+    { href: '/admin/testimonials', label: 'Reviews', icon: <MessageSquare size={20} /> },
     { href: '/admin/settings', label: 'Settings', icon: <Settings size={20} /> }
   ]
 
   return (
     <div className="admin-shell">
       <aside className="admin-sidebar">
-        <div className="sidebar-logo-area">
-          <div className="sidebar-logo">EKG <span style={{ color: 'var(--primary)' }}>LOGISTICS</span></div>
-          <div className="admin-badge" style={{ marginLeft: 8 }}>HQ</div>
+        <div className="sidebar-logo-area" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 32, marginBottom: 32 }}>
+          <div className="sidebar-logo" style={{ fontSize: 18, fontWeight: 900, letterSpacing: '0.1em' }}>ATLAS <span style={{ color: '#DF9738' }}>RENT-A-CAR</span></div>
+          <div className="admin-badge" style={{ marginLeft: 8, background: '#DF9738', color: '#fff', fontSize: 10, fontWeight: 900, padding: '2px 8px', borderRadius: 4 }}>HQ</div>
         </div>
 
         <div className="sidebar-scrollable-section" style={{ flex: 1, overflowY: 'auto', paddingBottom: 20 }}>
