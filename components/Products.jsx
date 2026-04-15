@@ -308,10 +308,14 @@ function ProfessionalShowcase({ items }) {
   )
 }
 
+const ALL_CATEGORIES = ['All', ...CATEGORIES]
+
 export default function Products({ limit }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('featured')
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -338,9 +342,18 @@ export default function Products({ limit }) {
       .finally(() => setLoading(false))
   }, [])
 
-  const filteredItems = items.filter(item => {
-    return selectedCategory === 'All' || item.category === selectedCategory
-  })
+  // Filtering Logic
+  const filteredItems = items
+    .filter(item => {
+      const matchCategory = selectedCategory === 'All' || item.category === selectedCategory
+      const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchCategory && matchSearch
+    })
+    .sort((a, b) => {
+      if (sortBy === 'price-low') return parseFloat(a.price || a.rate) - parseFloat(b.price || b.rate)
+      if (sortBy === 'price-high') return parseFloat(b.price || b.rate) - parseFloat(a.price || a.rate)
+      return 0
+    })
 
   const displayedItems = limit ? items.slice(0, limit) : filteredItems
 
@@ -359,34 +372,97 @@ export default function Products({ limit }) {
 
   // Otherwise, render the comprehensive Fleet grid
   return (
-    <section className="fleet-section">
-      <div className="section-header">
-        <h2>The Complete Fleet</h2>
-        <p>Browse our comprehensive range of high-end vehicles tailored for excellence.</p>
-      </div>
+    <section className="fleet-section" style={{ background: '#fff', paddingTop: 120 }}>
+      <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 48px' }}>
+        
+        {/* Advanced Filters Bar */}
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: isMobile ? 'column' : 'row', 
+          justifyContent: 'space-between', 
+          alignItems: isMobile ? 'stretch' : 'center', 
+          gap: 24,
+          marginBottom: 48
+        }}>
+          {/* Category Tabs */}
+          <div className="no-scrollbar" style={{ display: 'flex', gap: 24, overflowX: 'auto', paddingBottom: 8 }}>
+            {ALL_CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: '8px 0',
+                  color: selectedCategory === cat ? 'var(--accent)' : 'var(--text-muted)',
+                  fontSize: 14,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {cat}
+                {selectedCategory === cat && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'var(--accent-gold)' }} />}
+              </button>
+            ))}
+          </div>
 
-      <div className="fleet-tabs" style={{ flexWrap: 'wrap' }}>
-        {CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            className={`fleet-tab ${selectedCategory === cat ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+          {/* Search & Sort Panel */}
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+            <input 
+              type="text" 
+              placeholder="Search car model..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                padding: '12px 20px',
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                fontSize: 14,
+                width: isMobile ? '100%' : '240px',
+                outline: 'none'
+              }}
+            />
+            <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{
+                padding: '12px 16px',
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                fontSize: 14,
+                background: '#fff',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              <option value="featured">Featured First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
 
-      {filteredItems.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '100px 20px' }}>
-          <h3 style={{ fontSize: 24, marginBottom: 8 }}>No vehicles found</h3>
-          <p style={{ color: 'var(--text-muted)' }}>Try selecting a different category.</p>
+        {/* Results Info */}
+        <div style={{ marginBottom: 32, fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>
+          {filteredItems.length} vehicles found matching your criteria.
         </div>
-      ) : (
-        <div className="product-grid">
-          {displayedItems.map(i => <ProductCard key={i.id} item={i} />)}
-        </div>
-      )}
+
+        {/* Grid Display */}
+        {filteredItems.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '100px 20px', border: '1px dashed #e2e8f0', borderRadius: 16 }}>
+            <h3 style={{ fontSize: 24, marginBottom: 8 }}>No vehicles found</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or search terms.</p>
+          </div>
+        ) : (
+          <div className="product-grid" style={{ padding: '0 0 100px' }}>
+            {filteredItems.map(i => <ProductCard key={i.id} item={i} />)}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

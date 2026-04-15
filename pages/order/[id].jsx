@@ -111,7 +111,7 @@ export default function OrderPage() {
             width: 80,
             height: 80,
             margin: '0 auto 24px',
-            background: 'linear-gradient(135deg, var(--accent), #ff4444)',
+            background: 'var(--accent)',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
@@ -137,7 +137,7 @@ export default function OrderPage() {
             <strong style={{ color: 'var(--accent-2)' }}>Payment Notice:</strong> Payment will be collected upon vehicle delivery — no online payment required.
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
-            <button className="small" onClick={() => navigate('/my-orders')}>View All Orders</button>
+            <button className="small" onClick={() => navigate('/reservations')}>My Reservations</button>
             <button className="primary" onClick={() => navigate('/models')}>Browse More Models</button>
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function OrderPage() {
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 4 }}>
                   {model.range}{model.rangeUnit && !String(model.range).includes(model.rangeUnit) ? ` ${model.rangeUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -269,7 +269,7 @@ export default function OrderPage() {
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 4 }}>
                   {model.zeroToSixty}{model.zeroToSixtyUnit && !String(model.zeroToSixty).includes(model.zeroToSixtyUnit) ? `${model.zeroToSixtyUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -284,7 +284,7 @@ export default function OrderPage() {
                 border: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 4 }}>
                   {model.topSpeed}{model.topSpeedUnit && !String(model.topSpeed).includes(model.topSpeedUnit) ? ` ${model.topSpeedUnit}` : ''}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -299,7 +299,7 @@ export default function OrderPage() {
                 border: '1px solid rgba(212, 178, 106, 0.6)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
               }}>
-                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 800, color: '#f4d56f', marginBottom: 4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                <div style={{ fontSize: isMobile ? 24 : 32, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 4 }}>
                   {model.rate}
                 </div>
                 <div style={{ fontSize: 13, color: '#ffffff', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
@@ -545,11 +545,12 @@ export default function OrderPage() {
                   <div style={{ color: 'var(--muted)', fontSize: 14 }}>Complete the form below</div>
                 </div>
                 <div style={{
-                  background: 'linear-gradient(135deg, var(--accent), #ff4444)',
+                  background: 'var(--accent)',
                   padding: '10px 16px',
                   borderRadius: 10,
-                  fontWeight: 800,
-                  fontSize: 18
+                  fontWeight: 900,
+                  fontSize: 18,
+                  color: '#fff'
                 }}>
                   {model.rate}
                 </div>
@@ -757,7 +758,7 @@ export default function OrderPage() {
                     borderRadius: 12,
                     background: loading
                       ? 'rgba(100,100,100,0.3)'
-                      : 'linear-gradient(90deg, var(--accent), #ff4444)',
+                      : 'var(--accent)',
                     cursor: loading ? 'not-allowed' : 'pointer',
                     marginTop: 8
                   }}
@@ -787,8 +788,8 @@ export default function OrderPage() {
                   <div>Outside Accra (day): $10 | Overnight: $20</div>
                   <div>Outside Ghana: $35 per night</div>
                 </div>
-                <div style={{ padding: 12, background: 'rgba(255, 80, 80, 0.08)', borderRadius: 8, border: '1px solid rgba(255, 80, 80, 0.15)' }}>
-                  <strong style={{ color: 'var(--primary)', display: 'block', marginBottom: 6 }}>🚨 Emergency Breakdown</strong>
+                <div style={{ padding: 12, background: 'rgba(239, 68, 68, 0.05)', borderRadius: 8, border: '1px solid rgba(239, 68, 68, 0.1)' }}>
+                  <strong style={{ color: '#ef4444', display: 'block', marginBottom: 6 }}>🚨 Emergency Breakdown</strong>
                   <div>Call: +233 (0)501 326 989</div>
                   <div style={{ fontSize: 12, marginTop: 4, color: 'rgba(255,255,255,0.5)' }}>No unauthorized repairs allowed</div>
                 </div>
@@ -856,7 +857,7 @@ export default function OrderPage() {
                 </div>
                 <div style={{ marginTop: 8, padding: 10, background: 'rgba(255, 80, 80, 0.1)', borderRadius: 6 }}>
                   <strong style={{ color: 'var(--primary)', fontSize: 13 }}>⚠️ Important:</strong>
-                  <div style={{ fontSize: 12, marginTop: 4 }}>Do NOT allow unauthorized repairs. Only EKG-approved workshops.</div>
+                  <div style={{ fontSize: 12, marginTop: 4 }}>Do NOT allow unauthorized repairs. Only Atlas-approved workshops.</div>
                 </div>
               </div>
             </div>

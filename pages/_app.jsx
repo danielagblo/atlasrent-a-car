@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }) {
   return (
     <div className="app-root">
       <Head>
-        <title>EKG Logistics - Logistics & Executive Mobility</title>
+        <title>Atlas Rent-A-Car | Luxury Vehicle Rentals & Private Mobility</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
         <link rel="shortcut icon" href="/favicon.ico" />

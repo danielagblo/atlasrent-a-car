@@ -101,7 +101,7 @@ export default function MyOrders() {
     const removeContact = (c) => {
         const newSeeds = seeds.filter(s => s !== c)
         if (typeof window !== 'undefined') {
-            localStorage.setItem('ekg_linked_contacts_v1', JSON.stringify(newSeeds))
+            localStorage.setItem('atlas_linked_contacts_v1', JSON.stringify(newSeeds))
         }
         setSeeds(newSeeds)
         setOrders(null)
@@ -110,15 +110,15 @@ export default function MyOrders() {
     return (
         <Layout>
             <Head>
-                <title>Order History | EKG Luxury Rentals</title>
+                <title>Exhibitions | Atlas Luxury Rentals</title>
             </Head>
 
             <div className="my-orders-page" style={{
-                padding: '100px 20px',
+                padding: '160px 20px 100px',
                 minHeight: '100vh',
-                background: 'var(--bg)',
+                background: '#fff',
                 color: 'var(--text)',
-                backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%)'
+                backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(36, 39, 111, 0.03) 0%, transparent 40%)'
             }}>
                 <div style={{ maxWidth: 1000, margin: '0 auto' }}>
                     <motion.header
@@ -126,9 +126,9 @@ export default function MyOrders() {
                         animate={{ opacity: 1, y: 0 }}
                         style={{ marginBottom: 60, textAlign: 'center' }}
                     >
-                        <div style={{ fontSize: 12, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 800, marginBottom: 12 }}>Your Concierge</div>
-                        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: 'var(--text)', marginBottom: 16, letterSpacing: '-0.02em' }}>Order History</h1>
-                        <p style={{ color: 'var(--muted)', fontSize: '1.1rem', maxWidth: 600, margin: '0 auto' }}>Manage your executive fleet rentals and view all confirmed bookings across your various profiles.</p>
+                        <div style={{ fontSize: 12, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 800, marginBottom: 12 }}>Concierge Service</div>
+                        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: 'var(--accent)', marginBottom: 16, letterSpacing: '-0.02em' }}>My <span className="gradient-text">Reservations</span></h1>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: 600, margin: '0 auto' }}>Manage your high-end fleet rentals and view all confirmed bookings across your various profiles.</p>
                     </motion.header>
 
                     {/* Discovery Dashboard */}
@@ -151,7 +151,7 @@ export default function MyOrders() {
                             >
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
                                     <LinkIcon size={16} style={{ color: '#D4AF37' }} />
-                                    <h3 style={{ margin: 0, fontSize: 13, fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Linked Profiles</h3>
+                                    <h3 style={{ margin: 0, fontSize: 13, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Linked Profiles</h3>
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -219,16 +219,16 @@ export default function MyOrders() {
                                 >
                                     <div style={{
                                         width: 80, height: 80,
-                                        background: 'rgba(212, 175, 55, 0.1)',
+                                        background: 'rgba(36, 39, 111, 0.05)',
                                         borderRadius: '50%',
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         margin: '0 auto 32px'
                                     }}>
-                                        <ShoppingBag size={32} style={{ color: '#D4AF37' }} />
+                                        <ShoppingBag size={32} style={{ color: 'var(--accent)' }} />
                                     </div>
-                                    <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>Find Your Legacy</h2>
-                                    <p style={{ color: 'var(--muted)', marginBottom: 40, maxWidth: 500, margin: '0 auto 40px', lineHeight: 1.6 }}>
-                                        Enter any email or phone number used during your EKG Luxury bookings. We will automatically link and secure your entire fleet history.
+                                    <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent)', marginBottom: 16 }}>Find Your Legacy</h2>
+                                    <p style={{ color: 'var(--text-muted)', marginBottom: 40, maxWidth: 500, margin: '0 auto 40px', lineHeight: 1.6 }}>
+                                        Enter any email or phone number used during your Atlas Luxury bookings. We will automatically link and secure your entire fleet history.
                                     </p>
                                     <form onSubmit={handleManualAdd} style={{ maxWidth: 500, margin: '0 auto', display: 'flex', gap: 12 }}>
                                         <div style={{ position: 'relative', flex: 1 }}>
@@ -255,8 +255,8 @@ export default function MyOrders() {
                                             style={{
                                                 padding: '0 32px',
                                                 borderRadius: 16,
-                                                background: 'linear-gradient(135deg, #D4AF37, #FCEABB)',
-                                                color: '#000',
+                                                background: 'var(--accent)',
+                                                color: '#fff',
                                                 fontWeight: 800,
                                                 border: 'none',
                                                 cursor: 'pointer',
@@ -335,7 +335,7 @@ export default function MyOrders() {
 
                                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
                                                 <div>
-                                                    <h4 style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Contact Record</h4>
+                                                    <h4 style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Contact Record</h4>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--text)' }}>
                                                             <Mail size={16} strokeWidth={1.5} style={{ color: 'var(--muted)' }} /> <span>{order.email}</span>
@@ -346,7 +346,7 @@ export default function MyOrders() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Itinerary</h4>
+                                                    <h4 style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Itinerary</h4>
                                                     <div style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.6 }}>
                                                         <div style={{ marginBottom: 6 }}>
                                                             <Calendar size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: 'middle' }} />
@@ -377,8 +377,8 @@ export default function MyOrders() {
                                     <Box size={40} style={{ color: 'var(--muted)', marginBottom: 20, margin: '0 auto 20px' }} />
                                     <p style={{ color: 'var(--muted)', fontSize: '1.1rem' }}>We couldn't find any confirmed luxury rentals linked to these profiles.</p>
                                     <button
-                                        onClick={() => { setSeeds([]); localStorage.removeItem('ekg_linked_contacts_v1'); }}
-                                        style={{ marginTop: 24, color: '#D4AF37', background: 'none', border: '1px solid rgba(212, 175, 55, 0.3)', padding: '10px 24px', borderRadius: 999, cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
+                                        onClick={() => { setSeeds([]); localStorage.removeItem('atlas_linked_contacts_v1'); }}
+                                        style={{ marginTop: 24, color: 'var(--accent-gold)', background: 'none', border: '1px solid rgba(223, 151, 56, 0.3)', padding: '10px 24px', borderRadius: 999, cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
                                     >
                                         Clear History & Start Fresh
                                     </button>

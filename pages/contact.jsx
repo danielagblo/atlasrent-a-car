@@ -68,13 +68,14 @@ export default function ContactPage() {
   return (
     <Layout>
       {/* Header Section */}
-      <section style={{ padding: isMobile ? '60px 20px' : '80px 60px', background: 'linear-gradient(180deg, rgba(184,144,51,0.05) 0%, transparent 100%)', textAlign: 'center' }}>
+      <section style={{ padding: isMobile ? '120px 20px 60px' : '160px 64px 80px', background: '#fff', textAlign: 'center', borderBottom: '1px solid #f1f5f9' }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ maxWidth: 800, margin: '0 auto' }}>
-          <h1 style={{ fontSize: isMobile ? 40 : 56, marginBottom: 20, color: 'var(--heading)', letterSpacing: '-0.02em' }}>
-            Get in Touch
+          <div style={{ color: 'var(--accent-gold)', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Contact Us</div>
+          <h1 style={{ fontSize: isMobile ? 40 : 56, fontWeight: 900, marginBottom: 20, color: 'var(--accent)', letterSpacing: '-0.03em' }}>
+            Get in <span className="gradient-text">Touch</span>
           </h1>
-          <p style={{ color: 'var(--muted)', fontSize: isMobile ? 16 : 18, lineHeight: 1.6 }}>
-            Whether you need a bespoke transport solution, a fleet for corporate logistics, or a private chauffeur, the team at EKG Transport & Logistics is ready to assist you.
+          <p style={{ color: 'var(--text-muted)', fontSize: isMobile ? 16 : 18, lineHeight: 1.6 }}>
+            Whether you need a bespoke transport solution, a fleet for corporate logistics, or a private chauffeur, the team at Atlas Rent-A-Car is ready to assist you.
           </p>
         </motion.div>
       </section>
@@ -85,7 +86,7 @@ export default function ContactPage() {
           {/* Contact Info Panel */}
           <motion.div variants={stagger} initial="hidden" animate="show">
             <motion.div variants={fadeUp} style={{ marginBottom: 40 }}>
-              <h3 style={{ fontSize: 24, color: '#D4AF37', marginBottom: 24 }}>Contact Information</h3>
+              <h3 style={{ fontSize: 24, color: 'var(--accent-gold)', fontWeight: 800, marginBottom: 24 }}>Contact Information</h3>
               <div style={{ display: 'grid', gap: 24 }}>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(212, 175, 55, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
@@ -184,7 +185,7 @@ export default function ContactPage() {
               <button type="submit" disabled={loading} style={{
                 width: '100%',
                 padding: '16px',
-                background: loading ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #E30613, #ff4444)',
+                background: loading ? 'rgba(36, 39, 111, 0.1)' : 'var(--accent)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: 12,

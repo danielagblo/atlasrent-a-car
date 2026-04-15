@@ -17,11 +17,11 @@ export default function MissionPage() {
 
   return (
     <Layout>
-      <section style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '60px 20px' : '100px 60px', background: 'var(--bg)' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: isMobile ? '120px 20px 60px' : '160px 60px 100px', background: '#fff' }}>
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05), transparent 40%), radial-gradient(circle at 90% 80%, rgba(227, 6, 19, 0.05), transparent 50%)',
+          background: 'radial-gradient(circle at 10% 20%, rgba(36, 39, 111, 0.05), transparent 40%), radial-gradient(circle at 90% 80%, rgba(223, 151, 56, 0.05), transparent 50%)',
           zIndex: 0
         }}></div>
 
@@ -34,17 +34,17 @@ export default function MissionPage() {
               borderRadius: 999,
               padding: '6px 16px',
               marginBottom: 24,
-              background: 'rgba(212, 175, 55, 0.1)',
-              border: '1px solid rgba(212, 175, 55, 0.2)',
-              color: '#D4AF37',
+              background: 'rgba(36, 39, 111, 0.05)',
+              border: '1px solid rgba(36, 39, 111, 0.1)',
+              color: 'var(--accent)',
               fontSize: 12,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               fontWeight: 700
             }}>Our Mission</motion.div>
 
-            <motion.h1 variants={fadeUp} style={{ fontSize: isMobile ? 36 : 56, fontWeight: 800, lineHeight: 1.1, marginBottom: 24, color: 'var(--text)', letterSpacing: '-0.02em' }}>
-              Setting the Standard for <span style={{ background: 'linear-gradient(135deg, #D4AF37, #FCEABB)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>Premium Transport</span>
+            <motion.h1 variants={fadeUp} style={{ fontSize: isMobile ? 36 : 56, fontWeight: 900, lineHeight: 1.1, marginBottom: 24, color: 'var(--accent)', letterSpacing: '-0.02em' }}>
+              Setting the Standard for <span className="gradient-text">Premium Transport</span>
             </motion.h1>
 
             <motion.p variants={fadeUp} style={{ color: 'var(--muted)', fontSize: isMobile ? 16 : 18, lineHeight: 1.8, marginBottom: 32 }}>
@@ -52,14 +52,14 @@ export default function MissionPage() {
             </motion.p>
 
             <motion.div variants={fadeUp} style={{ display: 'grid', gap: 20 }}>
-              <div style={{ padding: 24, background: 'var(--glass)', borderRadius: 16, border: '1px solid var(--glass-border)' }}>
-                <h3 style={{ fontSize: 20, color: '#D4AF37', marginBottom: 12 }}>Uncompromising Safety</h3>
-                <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>All vehicles are comprehensively insured with 24-hour tracked monitoring and are driven by rigorously trained defensive drivers.</p>
+              <div style={{ padding: 24, background: '#f8fafc', borderRadius: 16, border: '1px solid #f1f5f9' }}>
+                <h3 style={{ fontSize: 20, color: 'var(--accent-gold)', fontWeight: 800, marginBottom: 12 }}>Uncompromising Safety</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>All vehicles are comprehensively insured with 24-hour tracked monitoring and are driven by rigorously trained defensive drivers.</p>
               </div>
 
-              <div style={{ padding: 24, background: 'var(--glass)', borderRadius: 16, border: '1px solid var(--glass-border)' }}>
-                <h3 style={{ fontSize: 20, color: '#D4AF37', marginBottom: 12 }}>Reliability & Flexibility</h3>
-                <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>Unlimited mileage, flexible payment options, and quick vehicle replacement guarantees peace of mind unconditionally.</p>
+              <div style={{ padding: 24, background: '#f8fafc', borderRadius: 16, border: '1px solid #f1f5f9' }}>
+                <h3 style={{ fontSize: 20, color: 'var(--accent-gold)', fontWeight: 800, marginBottom: 12 }}>Reliability & Flexibility</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: 15, margin: 0, lineHeight: 1.6 }}>Unlimited mileage, flexible payment options, and quick vehicle replacement guarantees peace of mind unconditionally.</p>
               </div>
             </motion.div>
           </motion.div>

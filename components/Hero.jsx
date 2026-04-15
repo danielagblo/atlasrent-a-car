@@ -52,7 +52,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           Premium Vehicles, <br />
-          <span className="gradient-text">Exceptional Service.</span>
+          <span style={{ color: 'var(--accent-gold)' }}>Exceptional Service.</span>
         </motion.h1>
 
         <motion.p

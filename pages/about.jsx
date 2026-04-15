@@ -1,206 +1,185 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Layout from '../components/Layout'
-import IMAGES from '../data/images'
-
-const Lock = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-)
-const User = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-)
-const ArrowRight = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-)
-
-const fadeUp = { hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }
-const stagger = { show: { transition: { staggerChildren: 0.1 } } }
+import Link from 'next/link'
+import { CheckCircle2, MapPin, Users, Award, Shield } from 'lucide-react'
 
 export default function AboutPage() {
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768)
-  const [brands, setBrands] = useState([])
-
+  const [isMobile, setIsMobile] = useState(false)
+  
   useEffect(() => {
+    setIsMobile(window.innerWidth <= 768)
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
     window.addEventListener('resize', handleResize)
-
-    // Fetch live brand settings from Admin configuration
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.featuredBrands) {
-          setBrands(data.featuredBrands.split(',').map(s => s.trim()).filter(Boolean))
-        }
-      })
-      .catch(e => console.error('Failed to load branding', e))
-
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const team = [
+    {
+      name: "Kenerick Akwasi Marfo",
+      role: "Founder & CEO",
+      img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+      bio: "Kenerick is the visionary founder of Atlas, driven by a commitment to excellence and years of experience in the luxury hospitality and automotive sectors."
+    },
+    {
+      name: "David Williams",
+      role: "Kumasi Branch Manager",
+      img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop",
+      bio: "A dedicated leader in automotive management, David ensures the highest standards of service for our clients across the Kumasi region."
+    },
+    {
+      name: "Francis Nartey",
+      role: "Transport Manager",
+      img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop",
+      bio: "Francis oversees our elite fleet with a meticulous approach to maintenance, logistics, and uncompromising vehicle safety."
+    }
+  ]
+
   return (
     <Layout>
-      {/* Header Section */}
-      <section style={{ padding: isMobile ? '60px 20px' : '80px 60px', background: 'linear-gradient(180deg, rgba(184,144,51,0.05) 0%, transparent 100%)', textAlign: 'center' }}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ maxWidth: 800, margin: '0 auto' }}>
-          <h1 style={{ fontSize: isMobile ? 40 : 56, marginBottom: 20, color: 'var(--text)', letterSpacing: '-0.02em' }}>
-            About <span style={{ color: '#D4AF37' }}>EKG</span>
-          </h1>
-          <p style={{ color: 'var(--muted)', fontSize: isMobile ? 16 : 18, lineHeight: 1.6 }}>
-            A wholly owned Ghanaian company providing premium car rental, logistics, travel and tour services tailored for executives and individuals.
-          </p>
-        </motion.div>
-      </section>
-
-      <section className="page page-about" style={{ padding: isMobile ? '20px 20px 40px' : '20px 60px 60px', maxWidth: 1400, margin: '0 auto' }}>
-
-        <motion.div variants={stagger} initial="hidden" animate="show" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.2fr 1fr', gap: isMobile ? 40 : 60, marginBottom: isMobile ? 60 : 80 }}>
-          <motion.div variants={fadeUp} style={{ padding: isMobile ? 32 : 48, background: 'var(--glass)', borderRadius: 24, border: '1px solid var(--glass-border)' }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              borderRadius: 999,
-              padding: '6px 16px',
-              marginBottom: 24,
-              background: 'rgba(212, 175, 55, 0.1)',
-              border: '1px solid rgba(212, 175, 55, 0.2)',
-              color: '#D4AF37',
-              fontSize: 12,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              fontWeight: 700
-            }}>Company Profile</div>
-            <h3 style={{ fontSize: 32, marginBottom: 24, color: 'var(--text)' }}>Driven by Excellence</h3>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: 16 }}>
-              EKG Transport and Logistics is duly incorporated under the Laws of the Republic of Ghana to provide car rental, logistics, travel and tour services. We are committed to fully meeting and satisfying our customers' requirements and expectations by providing friendly, reliable, cost-effective, timely, and high-quality rental services.
-            </p>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: 16, marginTop: 16 }}>
-              Our principle of flexibility, accessibility and affordability has helped the company to succeed to this day. Our drivers are carefully screened and undergo rigorous training and continuous professional development, guaranteeing the very best in customer service and safety.
+      <div style={{ background: '#fcfcfd', color: '#24276F' }}>
+        
+        {/* Cinematic Hero */}
+        <section style={{ 
+          minHeight: '60vh',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: `linear-gradient(rgba(10, 10, 12, 0.7), rgba(15, 15, 20, 0.9)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: '#fff',
+          textAlign: 'center',
+          padding: isMobile ? '160px 24px 80px' : '100px 64px'
+        }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 800 }}>
+            <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(223, 151, 56, 0.15)', border: '1px solid var(--accent-gold)', borderRadius: 999, marginBottom: 24, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
+              Our Story
+            </div>
+            <h1 style={{ fontSize: isMobile ? 44 : 85, fontWeight: 900, marginBottom: 24, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#fff' }}>
+              Defining <span style={{ color: 'var(--accent-gold)' }}>Excellence</span> <br/>
+              <span style={{ opacity: 0.6, fontSize: isMobile ? 32 : 60, display: 'block', marginTop: 12 }}>Since Day One</span>
+            </h1>
+            <p style={{ fontSize: 20, lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: 650, margin: '0 auto' }}>
+              Atlas Rent-a-Car is your trusted mobility partner in Dansoman, Accra. We are dedicated to providing reliable, affordable, and high-end services tailored to your unique travel needs.
             </p>
           </motion.div>
+        </section>
 
-          <motion.div variants={fadeUp} style={{ padding: isMobile ? 32 : 48, background: 'rgba(212, 175, 55, 0.05)', borderRadius: 24, border: '1px solid rgba(212, 175, 55, 0.15)' }}>
-            <h3 style={{ fontSize: 24, marginBottom: 24, color: '#D4AF37' }}>Why Choose EKG?</h3>
-            <div style={{ display: 'grid', gap: 16 }}>
+        {/* Immersive Elite Tiles - Why Choose Atlas */}
+        <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+            
+            {/* Redesigned Asymmetric Title */}
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: 40, marginBottom: 80 }}>
+              <div style={{ width: 4, height: 80, background: 'var(--accent-gold)', display: isMobile ? 'none' : 'block' }} />
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 12 }}>The Atlas Advantage</div>
+                <h2 style={{ fontSize: isMobile ? 40 : 64, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                  Why Choose <br/> <span style={{ color: 'var(--accent-gold)' }}>The Atlas Experience</span>?
+                </h2>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? '300px' : '350px', gap: 24 }}>
               {[
-                "Wide selection of cars with full range accessories for comfort and safety",
-                "All vehicles comprehensively insured with valid licenses and certifications",
-                "24-hour monitored tracking device installed in all vehicles",
-                "Well trained defensive drivers with valid Ghanaian driver licence",
-                "Unlimited mileage per day with flexible payment options",
-                "Quick vehicle replacement during unexpected breakdowns"
-              ].map((item, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#D4AF37', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, flexShrink: 0, marginTop: 2 }}>✓</div>
-                  <p style={{ color: 'var(--text)', margin: 0, fontSize: 15, lineHeight: 1.6 }}>{item}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Services Grid */}
-        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <h3 style={{ fontSize: isMobile ? 32 : 40, color: 'var(--text)', marginBottom: 16 }}>Our Core Services</h3>
-            <p style={{ color: 'var(--muted)', fontSize: 16 }}>End-to-end transport solutions designed for your needs.</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
-            {[
-              { icon: '🚗', title: 'Car Rental', desc: `Ultra-modern cars from ${brands.length > 0 ? brands.join(', ') : 'leading brands'}. Short, medium and long-term hire with flexible rates.` },
-              { icon: '🗺️', title: 'Travel & Tour', desc: 'City tours, coastal tours, culture tours, festival tours and natural environment tours across Ghana.' },
-              { icon: '📋', title: 'Immigration Services', desc: 'Visa on arrival, work permits, residence permits and accommodation assistance for international staff.' },
-              { icon: '🤝', title: 'Meet & Greet', desc: 'Personalized welcome ceremonies with local culture dance groups for VIPs and special guests.' },
-              { icon: '📦', title: 'Logistics', desc: 'Comprehensive supply chain and logistics solutions for your business needs.' },
-              { icon: '👨‍✈️', title: 'Chauffeur Services', desc: 'Professional chauffeur-driven services with drivers who have broad knowledge of Ghana.' }
-            ].map((srv, idx) => (
-              <motion.div key={idx} whileHover={{ y: -8, border: '1px solid rgba(212, 175, 55, 0.4)' }} style={{ padding: 32, background: 'var(--glass)', borderRadius: 20, border: '1px solid var(--glass-border)', transition: 'all 0.3s ease' }}>
-                <div style={{ width: 64, height: 64, borderRadius: 16, background: 'rgba(212, 175, 55, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, marginBottom: 20 }}>{srv.icon}</div>
-                <h4 style={{ marginBottom: 12, fontSize: 20, color: 'var(--text)' }}>{srv.title}</h4>
-                <p style={{ color: 'var(--muted)', fontSize: 15, lineHeight: 1.6, margin: 0 }}>{srv.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Chauffeur Details */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ marginTop: isMobile ? 60 : 100 }}>
-          <h3 style={{ fontSize: isMobile ? 32 : 40, marginBottom: 40, textAlign: 'center', color: 'var(--text)' }}>Chauffeur-Driven Service</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 24 : 40 }}>
-            <div style={{ padding: 40, background: 'var(--glass)', borderRadius: 24, border: '1px solid var(--glass-border)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
-                <div style={{ fontSize: 32 }}>⏰</div>
-                <h4 style={{ fontSize: 24, color: 'var(--text)', margin: 0 }}>Service Hours</h4>
-              </div>
-              <div style={{ display: 'grid', gap: 16 }}>
-                {[
-                  { k: 'Minimum Rental', v: '6 hours per day' },
-                  { k: 'Maximum Rental', v: '12 hours per day' },
-                  { k: 'Additional Hours', v: 'Charged per hour based on vehicle type' },
-                  { k: 'Driver Break', v: '12:00 noon - 2:00 PM' }
-                ].map((h, i) => (
-                  <div key={i} style={{ padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--glass-border)' }}>
-                    <div style={{ fontWeight: 600, marginBottom: 4, color: '#D4AF37', fontSize: 14, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h.k}</div>
-                    <div style={{ color: 'var(--text)', fontSize: 15 }}>{h.v}</div>
+                { col: 'span 3', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans, we offer a diverse fleet to suit every occasion." },
+                { col: 'span 3', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options, including daily, weekly, and monthly plans." },
+                { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Our friendly and professional team is here to ensure your experience is smooth and enjoyable." },
+                { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible and ready to serve you." },
+                { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear, straightforward pricing and terms." }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  whileHover={{ scale: 0.98 }}
+                  className="benefit-tile"
+                  style={{ 
+                    gridColumn: isMobile ? 'span 6' : item.col,
+                    position: 'relative',
+                    borderRadius: 32,
+                    overflow: 'hidden',
+                    background: '#1a1b1e',
+                    border: '1px solid rgba(223, 151, 56, 0.1)'
+                  }}
+                >
+                  <img 
+                    src={item.img} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, transition: 'transform 0.8s ease' }} 
+                    className="tile-img"
+                    alt={item.t}
+                  />
+                  <div style={{ 
+                    position: 'absolute', 
+                    inset: 0, 
+                    background: 'linear-gradient(to top, rgba(10, 10, 12, 1) 0%, rgba(10, 10, 12, 0.4) 50%, transparent 100%)',
+                    padding: 40,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    zIndex: 1
+                  }}>
+                    <div style={{ color: 'var(--accent-gold)', marginBottom: 16 }}>{item.icon}</div>
+                    <h3 style={{ fontSize: 22, fontWeight: 900, color: '#fff', marginBottom: 12 }}>{item.t}</h3>
+                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ padding: 40, background: 'var(--glass)', borderRadius: 24, border: '1px solid var(--glass-border)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
-                <div style={{ fontSize: 32 }}>💰</div>
-                <h4 style={{ fontSize: 24, color: 'var(--text)', margin: 0 }}>Chauffeur Allowances</h4>
-              </div>
-              <div style={{ display: 'grid', gap: 16 }}>
-                {[
-                  { k: 'Outside Accra (Day Trip)', v: '$10.00 per day' },
-                  { k: 'Outside Accra (Overnight)', v: '$20.00 per night' },
-                  { k: 'Outside Ghana', v: '$35.00 per night (for accommodation)' }
-                ].map((h, i) => (
-                  <div key={i} style={{ padding: 16, background: 'var(--glass)', borderRadius: 12, border: '1px solid var(--glass-border)' }}>
-                    <div style={{ fontWeight: 600, marginBottom: 4, color: '#D4AF37', fontSize: 14, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h.k}</div>
-                    <div style={{ color: 'var(--text)', fontSize: 15 }}>{h.v}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginTop: 24, padding: 32, background: 'rgba(212, 175, 55, 0.05)', borderRadius: 24, border: '1px solid rgba(212, 175, 55, 0.15)' }}>
-            <h4 style={{ fontSize: 20, marginBottom: 20, color: '#D4AF37' }}>Important Notes</h4>
-            <div style={{ display: 'grid', gap: 16 }}>
-              {[
-                "All vehicles are comprehensively insured, and the driver oversees vehicle safety.",
-                "Reasonable break and lunch periods (12 noon - 2:00 PM) are mandatory for driver welfare.",
-                "Clients must sign log sheets and verify fuel levels at the close of each day.",
-                "Driver allowances are paid in addition to vehicle rental fees for services outside Accra and Ghana."
-              ].map((note, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#D4AF37', flexShrink: 0 }}></div>
-                  <p style={{ color: 'var(--text)', margin: 0, fontSize: 15 }}>{note}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </motion.div>
+          
+          <style jsx>{`
+            .benefit-tile:hover .tile-img {
+              transform: scale(1.15);
+            }
+          `}</style>
+        </section>
 
-        {/* Brands Box */}
-        <motion.div whileInView={{ scale: [0.95, 1], opacity: [0, 1] }} transition={{ duration: 0.5 }} viewport={{ once: true }} style={{ marginTop: 80, padding: isMobile ? 40 : 60, background: 'linear-gradient(135deg, rgba(227, 6, 19, 0.1), rgba(212, 175, 55, 0.1))', borderRadius: 24, border: '1px solid rgba(212, 175, 55, 0.2)', textAlign: 'center' }}>
-          <div style={{ fontSize: 12, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 800, marginBottom: 12 }}>Authorized Fleet</div>
-          <h3 style={{ fontSize: isMobile ? 28 : 36, marginBottom: 32, color: 'var(--text)' }}>Vehicle Brands We Offer</h3>
-          <div style={{ display: 'flex', gap: isMobile ? 24 : 48, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-            {brands.map(brand => (
-              <div key={brand} style={{ fontSize: isMobile ? 24 : 32, fontWeight: 900, color: 'var(--text)', opacity: 0.9, letterSpacing: '-0.02em', margin: '0 12px' }}>{brand}</div>
-            ))}
+        {/* The Team Section */}
+        <section style={{ padding: isMobile ? '80px 24px' : '120px 64px', background: '#f8fafc' }}>
+            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: 64 }}>
+                <h2 style={{ fontSize: 36, fontWeight: 900, marginBottom: 16 }}>Meet Our <span className="gradient-text">Leadership</span></h2>
+                <p style={{ color: '#64748b' }}>The experts ensuring your safe and seamless travel in Ghana.</p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
+                {team.map((person, i) => (
+                  <motion.div 
+                    key={i}
+                    whileHover={{ y: -10 }}
+                    style={{ 
+                      background: '#fff', 
+                      borderRadius: 24, 
+                      padding: 32, 
+                      boxShadow: '0 10px 30px rgba(36, 39, 111, 0.03)',
+                      border: '1px solid #f1f5f9',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px', border: '4px solid #f8fafc' }}>
+                      <img src={person.img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
+                    </div>
+                    <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 4 }}>{person.name}</h3>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>{person.role}</div>
+                    <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{person.bio}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+        </section>
+
+        {/* Simple CTA */}
+        <section style={{ padding: '100px 24px', background: '#fff', textAlign: 'center' }}>
+          <div style={{ maxWidth: 600, margin: '0 auto' }}>
+             <h2 style={{ fontSize: 32, fontWeight: 900, marginBottom: 24 }}>Ready for your next journey?</h2>
+             <Link href="/models" className="cta" style={{ display: 'inline-block', background: 'var(--accent)', color: '#fff', padding: '16px 40px', borderRadius: 999, fontWeight: 700, textDecoration: 'none' }}>
+               Browse Collection
+             </Link>
           </div>
-          <p style={{ color: 'var(--muted)', marginTop: 24, fontSize: 16 }}>Available in sedan, 4x4, mini bus and vans.</p>
-        </motion.div>
+        </section>
 
-      </section>
-
-      {/* Display Fleet / Products Section */}
-
+      </div>
     </Layout>
   )
 }
