@@ -326,7 +326,7 @@ export default function Products({ limit }) {
   }, [])
 
   useEffect(() => {
-    fetch('/api/models')
+    fetch('/api/vehicles')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

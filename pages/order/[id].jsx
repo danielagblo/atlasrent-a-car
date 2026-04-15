@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { saveOrder } from '../../lib/orders'
-import { getModels } from '../../lib/modelsApi'
+import { getVehicles } from '../../lib/vehiclesApi'
 import CldOptimizedImage, { getCldImageUrl } from '../../components/CldOptimizedImage'
 
 export default function OrderPage() {
@@ -12,9 +12,9 @@ export default function OrderPage() {
     if (typeof to === 'number') return router.back()
     return router.push(to)
   }
-  const [models, setModels] = React.useState([])
-  const [modelsLoading, setModelsLoading] = React.useState(true)
-  const model = models.find(m => String(m.id) === String(id))
+   const [vehicles, setVehicles] = React.useState([])
+   const [vehiclesLoading, setVehiclesLoading] = React.useState(true)
+   const model = vehicles.find(m => String(m.id) === String(id))
 
   const [form, setForm] = React.useState({ name: '', email: '', phone: '', start: '', end: '', location: '', note: '' })
   const [loading, setLoading] = React.useState(false)
@@ -31,20 +31,20 @@ export default function OrderPage() {
 
   React.useEffect(() => {
     let mounted = true
-      ; (async () => {
-        const data = await getModels()
-        if (mounted) {
-          setModels(data)
-          setModelsLoading(false)
-        }
-      })()
+       ; (async () => {
+         const data = await getVehicles()
+         if (mounted) {
+           setVehicles(data)
+           setVehiclesLoading(false)
+         }
+       })()
     return () => { mounted = false }
   }, [])
 
-  if (modelsLoading) {
+  if (vehiclesLoading) {
     return (
       <section style={{ padding: 60 }}>
-        <h2>Loading model...</h2>
+        <h2>Loading vehicle...</h2>
       </section>
     )
   }

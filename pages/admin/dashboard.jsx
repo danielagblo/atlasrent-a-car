@@ -31,7 +31,7 @@ export default function AdminDashboard() {
         try {
           const [oRes, mRes, nRes, tRes] = await Promise.all([
             fetch('/api/orders', { headers: { Authorization: `Bearer ${token}` } }),
-            fetch('/api/models', { headers: { Authorization: `Bearer ${token}` } }),
+            fetch('/api/vehicles', { headers: { Authorization: `Bearer ${token}` } }),
             fetch('/api/news', { headers: { Authorization: `Bearer ${token}` } }),
             fetch('/api/testimonials', { headers: { Authorization: `Bearer ${token}` } })
           ])

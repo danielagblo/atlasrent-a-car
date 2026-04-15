@@ -64,7 +64,7 @@ export default function AdminVehicles() {
     let mounted = true
       ; (async () => {
         try {
-          const res = await fetch('/api/models', { headers: { Authorization: `Bearer ${token}` } })
+          const res = await fetch('/api/vehicles', { headers: { Authorization: `Bearer ${token}` } })
           if (res.status === 401) {
             localStorage.removeItem('admin_token')
             router.replace('/admin/login')
@@ -198,7 +198,7 @@ export default function AdminVehicles() {
     setError('')
     const token = localStorage.getItem('admin_token')
     const method = editingId ? 'PUT' : 'POST'
-    const url = editingId ? `/api/models/${editingId}` : '/api/models'
+    const url = editingId ? `/api/vehicles/${editingId}` : '/api/vehicles'
 
     try {
       const res = await fetch(url, {
@@ -232,7 +232,7 @@ export default function AdminVehicles() {
     setError('')
     const token = localStorage.getItem('admin_token')
     try {
-      const res = await fetch(`/api/models/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      const res = await fetch(`/api/vehicles/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
       if (res.status === 401) {
         localStorage.removeItem('admin_token')
         router.replace('/admin/login')
