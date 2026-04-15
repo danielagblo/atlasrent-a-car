@@ -12,12 +12,12 @@ export default function Hero() {
   const heroBgUrl = IMAGES.hero?.startsWith('http') || IMAGES.hero?.startsWith('/')
     ? IMAGES.hero
     : getCldImageUrl({
-        src: IMAGES.hero || 'hero-placeholder',
-        width: 1920,
-        height: 1080,
-        crop: 'fill',
-        gravity: 'center'
-      });
+      src: IMAGES.hero || 'hero-placeholder',
+      width: 1920,
+      height: 1080,
+      crop: 'fill',
+      gravity: 'center'
+    });
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
@@ -36,7 +36,7 @@ export default function Hero() {
         alt="Luxury Fleet"
         className="hero-video-bg"
       />
-      
+
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -51,10 +51,10 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Premium Vehicles, <br/>
+          Premium Vehicles, <br />
           <span className="gradient-text">Exceptional Service.</span>
         </motion.h1>
-        
+
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,7 +62,7 @@ export default function Hero() {
         >
           Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 concierge service across Ghana.
         </motion.p>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,7 +78,7 @@ export default function Hero() {
               <option value="kumasi">Kumasi</option>
             </select>
           </div>
-          
+
           <div className="booking-field-group">
             <label>Pick-up Date</label>
             <input type="date" />
@@ -96,7 +96,7 @@ export default function Hero() {
           </div>
 
           <button className="btn-premium" onClick={() => router.push('/models')}>
-            Search Fleet
+            Find Car
           </button>
         </motion.div>
       </div>

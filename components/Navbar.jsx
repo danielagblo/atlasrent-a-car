@@ -18,10 +18,10 @@ export default function Navbar() {
   }, [])
 
   return (
-    <motion.header 
-      className="nav" 
-      initial={{ y: -40, opacity: 0 }} 
-      animate={{ y: 0, opacity: 1 }} 
+    <motion.header
+      className="nav"
+      initial={{ y: -40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       style={{ padding: scrolled ? '16px 48px' : '24px 48px' }}
     >
@@ -38,14 +38,14 @@ export default function Navbar() {
           <Link href="/about" className={router.pathname === '/about' ? 'active' : ''}>About</Link>
           <Link href="/blog" className={router.pathname === '/blog' ? 'active' : ''}>Blog</Link>
           <Link href="/faqs" className={router.pathname === '/faqs' ? 'active' : ''}>FAQs</Link>
-          <Link href="/contact" className="cta">Reserve Now</Link>
+          <Link href="/contact" className="cta">Contact Us</Link>
         </div>
 
-        <button 
-          className="theme-toggle" 
-          style={{ display: 'none' /* Will show via CSS media query on mobile */ }} 
-          aria-expanded={open} 
-          onClick={() => setOpen(v => !v)} 
+        <button
+          className="theme-toggle"
+          style={{ display: 'none' /* Will show via CSS media query on mobile */ }}
+          aria-expanded={open}
+          onClick={() => setOpen(v => !v)}
           aria-label="Toggle menu"
         >
           {open ? <X size={20} /> : <Menu size={20} />}

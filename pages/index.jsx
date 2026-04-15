@@ -6,6 +6,44 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
 import { Heart, Car, Flag, MessageCircle } from 'lucide-react'
+import { useInView } from 'framer-motion'
+
+function Counter({ value, duration = 2 }) {
+  const [count, setCount] = React.useState(0);
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  React.useEffect(() => {
+    if (isInView) {
+      let start = 0;
+      const end = parseInt(value.replace(/[,.]/g, ''));
+      if (start === end) return;
+
+      let totalMiliseconds = duration * 1000;
+      let incrementTime = (totalMiliseconds / end) * 5; // simplified logic
+
+      let timer = setInterval(() => {
+        start += Math.ceil(end / 100);
+        if (start >= end) {
+          setCount(end);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 30);
+      return () => clearInterval(timer);
+    }
+  }, [isInView, value, duration]);
+
+  const formatNumber = (num) => {
+    if (value.includes('.')) {
+      return num.toLocaleString('de-DE');
+    }
+    return num.toLocaleString();
+  };
+
+  return <span ref={ref}>{formatNumber(count)}</span>;
+}
 
 function Statistics() {
   const stats = [
@@ -31,7 +69,7 @@ function Statistics() {
               {s.icon}
             </div>
             <div style={{ fontSize: 36, fontWeight: 900, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.02em' }}>
-              {s.value}
+              <Counter value={s.value} />
             </div>
             <div style={{ fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {s.label}
