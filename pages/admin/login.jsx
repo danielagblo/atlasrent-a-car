@@ -40,24 +40,26 @@ export default function AdminLogin() {
   return (
     <div className="login-page">
       <Head>
-        <title>Admin Login | EKG Logistics</title>
+        <title>Admin Login | Atlas Rent-A-Car</title>
       </Head>
 
       <div className="login-container">
         <div className="login-card">
           <div className="login-brand">
-            <div className="brand-logo">EKG</div>
-            <h1 className="brand-title">Welcome Back</h1>
-            <p className="brand-subtitle">Sign in to access your dashboard</p>
+            <div className="brand-logo">
+              ATLAS <span>RENT</span>
+            </div>
+            <h1 className="brand-title">Secure Portal</h1>
+            <p className="brand-subtitle">Management authentication required</p>
           </div>
 
           <form onSubmit={submit} className="login-form">
             <div className="login-field">
-              <label>Email Address</label>
+              <label>Administrator User</label>
               <div className="input-with-icon">
                 <User size={18} className="input-icon" />
                 <input
-                  placeholder="name@company.com"
+                  placeholder="admin@atlasrent.com"
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -67,7 +69,7 @@ export default function AdminLogin() {
             </div>
 
             <div className="login-field">
-              <label>Password</label>
+              <label>Secure Password</label>
               <div className="input-with-icon">
                 <Lock size={18} className="input-icon" />
                 <input
@@ -83,13 +85,13 @@ export default function AdminLogin() {
             {error && <div className="login-error">{error}</div>}
 
             <button className="login-submit" type="submit" disabled={loading}>
-              <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
+              <span>{loading ? 'Verifying Credentials...' : 'Access Dashboard'}</span>
               {!loading && <ArrowRight size={18} />}
             </button>
           </form>
 
           <div className="login-footer">
-            <p>Protected area. Authorized access only.</p>
+            <p>&copy; 2026 Atlas Rent-A-Car. Professional Division.</p>
           </div>
         </div>
       </div>
@@ -100,12 +102,12 @@ export default function AdminLogin() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #000;
+          background: #080810;
           background-image: 
-            radial-gradient(at 0% 0%, rgba(227, 6, 19, 0.15) 0, transparent 50%), 
-            radial-gradient(at 100% 100%, rgba(227, 6, 19, 0.05) 0, transparent 50%);
+            radial-gradient(at 0% 0%, rgba(36, 39, 111, 0.4) 0, transparent 50%), 
+            radial-gradient(at 100% 100%, rgba(223, 151, 56, 0.1) 0, transparent 50%);
           padding: 24px;
-          font-family: inherit;
+          font-family: 'Inter', sans-serif;
         }
 
         .login-container {
@@ -115,13 +117,13 @@ export default function AdminLogin() {
         }
 
         .login-card {
-          background: rgba(18, 18, 18, 0.8);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          background: rgba(21, 21, 37, 0.8);
+          backdrop-filter: blur(40px);
+          -webkit-backdrop-filter: blur(40px);
           padding: 60px;
           border-radius: 40px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
         }
 
         .login-brand {
@@ -130,32 +132,33 @@ export default function AdminLogin() {
         }
 
         .brand-logo {
-          width: 80px;
-          height: 80px;
-          background: #E30613;
-          color: white;
           font-size: 28px;
-          font-weight: 900;
+          font-weight: 950;
+          color: white;
+          letter-spacing: 0.1em;
+          margin-bottom: 24px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 24px;
-          margin: 0 auto 28px;
-          box-shadow: 0 20px 40px -10px rgba(227, 6, 19, 0.4);
-          transform: rotate(-5deg);
+          gap: 8px;
+        }
+
+        .brand-logo span {
+          color: #DF9738;
+          font-weight: 400;
         }
 
         .brand-title {
           font-size: 32px;
-          font-weight: 900;
+          font-weight: 800;
           color: white;
           margin-bottom: 12px;
           letter-spacing: -0.02em;
         }
 
         .brand-subtitle {
-          color: rgba(255, 255, 255, 0.4);
-          font-size: 16px;
+          color: rgba(255, 255, 255, 0.5);
+          font-size: 15px;
           font-weight: 500;
         }
 
@@ -168,10 +171,10 @@ export default function AdminLogin() {
           display: block;
           font-size: 11px;
           font-weight: 800;
-          color: rgba(255, 255, 255, 0.3);
+          color: #DF9738;
           margin-bottom: 12px;
           text-transform: uppercase;
-          letter-spacing: 1.5px;
+          letter-spacing: 2px;
         }
 
         .input-with-icon {
@@ -183,15 +186,15 @@ export default function AdminLogin() {
           left: 20px;
           top: 50%;
           transform: translateY(-50%);
-          color: rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.3);
           transition: all 0.3s ease;
         }
 
         .input-with-icon input {
           width: 100%;
           height: 64px;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 20px;
           padding: 0 24px 0 60px;
           color: white;
@@ -202,20 +205,20 @@ export default function AdminLogin() {
         }
 
         .input-with-icon input:focus {
-          border-color: rgba(227, 6, 19, 0.5);
-          background: rgba(227, 6, 19, 0.02);
-          box-shadow: 0 0 0 4px rgba(227, 6, 19, 0.1);
+          border-color: #DF9738;
+          background: rgba(223, 151, 56, 0.05);
+          box-shadow: 0 0 0 4px rgba(223, 151, 56, 0.1);
         }
 
         .input-with-icon input:focus + .input-icon {
-          color: #E30613;
+          color: #DF9738;
         }
 
         .login-error {
           padding: 16px 20px;
-          background: rgba(227, 6, 19, 0.1);
-          border: 1px solid rgba(227, 6, 19, 0.2);
-          color: #FF3B30;
+          background: rgba(255, 59, 48, 0.1);
+          border: 1px solid rgba(255, 59, 48, 0.2);
+          color: #FF6B6B;
           border-radius: 16px;
           font-size: 14px;
           font-weight: 600;
@@ -224,12 +227,12 @@ export default function AdminLogin() {
 
         .login-submit {
           height: 64px;
-          background: #E30613;
+          background: #24276F;
           color: white;
-          border: none;
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 20px;
-          font-size: 16px;
-          font-weight: 900;
+          font-size: 15px;
+          font-weight: 800;
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -238,13 +241,15 @@ export default function AdminLogin() {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           margin-top: 12px;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
+          box-shadow: 0 10px 30px rgba(36, 39, 111, 0.4);
         }
 
         .login-submit:hover:not(:disabled) {
-          background: #ff071a;
+          background: #2d308a;
           transform: translateY(-2px);
-          box-shadow: 0 20px 40px -10px rgba(227, 6, 19, 0.5);
+          box-shadow: 0 20px 40px -10px rgba(36, 39, 111, 0.6);
+          border-color: rgba(255, 255, 255, 0.2);
         }
 
         .login-submit:active:not(:disabled) {
@@ -259,11 +264,11 @@ export default function AdminLogin() {
         .login-footer {
           margin-top: 48px;
           text-align: center;
-          color: rgba(255, 255, 255, 0.2);
-          font-size: 12px;
+          color: rgba(255, 255, 255, 0.3);
+          font-size: 11px;
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 1.5px;
         }
 
         @keyframes slideUp {

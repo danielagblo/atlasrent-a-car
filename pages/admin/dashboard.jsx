@@ -63,20 +63,20 @@ export default function AdminDashboard() {
   }, [router])
 
   const stats = [
-    { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: '#DF9738', bg: 'rgba(223,151,56,0.1)', href: '/admin/orders', trend: '+12%', up: true },
-    { label: 'Fleet Vehicles', value: counts.vehicles, icon: <Box size={24} />, color: '#24276F', bg: 'rgba(36,39,111,0.05)', href: '/admin/vehicles', trend: '+2', up: true },
-    { label: 'Blog Posts', value: counts.news, icon: <Newspaper size={24} />, color: '#24276F', bg: 'rgba(36,39,111,0.05)', href: '/admin/news', trend: 'Updated', up: true },
-    { label: 'Client Reviews', value: counts.testimonials, icon: <MessageSquare size={24} />, color: '#24276F', bg: 'rgba(36,39,111,0.05)', href: '/admin/testimonials', trend: 'Active', up: true }
+    { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: 'var(--primary-gold)', bg: 'rgba(223,151,56,0.1)', href: '/admin/orders', trend: '+12%', up: true },
+    { label: 'Fleet Vehicles', value: counts.vehicles, icon: <Box size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/vehicles', trend: '+2', up: true },
+    { label: 'Blog Posts', value: counts.news, icon: <Newspaper size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/news', trend: 'Updated', up: true },
+    { label: 'Client Reviews', value: counts.testimonials, icon: <MessageSquare size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/testimonials', trend: 'Active', up: true }
   ]
 
   return (
     <AdminLayout title="Dashboard Overview">
       <div style={{ padding: '0 0 40px' }}>
         <div style={{ display: 'flex', gap: 32, alignItems: 'center', marginBottom: 12 }}>
-           <div style={{ width: 4, height: 48, background: '#DF9738' }} />
+           <div style={{ width: 4, height: 48, background: 'var(--primary-gold)' }} />
            <div>
-              <h1 style={{ fontSize: 32, fontWeight: 900, color: '#24276F', margin: 0, letterSpacing: '-0.02em' }}>Welcome, Administrator</h1>
-              <p style={{ margin: 0, color: '#94a3b8', fontSize: 14, fontWeight: 600 }}>Command center for Atlas Rent-A-Car Global Headquarters.</p>
+              <h1 style={{ fontSize: 32, fontWeight: 900, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>Welcome, Administrator</h1>
+              <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: 14, fontWeight: 600 }}>Command center for Atlas Rent-A-Car Global Headquarters.</p>
            </div>
         </div>
       </div>
@@ -96,11 +96,11 @@ export default function AdminDashboard() {
                 style={{
                   padding: 32,
                   borderRadius: 24,
-                  background: '#fff',
-                  border: '1px solid #f1f5f9',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border)',
                   cursor: 'pointer',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                  boxShadow: 'var(--shadow-sm)'
                 }}
                 className="hover-card"
               >
@@ -108,14 +108,14 @@ export default function AdminDashboard() {
                   <div style={{ width: 52, height: 52, borderRadius: 12, background: stat.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: stat.color }}>
                     {stat.icon}
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: stat.up ? '#10b981' : '#ef4444', fontSize: 12, fontWeight: 900, background: '#f8fafc', padding: '6px 12px', borderRadius: 99 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: stat.up ? '#10b981' : '#ef4444', fontSize: 12, fontWeight: 900, background: 'var(--sidebar-active)', padding: '6px 12px', borderRadius: 99 }}>
                     {stat.up ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                     {stat.trend}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: '#94a3b8', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: 8 }}>{stat.label}</div>
-                  <div style={{ fontSize: 32, fontWeight: 900, color: '#24276F' }}>{stat.value}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: 8 }}>{stat.label}</div>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: 'var(--text-primary)' }}>{stat.value}</div>
                 </div>
               </div>
             ))}
@@ -124,26 +124,26 @@ export default function AdminDashboard() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 32 }}>
             
             {/* Recent Ledger */}
-            <div style={{ padding: 40, background: '#fff', borderRadius: 32, border: '1px solid #f1f5f9' }}>
+            <div style={{ padding: 40, background: 'var(--bg-card)', borderRadius: 32, border: '1px solid var(--border)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <Activity size={22} style={{ color: '#DF9738' }} />
-                  <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: '#24276F' }}>System Activity</h3>
+                  <Activity size={22} style={{ color: 'var(--primary-gold)' }} />
+                  <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: 'var(--text-primary)' }}>System Activity</h3>
                 </div>
-                <button style={{ fontSize: 13, fontWeight: 900, color: '#DF9738', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <button style={{ fontSize: 13, fontWeight: 900, color: 'var(--primary-gold)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                    VIEW ALL <ChevronRight size={14} />
                 </button>
               </div>
               
               <div style={{ display: 'grid', gap: 0 }}>
                 {[1, 2, 3].map(i => (
-                  <div key={i} style={{ display: 'flex', gap: 20, alignItems: 'center', padding: '24px 0', borderBottom: i === 3 ? 'none' : '1px solid #f1f5f9' }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Calendar size={18} style={{ color: '#94a3b8' }} />
+                  <div key={i} style={{ display: 'flex', gap: 20, alignItems: 'center', padding: '24px 0', borderBottom: i === 3 ? 'none' : '1px solid var(--border)' }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--sidebar-active)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Calendar size={18} style={{ color: 'var(--text-muted)' }} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: '#24276F' }}>New lease inquiry for Range Rover Autobiography</div>
-                      <div style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600 }}>{i * 2}h ago • Customer ID: #ATL-{i}92</div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)' }}>New lease inquiry for Range Rover Autobiography</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>{i * 2}h ago • Customer ID: #ATL-{i}92</div>
                     </div>
                     <ArrowRight size={18} style={{ color: '#e2e8f0' }} />
                   </div>
@@ -152,9 +152,9 @@ export default function AdminDashboard() {
             </div>
 
             {/* Network Health */}
-            <div style={{ padding: 40, background: '#24276F', borderRadius: 32, color: '#fff' }}>
+            <div style={{ padding: 40, background: 'var(--primary)', borderRadius: 32, color: '#fff', border: '1px solid rgba(255,255,255,0.05)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}>
-                <Zap size={22} style={{ color: '#DF9738' }} />
+                <Zap size={22} style={{ color: 'var(--primary-gold)' }} />
                 <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: '#fff' }}>Core Systems</h3>
               </div>
               
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
 
                 <button 
                   onClick={() => router.push('/admin/settings')}
-                  style={{ width: '100%', padding: '16px', background: '#DF9738', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 900, fontSize: 14, cursor: 'pointer', marginTop: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
+                  style={{ width: '100%', padding: '16px', background: 'var(--primary-gold)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 900, fontSize: 14, cursor: 'pointer', marginTop: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
                    Global Settings
                 </button>
               </div>

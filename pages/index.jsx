@@ -47,31 +47,31 @@ function Counter({ value, duration = 2 }) {
 
 function Statistics() {
   const stats = [
-    { icon: <Heart size={56} strokeWidth={1.5} />, value: '5657', label: 'HAPPY CUSTOMERS' },
-    { icon: <Car size={56} strokeWidth={1.5} />, value: '657', label: 'TOTAL CAR COUNT' },
-    { icon: <Flag size={56} strokeWidth={1.5} />, value: '1.255.657', label: 'TOTAL KM/MIL' },
-    { icon: <MessageCircle size={56} strokeWidth={1.5} />, value: '1255', label: 'CALL CENTER SOLUTIONS' },
+    { icon: <Heart size={32} strokeWidth={1.5} />, value: '5657', label: 'Global Clients' },
+    { icon: <Car size={32} strokeWidth={1.5} />, value: '657', label: 'Premium Fleet' },
+    { icon: <Flag size={32} strokeWidth={1.5} />, value: '1.255.657', label: 'Miles Covered' },
+    { icon: <MessageCircle size={32} strokeWidth={1.5} />, value: '1255', label: 'Executive Concierge' },
   ];
 
   return (
-    <section style={{ padding: '100px 48px', backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
+    <section className="section-spacing" style={{ backgroundColor: '#fff', borderBottom: '1px solid var(--border-color)' }}>
+      <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 60 }}>
         {stats.map((s, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.15 }}
-            style={{ textAlign: 'center', color: 'var(--text-secondary)' }}
+            transition={{ delay: i * 0.15, duration: 0.8 }}
+            style={{ textAlign: 'left' }}
           >
-            <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center', color: '#94a3b8' }}>
+            <div style={{ marginBottom: 24, color: 'var(--accent-gold)' }}>
               {s.icon}
             </div>
-            <div style={{ fontSize: 36, fontWeight: 900, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.02em' }}>
+            <div style={{ fontSize: 42, fontWeight: 900, color: 'var(--accent)', marginBottom: 8, letterSpacing: '-0.04em', fontFamily: 'Inter' }}>
               <Counter value={s.value} />
             </div>
-            <div style={{ fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--text-muted)' }}>
               {s.label}
             </div>
           </motion.div>
@@ -83,8 +83,6 @@ function Statistics() {
 
 function Testimonials({ testimonials: apiTestimonials }) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  // Always ensure we have testimonials to display
   const defaultTestimonials = [
     { id: 1, quote: 'An absolutely flawless experience. The chauffeur was highly professional, and the vehicle was pristine. I highly recommend Atlas Rent-A-Car for executive travel.', name: 'Kwame Mensah', role: 'Chief Executive Officer', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
     { id: 2, quote: 'Top-tier luxury and an incredibly smooth booking experience. They handled our corporate event fleet with remarkable precision and care.', name: 'Sarah Osei', role: 'Event Director', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' },
@@ -96,68 +94,67 @@ function Testimonials({ testimonials: apiTestimonials }) {
   React.useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
+    }, 8000);
     return () => clearInterval(timer);
   }, [testimonials.length]);
 
   return (
-    <section style={{ padding: '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
-      <div className="section-header" style={{ marginBottom: 64 }}>
-        <h2>Client Experiences</h2>
-      </div>
-
-      <div style={{ position: 'relative', width: '100%', maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
-        <AnimatePresence mode="wait">
+    <section className="testimonial-section section-spacing" style={{ overflow: 'hidden', position: 'relative' }}>
+      <div className="container">
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 250 }}
+             initial={{ opacity: 0 }}
+             whileInView={{ opacity: 1 }}
+             viewport={{ once: true }}
+             style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 40 }}
           >
-            <div style={{ color: 'var(--accent)', fontSize: 24, marginBottom: 32 }}>
-              ★★★★★
-            </div>
-            <p style={{
-              fontSize: 28,
-              lineHeight: 1.6,
-              color: 'var(--text-primary)',
-              fontWeight: 500,
-              marginBottom: 48,
-              fontStyle: 'italic'
-            }}>
-              "{testimonials[currentIndex].quote}"
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              {testimonials[currentIndex].avatar && (
-                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }} />
-              )}
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>{testimonials[currentIndex].name}</h4>
-                <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
-              </div>
-            </div>
+            {[1,2,3,4,5].map(star => <div key={star} style={{ color: 'var(--accent-gold)', fontSize: 14 }}>★</div>)}
           </motion.div>
-        </AnimatePresence>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 64 }}>
-          {testimonials.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              style={{
-                width: idx === currentIndex ? 32 : 12,
-                height: 12,
-                borderRadius: 999,
-                background: idx === currentIndex ? 'var(--accent)' : 'var(--border-color)',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <p className="testimonial-quote">
+                "{testimonials[currentIndex].quote}"
+              </p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+                {testimonials[currentIndex].avatar && (
+                  <img 
+                    src={testimonials[currentIndex].avatar} 
+                    alt={testimonials[currentIndex].name} 
+                    style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-gold)' }} 
+                  />
+                )}
+                <div>
+                  <h4 style={{ margin: '0 0 4px', fontSize: 22, fontWeight: 700, color: '#fff' }}>{testimonials[currentIndex].name}</h4>
+                  <p style={{ margin: 0, fontSize: 12, color: 'var(--accent-gold)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.2em' }}>{testimonials[currentIndex].role}</p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 64 }}>
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                style={{
+                  width: idx === currentIndex ? 40 : 8,
+                  height: 2,
+                  background: idx === currentIndex ? 'var(--accent-gold)' : 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.4s ease'
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -168,22 +165,47 @@ function News({ newsItems }) {
   if (!newsItems || newsItems.length === 0) return null
 
   return (
-    <section style={{ padding: '80px 48px', maxWidth: 1440, margin: '0 auto' }}>
-      <div className="section-header" style={{ textAlign: 'left' }}>
-        <h2>Latest Insights</h2>
-        <div style={{ width: 60, height: 6, background: 'var(--accent)' }}></div>
-      </div>
+    <section className="section-spacing" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+      <div className="container">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 60 }}>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>The Collections</div>
+            <h2 style={{ margin: 0 }}>Atlas <span className="gradient-gold">Journal</span></h2>
+          </div>
+          <button style={{ 
+            background: 'none', 
+            border: 'none', 
+            color: 'var(--accent)', 
+            fontWeight: 800, 
+            fontSize: 13, 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.1em',
+            cursor: 'pointer',
+            paddingBottom: 4,
+            borderBottom: '2px solid var(--accent-gold)'
+          }}>View All Stories</button>
+        </div>
 
-      <div style={{ display: 'flex', overflowX: 'auto', gap: 24, paddingBottom: 16, scrollSnapType: 'x mandatory' }}>
-        {newsItems.map((n, i) => (
-          <article key={n.id} style={{ minWidth: 340, flex: '0 0 340px', scrollSnapAlign: 'start' }}>
-            <div style={{ height: 200, border: '3px solid #000', overflow: 'hidden', marginBottom: 16 }}>
-              <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={340} height={200} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-            </div>
-            <h3 style={{ fontSize: 20, marginBottom: 12 }}>{n.title}</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6 }}>{n.excerpt}</p>
-          </article>
-        ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 40 }}>
+          {newsItems.slice(0, 3).map((n, i) => (
+            <motion.article 
+              key={n.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              style={{ cursor: 'pointer' }}
+            >
+              <div style={{ position: 'relative', height: 400, borderRadius: 24, overflow: 'hidden', marginBottom: 24 }} className="hover-lift">
+                <CldOptimizedImage src={n.image || IMAGES.news1} alt={n.title} width={600} height={800} crop="fill" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 32, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: '#fff' }}>
+                  <div style={{ fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8, color: 'var(--accent-gold)' }}>Lifestyle • Executive</div>
+                  <h3 style={{ fontSize: 24, color: '#fff', margin: 0 }}>{n.title}</h3>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -208,12 +230,12 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <div className="app-root">
       <Hero />
       <Statistics />
       <Products limit={6} />
       <Testimonials testimonials={testimonials} />
       <News newsItems={newsItems} />
-    </>
+    </div>
   )
 }
