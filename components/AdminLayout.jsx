@@ -7,6 +7,7 @@ import {
   Box,
   Newspaper,
   MessageSquare,
+  Users,
   ChevronRight,
   LogOut,
   Settings

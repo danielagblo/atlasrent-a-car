@@ -103,7 +103,7 @@ export default function BlogPage() {
                       <div style={{ display: 'flex', gap: 24, marginBottom: 16, color: '#94a3b8', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Calendar size={14} /> {post.date}</span>
                          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><User size={14} /> {post.author}</span>
-                         <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><MessageSquare size={14} /> {post.comments || 0} Comments</span>
+                         <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><MessageSquare size={14} /> {post.comments_count || 0} Comments</span>
                       </div>
                       <Link href={`/blog/${post.slug || post.id}`}>
                         <h2 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 900, color: 'var(--accent)', marginBottom: 20, lineHeight: 1.2, cursor: 'pointer' }}>{post.title}</h2>
@@ -157,18 +157,20 @@ export default function BlogPage() {
                     </div>
 
                     {/* Gallery Post Preview */}
-                    <div>
-                       <h4 style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 24, color: 'var(--accent)' }}>Post Gallery</h4>
-                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-                          {posts.map((p, i) => (
-                             <Link key={i} href={`/blog/${p.slug}`}>
-                                <div style={{ paddingTop: '100%', position: 'relative', borderRadius: 12, overflow: 'hidden', cursor: 'pointer', background: '#f1f5f9' }}>
-                                   <img src={p.image || p.img} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </div>
-                             </Link>
+                    {posts.some(p => p.image || p.img) && (
+                      <div>
+                        <h4 style={{ fontSize: 14, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 24, color: 'var(--accent)' }}>Post Gallery</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+                          {posts.filter(p => p.image || p.img).map((p, i) => (
+                            <Link key={i} href={`/blog/${p.slug || p.id}`}>
+                              <div style={{ paddingTop: '100%', position: 'relative', borderRadius: 12, overflow: 'hidden', cursor: 'pointer', background: '#f1f5f9' }}>
+                                <img src={p.image || p.img} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} alt="Gallery Snapshot" />
+                              </div>
+                            </Link>
                           ))}
-                       </div>
-                    </div>
+                        </div>
+                      </div>
+                    )}
 
                  </div>
               </aside>

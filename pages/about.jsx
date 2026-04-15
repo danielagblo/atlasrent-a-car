@@ -148,8 +148,24 @@ export default function AboutPage() {
                         textAlign: 'center'
                       }}
                     >
-                      <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px', border: '4px solid #f8fafc' }}>
-                        <img src={person.image || '/placeholder-avatar.png'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
+                      <div style={{ 
+                        width: 120, 
+                        height: 120, 
+                        borderRadius: '50%', 
+                        overflow: 'hidden', 
+                        margin: '0 auto 24px', 
+                        border: '4px solid #f8fafc',
+                        background: '#f1f5f9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#cbd5e1'
+                      }}>
+                        {person.image ? (
+                          <img src={person.image} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
+                        ) : (
+                          <Users size={64} strokeWidth={1} />
+                        )}
                       </div>
                       <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 4 }}>{person.name}</h3>
                       <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>{person.role}</div>

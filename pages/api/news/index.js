@@ -4,7 +4,14 @@ const { verifyAdmin } = require("../../../lib/api-middleware/auth");
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const items = await storage.getNews();
-    return res.json(items);
+    const comments = await storage.getComments();
+    
+    const enriched = items.map(post => {
+      const count = (comments || []).filter(c => String(c.postId) === String(post.id)).length;
+      return { ...post, comments_count: count };
+    });
+    
+    return res.json(enriched);
   }
   if (req.method === "POST") {
     return verifyAdmin(req, res, async () => {
