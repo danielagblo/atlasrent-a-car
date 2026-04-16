@@ -390,6 +390,68 @@ export default function AdminVehicles() {
             </div>
           </div>
           <div className="field-group" style={{ marginTop: 32 }}>
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Vehicle Description</label>
+            <textarea name="desc" value={form.desc} onChange={onChange} style={{ width: '100%', height: 100, borderRadius: 8, border: '1px solid #E2E8F0', padding: '12px', outline: 'none', fontSize: 14, fontWeight: 500, fontFamily: 'inherit' }} />
+          </div>
+
+          <div className="field-group" style={{ marginTop: 32 }}>
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Fleet Features (Comma separated)</label>
+            <input name="features" value={form.features} onChange={onChange} placeholder="e.g. WiFi, Chauffeur, Insurance, GPS" style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+          </div>
+
+          <div style={{ marginTop: 32, padding: 24, background: '#F8FAFC', borderRadius: 16 }}>
+             <h4 style={{ margin: '0 0 20px', fontSize: 12, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1.5 }}>Technical Specifications</h4>
+             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
+                <div className="field-group">
+                  <label style={{ fontSize: 9, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 6 }}>SEATS</label>
+                  <select name="seats" value={form.specs?.seats} onChange={onSpecChange} style={{ width: '100%', height: 38, borderRadius: 6, border: '1px solid #E2E8F0', padding: '0 10px', fontSize: 13, background: '#fff' }}>
+                     <option value="">Select Seats</option>
+                     <option value="2">2 Seater</option>
+                     <option value="4">4 Seater</option>
+                     <option value="5">5 Seater</option>
+                     <option value="7">7 Seater (SUV)</option>
+                     <option value="12">12 Seater (Mini Bus)</option>
+                     <option value="14">14 Seater (High Roof)</option>
+                     <option value="25">25+ Seater (Coach)</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label style={{ fontSize: 9, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 6 }}>TRANSMISSION</label>
+                  <select name="transmission" value={form.specs?.transmission} onChange={onSpecChange} style={{ width: '100%', height: 38, borderRadius: 6, border: '1px solid #E2E8F0', padding: '0 10px', fontSize: 13, background: '#fff' }}>
+                     <option value="">Select Transmission</option>
+                     <option value="Automatic">Automatic</option>
+                     <option value="Manual">Manual</option>
+                     <option value="Tiptronic">Tiptronic</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label style={{ fontSize: 9, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 6 }}>FUEL TYPE</label>
+                  <select name="fuelType" value={form.specs?.fuelType} onChange={onSpecChange} style={{ width: '100%', height: 38, borderRadius: 6, border: '1px solid #E2E8F0', padding: '0 10px', fontSize: 13, background: '#fff' }}>
+                     <option value="">Select Fuel</option>
+                     <option value="Petrol">Petrol</option>
+                     <option value="Diesel">Diesel</option>
+                     <option value="Hybrid">Hybrid</option>
+                     <option value="Electric (EV)">Electric (EV)</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label style={{ fontSize: 9, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 6 }}>DRIVE (PERFORMANCE)</label>
+                  <select name="drive" value={form.specs?.drive} onChange={onSpecChange} style={{ width: '100%', height: 38, borderRadius: 6, border: '1px solid #E2E8F0', padding: '0 10px', fontSize: 13, background: '#fff' }}>
+                     <option value="">Select Drive</option>
+                     <option value="Front-Wheel Drive (FWD)">Front-Wheel Drive (FWD)</option>
+                     <option value="Rear-Wheel Drive (RWD)">Rear-Wheel Drive (RWD)</option>
+                     <option value="All-Wheel Drive (AWD)">All-Wheel Drive (AWD)</option>
+                     <option value="4x4 Executive">4x4 Executive</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label style={{ fontSize: 9, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 6 }}>RANGE ESTIMATE</label>
+                  <input name="range" value={form.range} onChange={onChange} placeholder="e.g. 500" style={{ width: '100%', height: 38, borderRadius: 6, border: '1px solid #E2E8F0', padding: '0 10px', fontSize: 13 }} />
+                </div>
+             </div>
+          </div>
+
+          <div className="field-group" style={{ marginTop: 32 }}>
             <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Hero Asset</label>
             <div style={{ display: 'flex', gap: 12 }}>
                <input name="image" placeholder="Primary Image URL" value={form.image} onChange={onChange} style={{ flex: 1, height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
@@ -437,8 +499,43 @@ export default function AdminVehicles() {
         {viewItem && (
           <div style={{ padding: '12px 0' }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, color: '#24276F', margin: '0 0 16px' }}>{viewItem.name}</h2>
-            <p style={{ color: '#475569', lineHeight: 2, fontSize: 15 }}>{viewItem.desc || 'Comprehensive vehicle documentation is pending for this asset.'}</p>
-            <button onClick={() => setViewItem(null)} style={{ marginTop: 40, width: '100%', height: 48, background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 12, color: '#475569', fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>Close Dossier</button>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32, padding: 20, background: '#F8FAFC', borderRadius: 16 }}>
+               <div>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 1 }}>Capacity</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>{viewItem.specs?.seats || '4'} Seats</div>
+               </div>
+               <div>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 1 }}>Transmission</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>{viewItem.specs?.transmission || 'Automatic'}</div>
+               </div>
+               <div>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 1 }}>Performance</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>{viewItem.specs?.drive || 'Rear Wheel'}</div>
+               </div>
+               <div>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 1 }}>Fuel Type</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>{viewItem.specs?.fuelType || 'Petrol / EV'}</div>
+               </div>
+            </div>
+
+            <div style={{ marginBottom: 32 }}>
+               <div style={{ fontSize: 9, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Executive Summary</div>
+               <p style={{ color: '#475569', lineHeight: 1.8, fontSize: 14, margin: 0 }}>{viewItem.desc || 'No summary available for this asset.'}</p>
+            </div>
+
+            {viewItem.features && viewItem.features.length > 0 && (
+               <div style={{ marginBottom: 32 }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#24276F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Fleet Features</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                     {(Array.isArray(viewItem.features) ? viewItem.features : viewItem.features.split(',')).map((f, i) => (
+                        <div key={i} style={{ padding: '6px 12px', background: '#F1F5F9', borderRadius: 6, fontSize: 11, fontWeight: 700, color: '#475569' }}>{f.trim()}</div>
+                     ))}
+                  </div>
+               </div>
+            )}
+
+            <button onClick={() => setViewItem(null)} style={{ width: '100%', height: 48, background: '#24276F', borderRadius: 12, color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 13, border: 'none' }}>Close Dossier</button>
           </div>
         )}
       </Modal>
