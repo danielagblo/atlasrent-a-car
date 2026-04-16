@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const router = useRouter()
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState('')
+  const [data, setData] = React.useState({ orders: [], vehicles: [], news: [], testimonials: [] })
   const [counts, setCounts] = React.useState({ orders: 0, vehicles: 0, news: 0, testimonials: 0 })
 
   React.useEffect(() => {
@@ -49,12 +50,16 @@ export default function AdminDashboard() {
             nRes.ok ? nRes.json() : [],
             tRes.ok ? tRes.json() : []
           ])
-          if (mounted) setCounts({
-            orders: Array.isArray(o) ? o.length : 0,
-            vehicles: Array.isArray(m) ? m.length : 0,
-            news: Array.isArray(n) ? n.length : 0,
-            testimonials: Array.isArray(t) ? t.length : 0
-          })
+          
+          if (mounted) {
+            setData({ orders: o, vehicles: m, news: n, testimonials: t })
+            setCounts({
+              orders: Array.isArray(o) ? o.length : 0,
+              vehicles: Array.isArray(m) ? m.length : 0,
+              news: Array.isArray(n) ? n.length : 0,
+              testimonials: Array.isArray(t) ? t.length : 0
+            })
+          }
         } catch (e) { if (mounted) setError(e.message || String(e)) }
         if (mounted) setLoading(false)
       })()
@@ -63,11 +68,37 @@ export default function AdminDashboard() {
   }, [router])
 
   const stats = [
-    { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: 'var(--primary-gold)', bg: 'rgba(223,151,56,0.1)', href: '/admin/orders', trend: '+12%', up: true },
-    { label: 'Total Inventory', value: counts.vehicles, icon: <Box size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/vehicles', trend: '+2', up: true },
-    { label: 'Executive Blog', value: counts.news, icon: <Newspaper size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/blog', trend: 'Latest Dispatch', up: true },
-    { label: 'Client Reviews', value: counts.testimonials, icon: <MessageSquare size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/testimonials', trend: 'Active', up: true }
+    { 
+      label: 'Estimated Revenue', 
+      value: `₵${data.orders.reduce((sum, o) => sum + (parseFloat(o.price || o.rate) || 0), 0).toLocaleString()}`, 
+      icon: <Zap size={24} />, 
+      color: 'var(--primary-gold)', 
+      bg: 'rgba(223,151,56,0.1)', 
+      href: '/admin/orders', 
+      trend: 'Gross Volume' 
+    },
+    { label: 'Total Orders', value: counts.orders, icon: <ShoppingBag size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/orders', trend: 'Live Feed' },
+    { label: 'Fleet Assets', value: counts.vehicles, icon: <Box size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/vehicles', trend: 'In Stock' },
+    { label: 'Editorial Dispatches', value: counts.news, icon: <Newspaper size={24} />, color: '#fff', bg: 'var(--primary)', href: '/admin/blog', trend: 'Latest' }
   ]
+
+  const sortedOrders = [...data.orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+  const formatDistanceToNow = (dateString) => {
+    if (!dateString) return 'recently'
+    const date = new Date(dateString)
+    if (isNaN(date.getTime())) return 'recently'
+    const now = new Date()
+    const diff = now - date
+    const mins = Math.floor(diff / 60000)
+    const hours = Math.floor(mins / 60)
+    const days = Math.floor(hours / 24)
+
+    if (days > 0) return `${days}d ago`
+    if (hours > 0) return `${hours}h ago`
+    if (mins > 0) return `${mins}m ago`
+    return 'just now'
+  }
 
   return (
     <AdminLayout title="System Overview">
@@ -113,20 +144,32 @@ export default function AdminDashboard() {
               </div>
               
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {[
-                  { text: 'Reservation confirmed for John Doe', time: '12m ago' },
-                  { text: 'Fleet unit status updated: Rolls Royce Ghost', time: '1h ago' },
-                  { text: 'Editorial draft published by Content Team', time: '3h ago' },
-                  { text: 'Client testimonial verified and approved', time: '5h ago' }
-                ].map((log, i) => (
+                {sortedOrders.length > 0 ? sortedOrders.slice(0, 5).map((order, i) => (
                   <div key={i} style={{ display: 'flex', gap: 24, alignItems: 'center', padding: '24px 0', borderBottom: '1px solid #F8FAFC' }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E2E8F0' }} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: '#334155' }}>{log.text}</div>
-                      <div style={{ fontSize: 12, color: '#64748B', marginTop: 4, fontWeight: 500 }}>{log.time}</div>
+                    <div style={{ 
+                      width: 44, height: 44, borderRadius: 12, background: '#F8FAFC', border: '1px solid #E2E8F0', 
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#24276F' 
+                    }}>
+                      <ShoppingBag size={18} strokeWidth={2} />
                     </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: '#334155' }}>
+                        New reservation for {order.name || 'Anonymous Client'}
+                      </div>
+                      <div style={{ fontSize: 12, color: '#64748B', marginTop: 4, fontWeight: 500 }}>
+                        {order.productName} • {formatDistanceToNow(order.createdAt)}
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => router.push(`/admin/orders`)}
+                      style={{ background: 'none', border: 'none', color: '#CBD5E1', cursor: 'pointer' }}
+                    >
+                      <ChevronRight size={18} />
+                    </button>
                   </div>
-                ))}
+                )) : (
+                  <div style={{ padding: '40px 0', textAlign: 'center', color: '#64748B', fontSize: 13 }}>No recent activity recorded.</div>
+                )}
               </div>
             </div>
 
@@ -138,9 +181,9 @@ export default function AdminDashboard() {
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
                 {[
-                  { label: 'Cloud Infrastructure', value: 'Healthy' },
-                  { label: 'Booking Engine', value: 'Operational' },
-                  { label: 'Global API', value: 'Optimized' }
+                  { label: 'Data Synchronization', value: 'Active' },
+                  { label: 'Cloud Persistence', value: 'Healthy' },
+                  { label: 'Security Layer', value: 'Encrypted' }
                 ].map((core, i) => (
                   <div key={i}>
                     <div style={{ fontSize: 10, color: '#64748B', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 12 }}>{core.label}</div>

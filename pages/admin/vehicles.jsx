@@ -389,6 +389,44 @@ export default function AdminVehicles() {
               </select>
             </div>
           </div>
+          <div className="field-group" style={{ marginTop: 32 }}>
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Hero Asset</label>
+            <div style={{ display: 'flex', gap: 12 }}>
+               <input name="image" placeholder="Primary Image URL" value={form.image} onChange={onChange} style={{ flex: 1, height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+               <label style={{ height: 44, padding: '0 20px', background: '#F8FAFC', color: '#24276F', borderRadius: 8, display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: '1px solid #E2E8F0' }}>
+                 BROWSE
+                 <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
+               </label>
+            </div>
+          </div>
+          {imagePreview && (
+            <div style={{ width: '100%', height: 200, borderRadius: 12, overflow: 'hidden', border: '1px solid #E2E8F0', marginTop: 16 }}>
+               <img src={imagePreview} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+          )}
+          
+          <div className="field-group" style={{ marginTop: 32 }}>
+            <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Media Gallery (Optional)</label>
+            <label style={{ width: '100%', height: 100, border: '2px dashed #E2E8F0', borderRadius: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', gap: 8 }}>
+               <PlusCircle size={24} color="#64748B" />
+               <span style={{ fontSize: 12, fontWeight: 700, color: '#64748B' }}>APPEND ASSETS</span>
+               <input type="file" accept="image/*" multiple onChange={onGalleryFile} style={{ display: 'none' }} />
+            </label>
+          </div>
+
+          {form.gallery && form.gallery.length > 0 && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: 12, marginTop: 16 }}>
+               {form.gallery.map((img, idx) => (
+                 <div key={idx} style={{ position: 'relative', height: 60, borderRadius: 8, overflow: 'hidden', border: '1px solid #E2E8F0' }}>
+                    <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <button onClick={() => removeFromGallery(idx)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(255,255,255,0.9)', border: 'none', borderRadius: '50%', width: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#F87171' }}>
+                       <Trash2 size={10} />
+                    </button>
+                 </div>
+               ))}
+            </div>
+          )}
+
           <div style={{ marginTop: 48 }}>
             <button type="submit" style={{ width: '100%', height: 48, borderRadius: 12, background: '#24276F', color: '#fff', border: 'none', fontWeight: 700, fontSize: 13 }}>{editingId ? 'Update Record' : 'Confirm Registration'}</button>
           </div>

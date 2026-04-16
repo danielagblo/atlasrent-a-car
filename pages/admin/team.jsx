@@ -188,12 +188,19 @@ export default function AdminTeam() {
             <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Executive Portrait</label>
             <div style={{ display: 'flex', gap: 12 }}>
               <input name="image" placeholder="Image URL" value={form.image} onChange={onChange} style={{ flex: 1, height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
-              <label style={{ height: 44, padding: '0 20px', background: '#F8FAFC', color: '#24276F', borderRadius: 8, display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: '1px solid #E2E8F0' }}>
-                UPLOAD
-                <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
-              </label>
-            </div>
+                <label style={{ height: 44, padding: '0 20px', background: '#F8FAFC', color: '#24276F', borderRadius: 8, display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: '1px solid #E2E8F0' }}>
+                  BROWSE
+                  <input type="file" accept="image/*" onChange={onImageFile} style={{ display: 'none' }} />
+                </label>
+             </div>
           </div>
+          {imagePreview && (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: 12 }}>
+               <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', border: '2px solid #E2E8F0' }}>
+                  <img src={imagePreview} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+               </div>
+            </div>
+          )}
           <div style={{ marginTop: 12 }}>
             <button type="submit" style={{ width: '100%', height: 52, borderRadius: 14, border: 'none', background: '#24276F', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               {editingId ? 'Confirm Updates' : 'Publish to Roster'}
