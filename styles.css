@@ -410,11 +410,14 @@ main {
 }
 
 .product-card-img-wrap {
-  height: 240px;
+  height: 300px;
   width: 100%;
   background: var(--bg-secondary);
   overflow: hidden;
-  padding: 24px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-card-img-wrap img {
@@ -436,8 +439,10 @@ main {
 }
 
 .product-card h3 {
-  font-size: 22px;
+  font-size: 20px;
+  min-height: 52px;
   margin-bottom: 8px;
+  color: var(--accent);
 }
 
 .product-price {

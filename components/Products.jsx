@@ -109,7 +109,14 @@ function HeritageShowcase({ items }) {
                     background: activeVehicleId === item.id ? '#DF9738' : 'transparent', 
                     transition: '0.4s' 
                   }} />
-                  {item.name}
+                  <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '100%' }}>
+                    <motion.div
+                      whileHover={{ x: [0, -40, 0] }}
+                      transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+                    >
+                      {item.name}
+                    </motion.div>
+                  </div>
                 </button>
               ))}
             </div>
