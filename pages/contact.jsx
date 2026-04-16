@@ -43,7 +43,7 @@ const HUBS = [
     reviews: 25,
     category: 'Car leasing service',
     address: 'Dansoman Estate, Accra, Ghana',
-    phone: '+233 30 231 1690',
+    phone: '+233 30 230 1081 / +233 20 211 7122',
     coords: [5.5585636, -0.2629432],
     photoUrl: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAFWn5jGRDXYe_mIDuShwFzlFUMpZisNCJt4gKHJ-pElmvGSKB4Co7B8YZmHat53CyGjnjHH0W6bX1jU7FI5NdkhMcLp3NhQzgMxFgSwK6334O7udVwHktufJL6QlX06syuNr7opyw=s1600',
     googleMapsUrl: 'https://www.google.com/maps/place/Atlas+Rent-A-Car/@5.5585689,-0.2655181,17z'
@@ -56,7 +56,7 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [L, setL] = useState(null)
   const [settings, setSettings] = useState({
-    supportPhone: '+233 30 230 1081',
+    supportPhone: '+233 30 230 1081 / +233 20 211 7122',
     headquarters: 'Dansoman, Accra, Ghana',
     adminEmail: 'contact@atlasrent-a-car.com'
   })
@@ -84,7 +84,7 @@ export default function ContactPage() {
       .then(data => {
         if (data) {
           setSettings({
-            supportPhone: data.supportPhone || '+233 30 230 1081',
+            supportPhone: data.supportPhone || '+233 30 230 1081 / +233 20 211 7122',
             headquarters: data.headquarters || 'Dansoman, Accra, Ghana',
             adminEmail: data.adminEmail || 'contact@atlasrent-a-car.com'
           })
@@ -214,7 +214,11 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <div style={{ fontSize: 9, fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>Call Us (24/7)</div>
-                        <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--accent)' }}>{settings.supportPhone}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                          {settings.supportPhone.split('/').map((p, i) => (
+                            <a key={i} href={`tel:${p.replace(/\s/g, '')}`} style={{ fontSize: 17, fontWeight: 800, color: 'var(--accent)', textDecoration: 'none' }}>{p.trim()}</a>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -358,9 +362,12 @@ export default function ContactPage() {
                            </div>
                            <div style={{ display: 'flex', gap: 12 }}>
                              <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#000', marginTop: 8, flexShrink: 0 }} />
-                             <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5 }}>
-                               <span style={{ fontWeight: 800 }}>Phone: </span> {hub.phone}
-                             </div>
+                              <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5, display: 'flex', flexDirection: 'column' }}>
+                                <span style={{ fontWeight: 800 }}>Phone: </span> 
+                                {hub.phone.split('/').map((p, idx) => (
+                                  <a key={idx} href={`tel:${p.replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 600 }}>{p.trim()}</a>
+                                ))}
+                              </div>
                            </div>
                         </div>
 

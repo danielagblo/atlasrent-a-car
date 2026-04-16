@@ -60,7 +60,10 @@ export default function Footer() {
                <div style={{ padding: '8px', background: 'rgba(223, 151, 56, 0.1)', borderRadius: 8 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-2.19a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                </div>
-               <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>+233 30 230 1081</span>
+               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <a href="tel:+233302301081" style={{ fontSize: 13, fontWeight: 700, color: '#fff', textDecoration: 'none' }}>+233 30 230 1081</a>
+                  <a href="tel:+233202117122" style={{ fontSize: 13, fontWeight: 700, color: '#fff', textDecoration: 'none' }}>+233 20 211 7122</a>
+               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                <div style={{ padding: '8px', background: 'rgba(223, 151, 56, 0.1)', borderRadius: 8 }}>
