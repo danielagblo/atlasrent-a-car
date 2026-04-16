@@ -133,6 +133,42 @@ function HeritageShowcase({ items }) {
             </div>
           )}
 
+          {/* Mobile Vehicle Selection Carousel */}
+          {isMobile && (
+            <div 
+              className="no-scrollbar"
+              style={{ 
+                display: 'flex', 
+                gap: 24, 
+                overflowX: 'auto', 
+                paddingBottom: 20,
+                borderBottom: '1px solid #f1f5f9',
+                marginBottom: 32,
+                width: '100%'
+              }}
+            >
+              {categoryItems.map(item => (
+                <button
+                  key={item.id} onClick={() => setActiveVehicleId(item.id)}
+                  style={{
+                    padding: '8px 0', cursor: 'pointer', border: 'none', background: 'none',
+                    color: activeVehicleId === item.id ? '#24276f' : '#cbd5e1',
+                    fontSize: 12, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em',
+                    transition: 'all 0.3s',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    position: 'relative'
+                  }}
+                >
+                  {item.name}
+                  {activeVehicleId === item.id && (
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: 2, background: '#df9738' }} />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Cinematic Image Stage */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: isMobile ? 32 : 60, height: isMobile ? 240 : 400 }}>
@@ -166,9 +202,6 @@ function HeritageShowcase({ items }) {
 
           {/* Detail Architecture */}
           <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-            {isMobile && (
-               <div style={{ fontSize: 24, fontWeight: 800, color: '#24276F', marginBottom: 12 }}>{current?.name}</div>
-            )}
             <div style={{ marginBottom: isMobile ? 32 : 60 }}>
                <div style={{ 
                  fontSize: isMobile ? 36 : 56, 
