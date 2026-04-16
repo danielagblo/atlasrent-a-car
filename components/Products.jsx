@@ -91,14 +91,25 @@ function HeritageShowcase({ items }) {
           
           {/* Sidebar: Lowercase & Spaced */}
           {!isMobile && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div 
+              className="no-scrollbar"
+              style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 12, 
+                maxHeight: '400px', 
+                overflowY: 'auto',
+                paddingRight: '12px',
+                borderRight: '1px solid #f8fafc'
+              }}
+            >
               {categoryItems.map(item => (
                 <button
                   key={item.id} onClick={() => setActiveVehicleId(item.id)}
                   style={{
                     textAlign: 'left', padding: '12px 0', cursor: 'pointer', border: 'none', background: 'none',
-                    color: activeVehicleId === item.id ? '#24276F' : '#94a3b8',
-                    fontSize: 15, fontWeight: 700,
+                    color: activeVehicleId === item.id ? '#24276f' : '#cbd5e1',
+                    fontSize: 14, fontWeight: 700,
                     transition: 'all 0.3s',
                     display: 'flex', alignItems: 'center', gap: 16
                   }}
@@ -106,12 +117,12 @@ function HeritageShowcase({ items }) {
                   <div style={{ 
                     width: 6, height: 6, 
                     transform: 'rotate(45deg)', 
-                    background: activeVehicleId === item.id ? '#DF9738' : 'transparent', 
+                    background: activeVehicleId === item.id ? '#df9738' : 'transparent', 
                     transition: '0.4s' 
                   }} />
                   <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '100%' }}>
                     <motion.div
-                      whileHover={{ x: [0, -40, 0] }}
+                      whileHover={{ x: [0, -20, 0] }}
                       transition={{ duration: 4, ease: "linear", repeat: Infinity }}
                     >
                       {item.name}
