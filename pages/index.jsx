@@ -8,6 +8,7 @@ import { getTestimonials, getNews } from '../lib/siteContentApi'
 import Link from 'next/link'
 import { Heart, Car, Flag, MessageCircle } from 'lucide-react'
 import { useInView } from 'framer-motion'
+import PartnerMarquee from '../components/PartnerMarquee'
 
 function Counter({ value, duration = 2 }) {
   const [count, setCount] = React.useState(0);
@@ -281,6 +282,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <PartnerMarquee />
       <Statistics isMobile={isMobile} />
       <Products limit={6} isMobile={isMobile} />
       <Testimonials testimonials={testimonials} isMobile={isMobile} />
