@@ -15,6 +15,9 @@ import {
 } from 'lucide-react'
 import AdminLayout from '../../components/AdminLayout'
 import Modal from '../../components/Modal'
+import dynamic from 'next/dynamic'
+
+const LexicalEditor = dynamic(() => import('../../components/LexicalEditor'), { ssr: false })
 
 function empty() { return { title: '', date: '', excerpt: '', content: '', image: '', status: 'active' } }
 
@@ -29,6 +32,11 @@ export default function AdminBlog() {
   const [imagePreview, setImagePreview] = React.useState('')
   const [search, setSearch] = React.useState('')
   const [viewItem, setViewItem] = React.useState(null)
+
+  const truncate = (str, n = 160) => {
+    if (!str) return ''
+    return str.length > n ? str.substr(0, n - 1) + "..." : str
+  }
 
   React.useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
@@ -52,6 +60,14 @@ export default function AdminBlog() {
 
   function onChange(e) { setForm(f => ({ ...f, [e.target.name]: e.target.value })) }
 
+  function onEditorChange({ html, text }) {
+    setForm(f => ({
+      ...f,
+      content: html,
+      excerpt: truncate(text)
+    }))
+  }
+
   async function onFile(e) {
     const file = e.target.files && e.target.files[0]
     if (!file) return
@@ -68,6 +84,11 @@ export default function AdminBlog() {
         headers: { Authorization: `Bearer ${token}` },
         body: formData
       })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       setForm(f => ({ ...f, image: data.url }))
@@ -100,6 +121,11 @@ export default function AdminBlog() {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(form)
       })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error(`Failed to ${editingId ? 'update' : 'publish'}`)
       const item = await res.json()
       if (editingId) setItems(s => s.map(i => i.id === editingId ? item : i))
@@ -113,6 +139,11 @@ export default function AdminBlog() {
     const token = localStorage.getItem('admin_token')
     try {
       const res = await fetch(`/api/news/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to remove')
       setItems(s => s.filter(i => i.id !== id))
     } catch (e) { setError(e.message || String(e)) }
@@ -208,7 +239,7 @@ export default function AdminBlog() {
                {/* Actions */}
                <div style={{ display: 'flex', gap: 16, justifyContent: 'flex-end' }}>
                   <button onClick={() => edit(item)} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer', padding: 0 }} title="Edit"><Edit2 size={16} strokeWidth={2} /></button>
-                  <button onClick={() => remove(item.id)} style={{ background: 'none', border: 'none', color: '#F87171', cursor: 'pointer', padding: 0 }} title="Delete"><Trash2 size={16} strokeWidth={2} /></button>
+                  <button onClick={() => remove(id)} style={{ background: 'none', border: 'none', color: '#F87171', cursor: 'pointer', padding: 0 }} title="Delete"><Trash2 size={16} strokeWidth={2} /></button>
                </div>
             </div>
           ))}
@@ -227,21 +258,22 @@ export default function AdminBlog() {
                 <input name="date" placeholder="October 24, 2026" value={form.date} onChange={onChange} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
              </div>
           </div>
+          
           <div className="field-group">
-             <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Article Summary (Listing Page)</label>
-             <textarea name="excerpt" placeholder="Brief overview for the gallery..." value={form.excerpt} onChange={onChange} style={{ width: '100%', minHeight: 80, borderRadius: 8, border: '1px solid #E2E8F0', padding: '12px', outline: 'none', resize: 'vertical', fontSize: 14, fontWeight: 500 }} />
+             <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Editorial Body (Rich Text)</label>
+             <LexicalEditor initialValue={form.content} onChange={onEditorChange} />
+             <p style={{ marginTop: 12, fontSize: 11, color: '#94A3B8', fontWeight: 600, fontStyle: 'italic' }}>
+               A preview summary is being generated automatically from your narrative.
+             </p>
           </div>
-          <div className="field-group">
-             <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Editorial Body (Individual Page)</label>
-             <textarea name="content" placeholder="Full article narrative..." value={form.content} onChange={onChange} style={{ width: '100%', minHeight: 240, borderRadius: 8, border: '1px solid #E2E8F0', padding: '12px', outline: 'none', resize: 'vertical', fontSize: 14, fontWeight: 500 }} />
-          </div>
+
           <div className="field-group">
              <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Visual Asset</label>
              <div style={{ display: 'flex', gap: 12 }}>
                 <input name="image" placeholder="Image URL" value={form.image} onChange={onChange} style={{ flex: 1, height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
                 <label style={{ height: 44, padding: '0 20px', background: '#F8FAFC', color: '#24276F', borderRadius: 8, display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: '1px solid #E2E8F0' }}>
-                  BROWSE
-                  <input type="file" accept="image/*" onChange={onFile} style={{ display: 'none' }} />
+                   BROWSE
+                   <input type="file" accept="image/*" onChange={onFile} style={{ display: 'none' }} />
                 </label>
              </div>
           </div>

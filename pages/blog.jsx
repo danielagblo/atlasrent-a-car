@@ -108,10 +108,13 @@ export default function BlogPage() {
                       <Link href={`/blog/${post.slug || post.id}`}>
                         <h2 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 900, color: 'var(--accent)', marginBottom: 20, lineHeight: 1.2, cursor: 'pointer' }}>{post.title}</h2>
                       </Link>
-                      <p style={{ 
-                        fontSize: 18, color: '#64748b', lineHeight: 1.8, marginBottom: 32,
-                        display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'
-                      }}>{post.excerpt || post.content}</p>
+                      <div 
+                        style={{ 
+                          fontSize: 18, color: '#64748b', lineHeight: 1.8, marginBottom: 32,
+                          display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                        }}
+                        dangerouslySetInnerHTML={{ __html: post.excerpt || post.content }}
+                      />
                       <Link href={`/blog/${post.slug || post.id}`}>
                         <button style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, fontWeight: 800, color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                           Read Continued <ArrowRight size={18} color="var(--accent-gold)" />
@@ -180,6 +183,11 @@ export default function BlogPage() {
         </section>
 
       </div>
+      <style jsx global>{`
+        .lexical-ul { padding-left: 32px; list-style-type: disc; margin: 16px 0; }
+        .lexical-ol { padding-left: 32px; list-style-type: decimal; margin: 16px 0; }
+        .lexical-paragraph { margin-bottom: 16px; }
+      `}</style>
     </Layout>
   )
 }

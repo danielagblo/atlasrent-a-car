@@ -138,12 +138,14 @@ export default function ArticlePage() {
             
             {/* Body */}
             <div>
-               <div className="editorial-narrative-container" style={{ 
-                 fontSize: isMobile ? 17 : 18, color: '#64748b', lineHeight: isMobile ? 1.8 : 2, whiteSpace: 'pre-line', 
-                 marginBottom: isMobile ? 60 : 80, maxHeight: isMobile ? 'none' : '70vh', overflowY: isMobile ? 'visible' : 'auto', paddingRight: isMobile ? 0 : 24 
-               }}>
-                  {post.content || post.excerpt}
-               </div>
+                <div 
+                   className="editorial-narrative-container" 
+                   style={{ 
+                     fontSize: isMobile ? 17 : 18, color: '#64748b', lineHeight: isMobile ? 1.8 : 2,
+                     marginBottom: isMobile ? 60 : 80, maxHeight: isMobile ? 'none' : '70vh', overflowY: isMobile ? 'visible' : 'auto', paddingRight: isMobile ? 0 : 24 
+                   }}
+                   dangerouslySetInnerHTML={{ __html: post.content || post.excerpt }}
+                />
 
                {/* Comments Section */}
                <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: isMobile ? 60 : 80 }}>
@@ -281,6 +283,11 @@ export default function ArticlePage() {
         </section>
 
       </div>
+      <style jsx global>{`
+        .lexical-ul { padding-left: 32px; list-style-type: disc; margin: 16px 0; }
+        .lexical-ol { padding-left: 32px; list-style-type: decimal; margin: 16px 0; }
+        .lexical-paragraph { margin-bottom: 16px; }
+      `}</style>
     </Layout>
   )
 }

@@ -57,6 +57,11 @@ export default function AdminTestimonials() {
       const formData = new FormData(); formData.append('image', file)
       const token = localStorage.getItem('admin_token')
       const res = await fetch('/api/upload', { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: formData })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       setForm(f => ({ ...f, avatar: data.url }))
@@ -79,6 +84,11 @@ export default function AdminTestimonials() {
         method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(form)
       })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to save')
       const item = await res.json()
       if (editingId) setItems(s => s.map(i => i.id === editingId ? item : i))
@@ -92,6 +102,11 @@ export default function AdminTestimonials() {
     const token = localStorage.getItem('admin_token')
     try {
       const res = await fetch(`/api/testimonials/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to delete')
       setItems(s => s.filter(i => i.id !== id))
     } catch (e) { setError(e.message || String(e)) }

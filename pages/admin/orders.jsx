@@ -80,6 +80,11 @@ export default function AdminOrders() {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status })
       })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to update status')
       const updated = await res.json()
       setOrders(prev => prev.map(o => o.id === id ? updated : o))
@@ -93,6 +98,11 @@ export default function AdminOrders() {
     try {
       const token = localStorage.getItem('admin_token')
       const res = await fetch(`/api/orders/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to delete order')
       setOrders(prev => prev.filter(o => o.id !== id))
       if (viewItem?.id === id) setViewItem(null)

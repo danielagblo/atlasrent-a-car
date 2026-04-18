@@ -111,6 +111,11 @@ export default function AdminVehicles() {
         headers: { Authorization: `Bearer ${token}` },
         body: formData
       })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       setForm(f => ({ ...f, image: data.url }))
@@ -132,6 +137,11 @@ export default function AdminVehicles() {
           headers: { Authorization: `Bearer ${token}` },
           body: formData
         })
+        if (res.status === 401) {
+          localStorage.removeItem('admin_token')
+          router.replace('/admin/login')
+          return
+        }
         const data = await res.json()
         if (!res.ok) throw new Error(data.error || 'Upload failed')
         setForm(f => ({
@@ -219,6 +229,11 @@ export default function AdminVehicles() {
     const token = localStorage.getItem('admin_token')
     try {
       const res = await fetch(`/api/vehicles/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token')
+        router.replace('/admin/login')
+        return
+      }
       if (!res.ok) throw new Error('Failed to delete')
       setItems(s => s.filter(i => !sameId(i.id, id)))
     } catch (e) { setError(e.message || String(e)) }
