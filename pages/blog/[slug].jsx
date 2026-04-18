@@ -110,6 +110,8 @@ export default function ArticlePage() {
       </Layout>
     )
   }
+const siteUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || '');
+const ogImage = post?.image ? `${siteUrl}${post.image}` : post?.img ? `${siteUrl}${post.img}` : `${siteUrl}/logo-transparent.png`;
 
   return (
     <Layout>
