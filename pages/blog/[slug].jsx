@@ -114,14 +114,20 @@ export default function ArticlePage() {
   return (
     <Layout>
       <Head>
-        <title>{post.title} | Atlas Rent-A-Car</title>
-        <meta name="description" content={post.excerpt} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.image || post.img || '/favicon.png'} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={currentUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
+        const siteUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || '');
+        const ogImage = post?.image ? `${siteUrl}${post.image}` : post?.img ? `${siteUrl}${post.img}` : `${siteUrl}/logo-transparent.png`;
+        <Head>
+          <title>{post.title} | Atlas Rent-A-Car</title>
+          <meta name="description" content={post.excerpt} />
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={post.excerpt} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:type" content="article" />
+          <meta property="og:url" content={currentUrl} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </Head>
       </Head>
 
       <div style={{ background: '#fff', minHeight: '100vh' }}>
