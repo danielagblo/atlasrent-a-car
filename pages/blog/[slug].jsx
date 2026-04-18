@@ -6,12 +6,12 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, MessageCircle } from 'lucide-react'
 
-export default function ArticlePage() {
+export default function ArticlePage({ post: initialPost }) {
   const router = useRouter()
   const { slug } = router.query
-  const [post, setPost] = useState(null)
+  const [post, setPost] = useState(initialPost)
   const [comments, setComments] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!initialPost)
   const [isMobile, setIsMobile] = useState(false)
   const [commentForm, setCommentForm] = useState({ author: '', email: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
@@ -31,31 +31,21 @@ export default function ArticlePage() {
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
     window.addEventListener('resize', handleResize)
 
-    if (slug) {
-      fetchData()
+    if (post) {
+      fetchComments()
     }
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [slug])
+  }, [post])
 
-  const fetchData = async () => {
+  const fetchComments = async () => {
+    if (!post) return;
     try {
-      // Fetch all posts and find the one with matching slug
-      const pRes = await fetch('/api/news')
-      const posts = await pRes.json()
-      const currentPost = posts.find(p => (p.slug === slug) || (String(p.id) === String(slug)));
-
-      if (currentPost) {
-        setPost(currentPost)
-        // Fetch comments for this post
-        const cRes = await fetch(`/api/comments?postId=${currentPost.id}`)
-        const commentsData = await cRes.json()
-        setComments(Array.isArray(commentsData) ? commentsData : [])
-      }
+      const cRes = await fetch(`/api/comments?postId=${post.id}`)
+      const commentsData = await cRes.json()
+      setComments(Array.isArray(commentsData) ? commentsData : [])
     } catch (err) {
-      console.error("Failed to load article", err)
-    } finally {
-      setLoading(false)
+      console.error("Failed to load comments", err)
     }
   }
 
@@ -110,8 +100,13 @@ export default function ArticlePage() {
       </Layout>
     )
   }
-const siteUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || '');
-const ogImage = post?.image ? `${siteUrl}${post.image}` : post?.img ? `${siteUrl}${post.img}` : `${siteUrl}/logo-transparent.png`;
+
+  // Handle OG Image logic with absolute URL support
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://atlasrentacar.com');
+  const rawImage = post.image || post.img;
+  const ogImage = rawImage 
+    ? (rawImage.startsWith('http') ? rawImage : `${siteUrl}${rawImage}`)
+    : `${siteUrl}/logo-transparent.png`;
 
   return (
     <Layout>
@@ -127,6 +122,7 @@ const ogImage = post?.image ? `${siteUrl}${post.image}` : post?.img ? `${siteUrl
         <meta property="og:url" content={currentUrl} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+
 
       <div style={{ background: '#fff', minHeight: '100vh' }}>
 
@@ -317,4 +313,26 @@ const ogImage = post?.image ? `${siteUrl}${post.image}` : post?.img ? `${siteUrl
       `}</style>
     </Layout>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://atlasrentacar.com';
+  
+  try {
+    // We fetch from the internal API path or direct DB if preferred
+    // Using absolute URL for server-side fetch if necessary
+    const res = await fetch(`${siteUrl}/api/news`);
+    const posts = await res.json();
+    const post = posts.find(p => (p.slug === slug) || (String(p.id) === String(slug))) || null;
+
+    return {
+      props: { post }
+    };
+  } catch (error) {
+    console.error("Error fetching post in getServerSideProps:", error);
+    return {
+      props: { post: null }
+    };
+  }
 }
