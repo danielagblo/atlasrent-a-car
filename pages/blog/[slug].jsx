@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, Send } from 'lucide-react'
+import Head from 'next/head'
+import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, MessageCircle } from 'lucide-react'
 
 export default function ArticlePage() {
   const router = useRouter()
@@ -14,6 +15,16 @@ export default function ArticlePage() {
   const [isMobile, setIsMobile] = useState(false)
   const [commentForm, setCommentForm] = useState({ author: '', email: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
+
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const shareText = post ? encodeURIComponent(`Check out this article: ${post.title}`) : ''
+
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(currentUrl)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${shareText}%20${encodeURIComponent(currentUrl)}`
+  }
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768)
@@ -102,6 +113,17 @@ export default function ArticlePage() {
 
   return (
     <Layout>
+      <Head>
+        <title>{post.title} | Atlas Rent-A-Car</title>
+        <meta name="description" content={post.excerpt} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:image" content={post.image || post.img || '/atlas-sharing-logo.png'} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={currentUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
       <div style={{ background: '#fff', minHeight: '100vh' }}>
         
         {/* Article Header */}
@@ -226,9 +248,10 @@ export default function ArticlePage() {
                   <div>
                     <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Share This</h4>
                     <div style={{ display: 'flex', gap: 16 }}>
-                      <Facebook size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
-                      <Twitter size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
-                      <Linkedin size={20} style={{ cursor: 'pointer' }} color="var(--accent)" />
+                      <a href={shareLinks.facebook} target="_blank" rel="noreferrer"><Facebook size={20} style={{ cursor: 'pointer' }} color="var(--accent)" /></a>
+                      <a href={shareLinks.twitter} target="_blank" rel="noreferrer"><Twitter size={20} style={{ cursor: 'pointer' }} color="var(--accent)" /></a>
+                      <a href={shareLinks.linkedin} target="_blank" rel="noreferrer"><Linkedin size={20} style={{ cursor: 'pointer' }} color="var(--accent)" /></a>
+                      <a href={shareLinks.whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={20} style={{ cursor: 'pointer' }} color="var(--accent)" /></a>
                     </div>
                   </div>
                   <div style={{ 

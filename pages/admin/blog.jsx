@@ -19,7 +19,7 @@ import dynamic from 'next/dynamic'
 
 const LexicalEditor = dynamic(() => import('../../components/LexicalEditor'), { ssr: false })
 
-function empty() { return { title: '', date: '', excerpt: '', content: '', image: '', status: 'active' } }
+function empty() { return { title: '', date: '', author: '', category: '', excerpt: '', content: '', image: '', status: 'active' } }
 
 export default function AdminBlog() {
   const router = useRouter()
@@ -99,6 +99,8 @@ export default function AdminBlog() {
     setForm({ 
       title: item.title || '', 
       date: item.date || '', 
+      author: item.author || '',
+      category: item.category || '',
       excerpt: item.excerpt || '', 
       content: item.content || '',
       image: item.image || '', 
@@ -256,6 +258,30 @@ export default function AdminBlog() {
              <div className="field-group">
                 <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Release Date</label>
                 <input name="date" placeholder="October 24, 2026" value={form.date} onChange={onChange} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+             </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+             <div className="field-group">
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Published By</label>
+                <input name="author" placeholder="e.g. Atlas Executive Team" value={form.author} onChange={onChange} style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500 }} />
+             </div>
+             <div className="field-group">
+                <label style={{ fontSize: 10, fontWeight: 800, color: '#64748B', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1.5 }}>Category</label>
+                <select 
+                  name="category" 
+                  value={form.category} 
+                  onChange={onChange} 
+                  style={{ width: '100%', height: 44, borderRadius: 8, border: '1px solid #E2E8F0', padding: '0 12px', outline: 'none', fontSize: 14, fontWeight: 500, background: '#fff' }}
+                >
+                  <option value="">Select Category</option>
+                  <option value="Fleet Insights">Fleet Insights</option>
+                  <option value="Luxury Travel">Luxury Travel</option>
+                  <option value="Corporate Mobility">Corporate Mobility</option>
+                  <option value="Protocol Services">Protocol Services</option>
+                  <option value="Destination Ghana">Destination Ghana</option>
+                  <option value="Company News">Company News</option>
+                </select>
              </div>
           </div>
           
