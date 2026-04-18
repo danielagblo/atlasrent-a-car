@@ -5,16 +5,21 @@ import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Head from 'next/head'
 import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, MessageCircle } from 'lucide-react'
+import storage from '../../lib/api-storage'
 
 export default function ArticlePage({ post: initialPost }) {
   const router = useRouter()
   const { slug } = router.query
   const [post, setPost] = useState(initialPost)
   const [comments, setComments] = useState([])
-  const [loading, setLoading] = useState(!initialPost)
   const [isMobile, setIsMobile] = useState(false)
   const [commentForm, setCommentForm] = useState({ author: '', email: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
+
+  // Ensure internal state syncs with server props
+  useEffect(() => {
+    setPost(initialPost);
+  }, [initialPost]);
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : ''
   const shareText = post ? encodeURIComponent(`Check out this article: ${post.title}`) : ''
@@ -39,7 +44,7 @@ export default function ArticlePage({ post: initialPost }) {
   }, [post])
 
   const fetchComments = async () => {
-    if (!post) return;
+    if (!post || !post.id) return;
     try {
       const cRes = await fetch(`/api/comments?postId=${post.id}`)
       const commentsData = await cRes.json()
@@ -76,21 +81,12 @@ export default function ArticlePage({ post: initialPost }) {
     }
   }
 
-  if (loading) {
-    return (
-      <Layout>
-        <div style={{ padding: '160px 64px', textAlign: 'center' }}>
-          <p style={{ color: '#94a3b8' }}>Archiving content...</p>
-        </div>
-      </Layout>
-    )
-  }
-
   if (!post) {
     return (
       <Layout>
-        <div style={{ padding: '160px 64px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 32, fontWeight: 900 }}>Article Not Found</h2>
+        <div style={{ padding: '160px 20px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 32, fontWeight: 900, color: 'var(--accent)' }}>Article Not Found</h2>
+          <p style={{ color: '#94a3b8', marginTop: 16 }}>The content your are looking for may have been archived.</p>
           <Link href="/blog">
             <button style={{ marginTop: 24, padding: '12px 32px', background: 'var(--accent)', color: '#fff', borderRadius: 999, border: 'none', fontWeight: 700, cursor: 'pointer' }}>
               Back to Journal
@@ -111,7 +107,7 @@ export default function ArticlePage({ post: initialPost }) {
   return (
     <Layout>
       <Head>
-        <title>{post.title} | Atlas Rent-A-Car</title>
+        <title>{`${post.title} | Atlas Rent-A-Car`}</title>
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
@@ -317,17 +313,15 @@ export default function ArticlePage({ post: initialPost }) {
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://atlasrentacar.com';
   
   try {
-    // We fetch from the internal API path or direct DB if preferred
-    // Using absolute URL for server-side fetch if necessary
-    const res = await fetch(`${siteUrl}/api/news`);
-    const posts = await res.json();
+    const posts = await storage.getNews();
     const post = posts.find(p => (p.slug === slug) || (String(p.id) === String(slug))) || null;
 
     return {
-      props: { post }
+      props: { 
+        post: JSON.parse(JSON.stringify(post)) // Simple deep clone to ensure serializable data
+      }
     };
   } catch (error) {
     console.error("Error fetching post in getServerSideProps:", error);
