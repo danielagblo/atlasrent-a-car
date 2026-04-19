@@ -24,7 +24,7 @@ export default function RentalPage() {
     if (typeof to === 'number') return router.back()
     return router.push(to)
   }
-  
+
   const [vehicles, setVehicles] = React.useState([])
   const [vehiclesLoading, setVehiclesLoading] = React.useState(true)
   const [form, setForm] = React.useState({ name: '', email: '', phone: '', start: '', end: '', location: '', note: '' })
@@ -114,128 +114,128 @@ export default function RentalPage() {
   return (
     <Layout>
       <div style={{ background: '#fff', minHeight: '100vh', color: '#1a1a1a' }}>
-        
+
         {/* Navigation & Trace */}
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '160px 20px 20px' : '110px 64px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 101 }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 24, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#999' }}>
-              <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#000', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 900 }}>
-                 <ChevronLeft size={14} /> BACK
-              </button>
-              <div style={{ width: 1, height: 16, background: '#eee' }} />
-              <span style={{ fontSize: 9 }}>{model.category} COLLECTION</span>
-           </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 24, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#999' }}>
+            <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#000', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 900 }}>
+              <ChevronLeft size={14} /> BACK
+            </button>
+            <div style={{ width: 1, height: 16, background: '#eee' }} />
+            <span style={{ fontSize: 9 }}>{model.category} COLLECTION</span>
+          </div>
         </div>
 
         {/* The Boutique Layout */}
         <section style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '0 20px 60px' : '0 64px 100px' }}>
-           <motion.div initial="initial" animate="animate" variants={stagger} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 40 : 100, alignItems: 'start' }}>
-              
-              {/* Image & Context Column */}
-              <div style={{ flex: 1, width: '100%', display: 'grid', gap: isMobile ? 24 : 48 }}>
-                 <motion.div variants={fadeInUp} style={{ position: 'relative', borderRadius: isMobile ? 16 : 24, overflow: 'hidden', background: '#fff', border: '1px solid #f0f0f0' }}>
-                    <CldOptimizedImage src={allImages[selectedImage]} alt={model.name} width={1000} height={650} style={{ width: '100%', height: 'auto', maxHeight: isMobile ? 'none' : 500, objectFit: 'contain', display: 'block' }} />
-                    <div style={{ position: 'absolute', bottom: isMobile ? 16 : 32, right: isMobile ? 16 : 32, background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', padding: isMobile ? '8px 16px' : '12px 24px', borderRadius: 99, fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', letterSpacing: '0.1em' }}>
-                       {selectedImage + 1}/{allImages.length}
-                    </div>
-                 </motion.div>
-                 
-                 <motion.div variants={fadeInUp} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 12 }} className="no-scrollbar">
-                    {allImages.map((img, idx) => (
-                      <div 
-                        key={idx} 
-                        onClick={() => setSelectedImage(idx)} 
-                        style={{ flexShrink: 0, width: isMobile ? 100 : 180, height: isMobile ? 65 : 120, borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.4, transition: '0.3s' }}
-                      >
-                         <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', background: '#fff' }} />
-                      </div>
-                    ))}
-                 </motion.div>
+          <motion.div initial="initial" animate="animate" variants={stagger} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 40 : 100, alignItems: 'start' }}>
 
-                 <motion.div variants={fadeInUp} style={{ padding: isMobile ? '32px 0' : '64px 0', borderTop: '1px solid #eee' }}>
-                    <h2 style={{ fontSize: isMobile ? 28 : 48, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', fontStyle: 'italic', marginBottom: 24, lineHeight: 1.2 }}>Bespoke Executive Mobility.</h2>
-                    <p style={{ fontSize: 16, color: '#666', lineHeight: 1.8, maxWidth: 800 }}>{model.desc}</p>
-                 </motion.div>
-
-                 {/* Tech Attributes - Single row grid */}
-                 <motion.div variants={fadeInUp} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fit, minmax(200px, 1fr))', gap: isMobile ? 16 : 40, paddingBottom: isMobile ? 20 : 60 }}>
-                    <div style={{ padding: isMobile ? 20 : 32, background: '#fcfcf9', borderRadius: 16 }}>
-                       <div style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>CAPACITY</div>
-                       <div style={{ fontSize: 18, fontWeight: 400 }}>{model.specs.seats} Seater</div>
-                    </div>
-                    <div style={{ padding: isMobile ? 20 : 32, background: '#fcfcf9', borderRadius: 16 }}>
-                       <div style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>PERFORMANCE</div>
-                       <div style={{ fontSize: 18, fontWeight: 400 }}>{model.specs.drive}</div>
-                    </div>
-                 </motion.div>
-              </div>
-
-              {/* Concierge Desk - Optimised for Mobile Scroll */}
-              <motion.div variants={fadeInUp} style={{ width: '100%', maxWidth: isMobile ? '100%' : 450, position: isMobile ? 'relative' : 'sticky', top: 120 }}>
-                 <div style={{ background: '#fff', padding: isMobile ? 32 : 48, borderRadius: isMobile ? 32 : 40, border: '1px solid #f0f0f0', boxShadow: '0 40px 100px rgba(0,0,0,0.03)' }}>
-                    
-                    <div style={{ marginBottom: 40 }}>
-                       <h1 style={{ fontSize: isMobile ? 40 : 64, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', margin: '0 0 12px', fontStyle: 'italic', lineHeight: 1 }}>{model.name}</h1>
-                       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-                          <div style={{ fontSize: 24, fontWeight: 300, color: 'var(--accent-gold)' }}>{model.rate}</div>
-                          <div style={{ fontSize: 12, color: '#999', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Per Charter Day</div>
-                       </div>
-                    </div>
-
-                    <form onSubmit={submit} style={{ display: 'grid', gap: isMobile ? 16 : 20 }}>
-                       
-                       <div className="input-group">
-                          <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>ESTEEMED CLIENT</label>
-                          <div style={{ position: 'relative' }}>
-                             <User size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
-                             <input name="name" required value={form.name} onChange={update} placeholder="Full Legal Identity" className="luxury-input" />
-                          </div>
-                       </div>
-
-                       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
-                          <div className="input-group">
-                             <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Email</label>
-                             <input name="email" required type="email" value={form.email} onChange={update} placeholder="Emauil" className="luxury-input small" />
-                          </div>
-                          <div className="input-group">
-                             <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Phone</label>
-                             <input name="phone" type="tel" value={form.phone} onChange={update} placeholder="Phone" className="luxury-input small" />
-                          </div>
-                       </div>
-
-                       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
-                          <div className="input-group">
-                             <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>MOBILIZE</label>
-                             <input name="start" required type="date" value={form.start} onChange={update} min={new Date().toISOString().split('T')[0]} className="luxury-input small" />
-                          </div>
-                          <div className="input-group">
-                             <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>RESTORE</label>
-                             <input name="end" required type="date" value={form.end} onChange={update} min={form.start || new Date().toISOString().split('T')[0]} className="luxury-input small" />
-                          </div>
-                       </div>
-
-                       <div className="input-group">
-                          <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>DELIVERY COORDINATES</label>
-                          <div style={{ position: 'relative' }}>
-                             <MapPin size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
-                             <input name="location" value={form.location} onChange={update} placeholder="e.g. Kotoka Terminal 3" className="luxury-input" />
-                          </div>
-                       </div>
-
-                       {error && <div style={{ fontSize: 13, color: '#ef4444', fontWeight: 700 }}>{error}</div>}
-
-                       <button disabled={loading} type="submit" className="primary" style={{ width: '100%', padding: '24px', fontSize: 14, fontWeight: 900, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 12 }}>
-                          {loading ? 'Initiating Charter...' : 'Secure Charter'} <ArrowRight size={20} />
-                       </button>
-
-                       <div style={{ display: 'flex', gap: 16, background: '#fcfcf9', padding: '16px', borderRadius: 16, border: '1px solid #f0f0f0', marginTop: 10 }}>
-                          <Shield size={18} color="var(--accent-gold)" />
-                          <p style={{ margin: 0, fontSize: 10, color: '#999', lineHeight: 1.6, fontWeight: 600 }}>Billing is non-digital. Final itinerary and mobilization fees handled during vessel delivery.</p>
-                       </div>
-                    </form>
-
-                 </div>
+            {/* Image & Context Column */}
+            <div style={{ flex: 1, width: '100%', display: 'grid', gap: isMobile ? 24 : 48 }}>
+              <motion.div variants={fadeInUp} style={{ position: 'relative', borderRadius: isMobile ? 16 : 24, overflow: 'hidden', background: '#fff', border: '1px solid #f0f0f0' }}>
+                <CldOptimizedImage src={allImages[selectedImage]} alt={model.name} width={1000} height={250} style={{ width: '100%', height: 'auto', maxHeight: isMobile ? 'none' : 500, objectFit: 'contain', display: 'block' }} />
+                <div style={{ position: 'absolute', bottom: isMobile ? 16 : 32, right: isMobile ? 16 : 32, background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', padding: isMobile ? '8px 16px' : '12px 24px', borderRadius: 99, fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', letterSpacing: '0.1em' }}>
+                  {selectedImage + 1}/{allImages.length}
+                </div>
               </motion.div>
-           </motion.div>
+
+              <motion.div variants={fadeInUp} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 12 }} className="no-scrollbar">
+                {allImages.map((img, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    style={{ flexShrink: 0, width: isMobile ? 100 : 180, height: isMobile ? 65 : 120, borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.4, transition: '0.3s' }}
+                  >
+                    <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', background: '#fff' }} />
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={fadeInUp} style={{ padding: isMobile ? '32px 0' : '64px 0', borderTop: '1px solid #eee' }}>
+                <h2 style={{ fontSize: isMobile ? 28 : 48, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', fontStyle: 'italic', marginBottom: 24, lineHeight: 1.2 }}>Bespoke Executive Mobility.</h2>
+                <p style={{ fontSize: 16, color: '#666', lineHeight: 1.8, maxWidth: 800 }}>{model.desc}</p>
+              </motion.div>
+
+              {/* Tech Attributes - Single row grid */}
+              <motion.div variants={fadeInUp} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fit, minmax(200px, 1fr))', gap: isMobile ? 16 : 40, paddingBottom: isMobile ? 20 : 60 }}>
+                <div style={{ padding: isMobile ? 20 : 32, background: '#fcfcf9', borderRadius: 16 }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>CAPACITY</div>
+                  <div style={{ fontSize: 18, fontWeight: 400 }}>{model.specs.seats} Seater</div>
+                </div>
+                <div style={{ padding: isMobile ? 20 : 32, background: '#fcfcf9', borderRadius: 16 }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>PERFORMANCE</div>
+                  <div style={{ fontSize: 18, fontWeight: 400 }}>{model.specs.drive}</div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Concierge Desk - Optimised for Mobile Scroll */}
+            <motion.div variants={fadeInUp} style={{ width: '100%', maxWidth: isMobile ? '100%' : 450, position: isMobile ? 'relative' : 'sticky', top: 120 }}>
+              <div style={{ background: '#fff', padding: isMobile ? 32 : 48, borderRadius: isMobile ? 32 : 40, border: '1px solid #f0f0f0', boxShadow: '0 40px 100px rgba(0,0,0,0.03)' }}>
+
+                <div style={{ marginBottom: 40 }}>
+                  <h1 style={{ fontSize: isMobile ? 40 : 64, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', margin: '0 0 12px', fontStyle: 'italic', lineHeight: 1 }}>{model.name}</h1>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+                    <div style={{ fontSize: 24, fontWeight: 300, color: 'var(--accent-gold)' }}>{model.rate}</div>
+                    <div style={{ fontSize: 12, color: '#999', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Per Charter Day</div>
+                  </div>
+                </div>
+
+                <form onSubmit={submit} style={{ display: 'grid', gap: isMobile ? 16 : 20 }}>
+
+                  <div className="input-group">
+                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>ESTEEMED CLIENT</label>
+                    <div style={{ position: 'relative' }}>
+                      <User size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
+                      <input name="name" required value={form.name} onChange={update} placeholder="Full Legal Identity" className="luxury-input" />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
+                    <div className="input-group">
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Email</label>
+                      <input name="email" required type="email" value={form.email} onChange={update} placeholder="Emauil" className="luxury-input small" />
+                    </div>
+                    <div className="input-group">
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Phone</label>
+                      <input name="phone" type="tel" value={form.phone} onChange={update} placeholder="Phone" className="luxury-input small" />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
+                    <div className="input-group">
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>MOBILIZE</label>
+                      <input name="start" required type="date" value={form.start} onChange={update} min={new Date().toISOString().split('T')[0]} className="luxury-input small" />
+                    </div>
+                    <div className="input-group">
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>RESTORE</label>
+                      <input name="end" required type="date" value={form.end} onChange={update} min={form.start || new Date().toISOString().split('T')[0]} className="luxury-input small" />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>DELIVERY COORDINATES</label>
+                    <div style={{ position: 'relative' }}>
+                      <MapPin size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
+                      <input name="location" value={form.location} onChange={update} placeholder="e.g. Kotoka Terminal 3" className="luxury-input" />
+                    </div>
+                  </div>
+
+                  {error && <div style={{ fontSize: 13, color: '#ef4444', fontWeight: 700 }}>{error}</div>}
+
+                  <button disabled={loading} type="submit" className="primary" style={{ width: '100%', padding: '24px', fontSize: 14, fontWeight: 900, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 12 }}>
+                    {loading ? 'Initiating Charter...' : 'Secure Charter'} <ArrowRight size={20} />
+                  </button>
+
+                  <div style={{ display: 'flex', gap: 16, background: '#fcfcf9', padding: '16px', borderRadius: 16, border: '1px solid #f0f0f0', marginTop: 10 }}>
+                    <Shield size={18} color="var(--accent-gold)" />
+                    <p style={{ margin: 0, fontSize: 10, color: '#999', lineHeight: 1.6, fontWeight: 600 }}>Billing is non-digital. Final itinerary and mobilization fees handled during vessel delivery.</p>
+                  </div>
+                </form>
+
+              </div>
+            </motion.div>
+          </motion.div>
         </section>
 
       </div>
