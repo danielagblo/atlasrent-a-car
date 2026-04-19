@@ -133,7 +133,7 @@ export default function RentalPage() {
               {/* Image & Context Column */}
               <div style={{ flex: 1, width: '100%', display: 'grid', gap: isMobile ? 24 : 48 }}>
                  <motion.div variants={fadeInUp} style={{ position: 'relative', borderRadius: isMobile ? 16 : 24, overflow: 'hidden', background: '#fcfcfc', border: '1px solid #f0f0f0' }}>
-                    <CldOptimizedImage src={allImages[selectedImage]} alt={model.name} width={1000} height={650} style={{ width: '100%', height: isMobile ? 300 : 720, objectFit: 'contain' }} />
+                    <CldOptimizedImage src={allImages[selectedImage]} alt={model.name} width={1000} height={650} style={{ width: '100%', height: isMobile ? 'auto' : 720, aspectRatio: isMobile ? '16/10' : 'auto', objectFit: 'contain' }} />
                     <div style={{ position: 'absolute', bottom: isMobile ? 16 : 32, right: isMobile ? 16 : 32, background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)', padding: isMobile ? '8px 16px' : '12px 24px', borderRadius: 99, fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', letterSpacing: '0.1em' }}>
                        {selectedImage + 1}/{allImages.length}
                     </div>
@@ -146,7 +146,7 @@ export default function RentalPage() {
                         onClick={() => setSelectedImage(idx)} 
                         style={{ flexShrink: 0, width: isMobile ? 100 : 180, height: isMobile ? 65 : 120, borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.4, transition: '0.3s' }}
                       >
-                         <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                         <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }} />
                       </div>
                     ))}
                  </motion.div>
