@@ -144,9 +144,9 @@ export default function RentalPage() {
                   <div
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
-                    style={{ flexShrink: 0, width: isMobile ? 100 : 180, height: isMobile ? 65 : 120, borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.4, transition: '0.3s' }}
+                    style={{ flexShrink: 0, width: isMobile ? 110 : 180, height: isMobile ? 70 : 120, borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.4, transition: '0.3s' }}
                   >
-                    <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', background: '#fff' }} />
+                    <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', background: '#fff' }} />
                   </div>
                 ))}
               </motion.div>
@@ -269,6 +269,7 @@ export default function RentalPage() {
         .no-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
         }
       `}</style>
     </Layout>
