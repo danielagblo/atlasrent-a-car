@@ -146,7 +146,7 @@ export default function RentalPage() {
                     onClick={() => setSelectedImage(idx)}
                     style={{ flexShrink: 0, width: isMobile ? 120 : 180, height: 'auto', borderRadius: 12, overflow: 'hidden', cursor: 'pointer', border: selectedImage === idx ? '2px solid var(--accent-gold)' : '2px solid transparent', opacity: selectedImage === idx ? 1 : 0.6, transition: '0.3s' }}
                   >
-                    <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={150} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <CldOptimizedImage src={img} alt="Thumbnail" width={200} height={100} style={{ width: '100%', height: 'auto', display: 'block' }} />
                   </div>
                 ))}
               </motion.div>
