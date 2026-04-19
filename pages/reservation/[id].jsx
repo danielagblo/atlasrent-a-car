@@ -174,7 +174,7 @@ export default function RentalPage() {
               <div style={{ background: '#fff', padding: isMobile ? 32 : 48, borderRadius: isMobile ? 32 : 40, border: '1px solid #f0f0f0', boxShadow: '0 40px 100px rgba(0,0,0,0.03)' }}>
 
                 <div style={{ marginBottom: 40 }}>
-                  <h1 style={{ fontSize: isMobile ? 40 : 64, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', margin: '0 0 12px', fontStyle: 'italic', lineHeight: 1 }}>{model.name}</h1>
+                  <h1 style={{ fontSize: isMobile ? 32 : 40, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', margin: '0 0 12px', fontStyle: 'italic', lineHeight: 1 }}>{model.name}</h1>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
                     <div style={{ fontSize: 24, fontWeight: 300, color: 'var(--accent-gold)' }}>{model.rate}</div>
                     <div style={{ fontSize: 12, color: '#999', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Per Charter Day</div>
