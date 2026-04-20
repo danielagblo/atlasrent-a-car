@@ -85,7 +85,7 @@ export default function Hero() {
             </select>
           </div>
 
-          <button className="btn-premium" onClick={() => router.push('/models')}>
+          <button className="btn-premium" onClick={() => router.push('/vehicles')}>
             Find Car
           </button>
         </motion.div>

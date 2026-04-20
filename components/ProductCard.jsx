@@ -17,6 +17,9 @@ export default function ProductCard({ item }) {
       </div>
       
       <div className="product-card-content">
+        <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 6 }}>
+          {item.category ? item.category.replace(/ cars?/i, '') : 'Luxury'}
+        </div>
         <h3>{item.name}</h3>
         <div className="product-price">
           {item.price || item.rate} GHS <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>/ day</span>

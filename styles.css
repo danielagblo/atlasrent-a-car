@@ -661,5 +661,6 @@ main {
   .product-price { font-size: 14px; margin-bottom: 12px; }
   .product-price span { font-size: 11px !important; }
   .product-specs { display: none; }
+  .product-card { border-radius: 12px; }
   .product-card .btn-outline { padding: 10px; font-size: 12px; }
 }
