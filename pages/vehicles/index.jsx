@@ -5,7 +5,7 @@ import Layout from '../../components/Layout'
 export default function VehiclesPage() {
   return (
     <Layout>
-      <div style={{ padding: '0 0 60px' }}>
+      <div style={{ paddingTop: 100, paddingBottom: 60 }}>
         <Products />
       </div>
     </Layout>
