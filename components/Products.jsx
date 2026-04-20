@@ -275,20 +275,41 @@ export default function Products({ limit, isMobile: propIsMobile }) {
 
   if (loading) return null
 
-  if (limit) {
-    return <HeritageShowcase items={items} />
-  }
+  const displayedItems = limit ? items.slice(0, limit) : items
 
   return (
-     <section style={{ background: '#fff', padding: isMobile ? '40px 20px' : '120px 48px' }}>
-       <div style={{ 
-          maxWidth: 1440, 
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: isMobile ? 32 : 48
-       }}>
-          {items.map(i => <ProductCard key={i.id} item={i} i={0} />)}
+     <section style={{ background: '#fff', padding: isMobile ? '40px 16px' : '120px 48px' }}>
+       <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+          {limit && (
+            <div style={{ textAlign: 'center', marginBottom: isMobile ? 60 : 100 }}>
+               <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 800, color: '#DF9738', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>The Sovereign Selection</div>
+               <h2 style={{ 
+                 fontSize: isMobile ? 32 : 64, 
+                 fontWeight: 400, 
+                 color: '#24276F', 
+                 fontFamily: 'serif', 
+                 letterSpacing: '-0.02em',
+                 fontStyle: 'italic',
+                 lineHeight: 1.1
+               }}>
+                 The Atlas <span style={{ color: '#000' }}>Collection.</span>
+               </h2>
+            </div>
+          )}
+          <div style={{ 
+             display: 'grid',
+             gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(320px, 1fr))',
+             gap: isMobile ? 16 : 48
+          }}>
+             {displayedItems.map(i => <ProductCard key={i.id} item={i} i={0} />)}
+          </div>
+          {limit && (
+            <div style={{ textAlign: 'center', marginTop: isMobile ? 40 : 60 }}>
+              <Link href="/vehicles">
+                <button className="btn-premium">View Full Collection</button>
+              </Link>
+            </div>
+          )}
        </div>
      </section>
   )

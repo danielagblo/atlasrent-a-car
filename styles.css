@@ -654,4 +654,14 @@ main {
   .hero-section { padding: 120px 24px 60px; min-height: auto; }
   .fleet-section { padding: 80px 24px; }
   .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+
+  .product-card-img-wrap { height: 140px; padding: 12px; }
+  .product-card-content { padding: 12px; }
+  .product-card h3 { font-size: 14px; min-height: 38px; margin-bottom: 4px; }
+  .product-price { font-size: 14px; margin-bottom: 12px; }
+  .product-price span { font-size: 11px !important; }
+  .product-specs { grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px; padding-top: 12px; }
+  .spec-item { font-size: 11px; }
+  .spec-item svg { width: 14px; height: 14px; }
+  .product-card .btn-outline { padding: 10px; font-size: 12px; }
 }
