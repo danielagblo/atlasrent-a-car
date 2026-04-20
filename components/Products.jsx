@@ -297,7 +297,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   const displayedItems = limit ? filteredItems.slice(0, limit) : filteredItems
 
   return (
-     <section style={{ background: '#fff', padding: isMobile ? '40px 16px' : '120px 48px' }}>
+     <section style={{ background: '#fff', padding: limit ? (isMobile ? '40px 16px' : '120px 48px') : (isMobile ? '16px 16px' : '32px 48px') }}>
        <div style={{ maxWidth: 1440, margin: '0 auto' }}>
           {limit && (
             <div style={{ textAlign: 'center', marginBottom: isMobile ? 60 : 100 }}>
@@ -321,7 +321,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
               display: 'flex', 
               justifyContent: isMobile ? 'flex-start' : 'center',
               gap: isMobile ? 24 : 48,
-              marginBottom: 48,
+              marginBottom: 24,
               borderBottom: '1px solid #f1f5f9',
               overflowX: 'auto',
               whiteSpace: 'nowrap',
@@ -349,7 +349,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
           )}
 
           {!limit && (
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 40 }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 24 }}>
                <div style={{ position: 'relative', width: isMobile ? '100%' : '320px' }}>
                  <input 
                    type="text" 
