@@ -85,77 +85,109 @@ function Statistics() {
 
 function Testimonials({ testimonials, isMobile }) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const itemsPerPage = isMobile ? 1 : 3;
 
   React.useEffect(() => {
-    if (!testimonials || testimonials.length === 0) return;
+    if (!testimonials || testimonials.length <= itemsPerPage) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [testimonials?.length]);
+  }, [testimonials?.length, itemsPerPage]);
 
   if (!testimonials || testimonials.length === 0) return null;
 
+  let visibleTestimonials = [];
+  if (testimonials.length <= itemsPerPage) {
+    visibleTestimonials = testimonials;
+  } else {
+    for (let i = 0; i < itemsPerPage; i++) {
+      visibleTestimonials.push(testimonials[(currentIndex + i) % testimonials.length]);
+    }
+  }
+
   return (
-    <section style={{ padding: isMobile ? '80px 0' : '120px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
-      <div className="section-header" style={{ marginBottom: isMobile ? 40 : 64 }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 32 : 44, fontWeight: 900 }}>Client Experiences</h2>
+    <section style={{ padding: isMobile ? '40px 0' : '80px 0', background: 'var(--bg-secondary)', textAlign: 'center', overflow: 'hidden', position: 'relative' }}>
+      <div className="section-header" style={{ marginBottom: isMobile ? 24 : 48 }}>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 28 : 40, fontWeight: 900, margin: 0 }}>Client Experiences</h2>
       </div>
 
-      <div style={{ position: 'relative', width: '100%', maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
+      <div style={{ position: 'relative', width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: isMobile ? 320 : 250 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
+            style={{ 
+              display: 'grid', 
+              gridTemplateColumns: isMobile ? '1fr' : `repeat(${visibleTestimonials.length}, 1fr)`, 
+              gap: 24,
+              alignItems: 'stretch'
+            }}
           >
-            <div style={{ color: 'var(--accent-gold)', fontSize: isMobile ? 18 : 24, marginBottom: isMobile ? 20 : 32 }}>
-              ★★★★★
-            </div>
-            <p style={{
-              fontSize: isMobile ? 20 : 28,
-              lineHeight: 1.6,
-              color: 'var(--text-primary)',
-              fontWeight: 500,
-              marginBottom: isMobile ? 32 : 48,
-              fontStyle: 'italic',
-              fontFamily: "'Playfair Display', serif"
-            }}>
-              "{testimonials[currentIndex].quote}"
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              {testimonials[currentIndex].avatar && (
-                <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} style={{ width: isMobile ? 48 : 64, height: isMobile ? 48 : 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff' }} />
-              )}
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ margin: 0, fontSize: isMobile ? 15 : 18, fontWeight: 800, color: 'var(--accent)' }}>{testimonials[currentIndex].name}</h4>
-                <p style={{ margin: 0, fontSize: isMobile ? 11 : 13, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{testimonials[currentIndex].role}</p>
+            {visibleTestimonials.map((t, idx) => (
+              <div key={`${t.name}-${idx}`} style={{ 
+                background: '#fff', 
+                padding: isMobile ? 24 : 32, 
+                borderRadius: 16, 
+                boxShadow: 'var(--shadow-sm)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                textAlign: 'left'
+              }}>
+                <div>
+                  <div style={{ color: 'var(--accent-gold)', fontSize: 16, marginBottom: 16 }}>
+                    ★★★★★
+                  </div>
+                  <p style={{
+                    fontSize: isMobile ? 15 : 16,
+                    lineHeight: 1.6,
+                    color: 'var(--text-primary)',
+                    fontWeight: 500,
+                    marginBottom: 24,
+                    fontStyle: 'italic',
+                    fontFamily: "'Playfair Display', serif"
+                  }}>
+                    "{t.quote}"
+                  </p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  {t.avatar && (
+                    <img src={t.avatar} alt={t.name} style={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover' }} />
+                  )}
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>{t.name}</h4>
+                    <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t.role}</p>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </motion.div>
         </AnimatePresence>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: isMobile ? 40 : 64 }}>
-          {testimonials.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              style={{
-                width: idx === currentIndex ? (isMobile ? 24 : 32) : (isMobile ? 8 : 12),
-                height: isMobile ? 8 : 12,
-                borderRadius: 999,
-                background: idx === currentIndex ? 'var(--accent)' : 'var(--border-color)',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
+        {testimonials.length > itemsPerPage && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: isMobile ? 32 : 48 }}>
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                style={{
+                  width: idx === currentIndex ? 24 : 8,
+                  height: 8,
+                  borderRadius: 999,
+                  background: idx === currentIndex ? 'var(--accent)' : 'var(--border-color)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
