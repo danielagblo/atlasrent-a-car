@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProductCard from './ProductCard'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ChevronRight } from 'lucide-react'
 
 const CATEGORIES = ['Business Cars', 'Economic Cars', 'Luxury Cars', 'Premium Cars']
@@ -246,6 +247,7 @@ function HeritageShowcase({ items }) {
 }
 
 export default function Products({ limit, isMobile: propIsMobile }) {
+  const router = useRouter()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [internalIsMobile, setInternalIsMobile] = useState(false)
@@ -254,6 +256,12 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const isMobile = propIsMobile !== undefined ? propIsMobile : internalIsMobile
+
+  useEffect(() => {
+    if (router.isReady && router.query.category) {
+      setActiveCategory(router.query.category)
+    }
+  }, [router.isReady, router.query.category])
 
   useEffect(() => {
     if (propIsMobile === undefined) {

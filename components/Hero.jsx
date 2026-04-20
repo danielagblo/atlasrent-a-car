@@ -8,6 +8,15 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
 
   const heroBgUrl = IMAGES.hero || '/hero-placeholder.jpg';
+  const [category, setCategory] = useState('All');
+
+  const handleFindCar = () => {
+    if (category && category !== 'All') {
+      router.push(`/vehicles?category=${encodeURIComponent(category)}`)
+    } else {
+      router.push('/vehicles')
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
@@ -76,8 +85,8 @@ export default function Hero() {
 
           <div className="booking-field-group">
             <label>Vehicle Type</label>
-            <select defaultValue="">
-              <option value="" disabled>Select Class</option>
+            <select value={category} onChange={e => setCategory(e.target.value)}>
+              <option value="All">All Classes</option>
               <option value="Business Cars">Business Cars</option>
               <option value="Economic Cars">Economic Cars</option>
               <option value="Luxury Cars">Luxury Cars</option>
@@ -85,7 +94,7 @@ export default function Hero() {
             </select>
           </div>
 
-          <button className="btn-premium" onClick={() => router.push('/vehicles')}>
+          <button className="btn-premium" onClick={handleFindCar}>
             Find Car
           </button>
         </motion.div>
