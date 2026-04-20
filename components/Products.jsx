@@ -316,16 +316,16 @@ export default function Products({ limit, isMobile: propIsMobile }) {
             </div>
           )}
 
-          {!limit && (
+          {!limit && isMobile && (
             <div className="no-scrollbar" style={{ 
               display: 'flex', 
-              justifyContent: isMobile ? 'flex-start' : 'center',
-              gap: isMobile ? 24 : 48,
+              justifyContent: 'flex-start',
+              gap: 24,
               marginBottom: 24,
               borderBottom: '1px solid #f1f5f9',
               overflowX: 'auto',
               whiteSpace: 'nowrap',
-              paddingBottom: isMobile ? 8 : 0
+              paddingBottom: 8
             }}>
               {['All', ...CATEGORIES].map(cat => {
                  const displayCat = cat.replace(/ cars?/i, '')
@@ -333,7 +333,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
                   <button
                     key={cat} onClick={() => setActiveCategory(cat)}
                     style={{
-                      padding: isMobile ? '16px 0' : '24px 0', background: 'none', border: 'none', cursor: 'pointer',
+                      padding: '16px 0', background: 'none', border: 'none', cursor: 'pointer',
                       color: activeCategory === cat ? '#24276F' : '#cbd5e1',
                       fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em',
                       transition: 'all 0.4s ease', position: 'relative',
@@ -349,8 +349,39 @@ export default function Products({ limit, isMobile: propIsMobile }) {
           )}
 
           {!limit && (
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 24 }}>
-               <div style={{ position: 'relative', width: isMobile ? '100%' : '320px' }}>
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'flex-end' : 'space-between', marginBottom: 24, gap: 16 }}>
+               
+               {!isMobile && (
+                 <div style={{ position: 'relative', width: '240px' }}>
+                   <select 
+                     value={activeCategory} 
+                     onChange={e => setActiveCategory(e.target.value)}
+                     style={{
+                       width: '100%',
+                       padding: '14px 40px 14px 20px',
+                       borderRadius: '99px',
+                       border: '1px solid #e2e8f0',
+                       background: '#f8fafc',
+                       fontSize: '14px',
+                       fontWeight: '600',
+                       outline: 'none',
+                       color: '#0f172a',
+                       cursor: 'pointer',
+                       appearance: 'none',
+                       boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
+                     }}
+                   >
+                     {['All', ...CATEGORIES].map(cat => (
+                       <option key={cat} value={cat}>
+                         {cat === 'All' ? 'Select Category : Our Fleet' : `Category : ${cat.replace(/ cars?/i, '')}`}
+                       </option>
+                     ))}
+                   </select>
+                   <svg style={{ position: 'absolute', right: 18, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#64748b' }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
+                 </div>
+               )}
+
+               <div style={{ position: 'relative', width: isMobile ? '100%' : '360px' }}>
                  <input 
                    type="text" 
                    placeholder="Search models, seats, fuel type..." 
@@ -366,7 +397,8 @@ export default function Products({ limit, isMobile: propIsMobile }) {
                      fontWeight: '500',
                      outline: 'none',
                      color: '#0f172a',
-                     transition: 'all 0.3s'
+                     transition: 'all 0.3s',
+                     boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
                    }}
                  />
                  <svg style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
