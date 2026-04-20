@@ -660,8 +660,6 @@ main {
   .product-card h3 { font-size: 14px; min-height: 38px; margin-bottom: 4px; }
   .product-price { font-size: 14px; margin-bottom: 12px; }
   .product-price span { font-size: 11px !important; }
-  .product-specs { grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px; padding-top: 12px; }
-  .spec-item { font-size: 11px; }
-  .spec-item svg { width: 14px; height: 14px; }
+  .product-specs { display: none; }
   .product-card .btn-outline { padding: 10px; font-size: 12px; }
 }
