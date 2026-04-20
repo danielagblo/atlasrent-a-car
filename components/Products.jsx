@@ -249,6 +249,9 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [internalIsMobile, setInternalIsMobile] = useState(false)
+  const [activeCategory, setActiveCategory] = useState('All')
+
+  const [searchQuery, setSearchQuery] = useState('')
 
   const isMobile = propIsMobile !== undefined ? propIsMobile : internalIsMobile
 
@@ -275,7 +278,23 @@ export default function Products({ limit, isMobile: propIsMobile }) {
 
   if (loading) return null
 
-  const displayedItems = limit ? items.slice(0, limit) : items
+  const filteredItems = items.filter(i => {
+    if (activeCategory !== 'All' && i.category !== activeCategory) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const specs = `
+        ${i.name || ''} 
+        ${i.specs?.seats || '4'} seats 
+        ${i.specs?.transmission || 'Automatic'} 
+        ${i.specs?.fuelType || 'Petrol / EV'} 
+        ${i.range || 'Unlimited km'}
+      `.toLowerCase();
+      if (!specs.includes(q)) return false;
+    }
+    return true;
+  })
+    
+  const displayedItems = limit ? filteredItems.slice(0, limit) : filteredItems
 
   return (
      <section style={{ background: '#fff', padding: isMobile ? '40px 16px' : '120px 48px' }}>
@@ -296,6 +315,65 @@ export default function Products({ limit, isMobile: propIsMobile }) {
                </h2>
             </div>
           )}
+
+          {!limit && (
+            <div className="no-scrollbar" style={{ 
+              display: 'flex', 
+              justifyContent: isMobile ? 'flex-start' : 'center',
+              gap: isMobile ? 24 : 48,
+              marginBottom: 48,
+              borderBottom: '1px solid #f1f5f9',
+              overflowX: 'auto',
+              whiteSpace: 'nowrap',
+              paddingBottom: isMobile ? 8 : 0
+            }}>
+              {['All', ...CATEGORIES].map(cat => {
+                 const displayCat = cat.replace(/ cars?/i, '')
+                 return (
+                  <button
+                    key={cat} onClick={() => setActiveCategory(cat)}
+                    style={{
+                      padding: isMobile ? '16px 0' : '24px 0', background: 'none', border: 'none', cursor: 'pointer',
+                      color: activeCategory === cat ? '#24276F' : '#cbd5e1',
+                      fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em',
+                      transition: 'all 0.4s ease', position: 'relative',
+                      flexShrink: 0
+                    }}
+                  >
+                    {displayCat === 'All' ? 'Our Fleet' : displayCat}
+                    {activeCategory === cat && <div style={{ position: 'absolute', bottom: -1, left: '50%', transform: 'translateX(-50%)', width: '100%', height: 2, background: '#DF9738' }} />}
+                  </button>
+                 )
+              })}
+            </div>
+          )}
+
+          {!limit && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 40 }}>
+               <div style={{ position: 'relative', width: isMobile ? '100%' : '320px' }}>
+                 <input 
+                   type="text" 
+                   placeholder="Search models, seats, fuel type..." 
+                   value={searchQuery}
+                   onChange={(e) => setSearchQuery(e.target.value)}
+                   style={{
+                     width: '100%',
+                     padding: '14px 16px 14px 44px',
+                     borderRadius: '99px',
+                     border: '1px solid #e2e8f0',
+                     background: '#f8fafc',
+                     fontSize: '14px',
+                     fontWeight: '500',
+                     outline: 'none',
+                     color: '#0f172a',
+                     transition: 'all 0.3s'
+                   }}
+                 />
+                 <svg style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+               </div>
+            </div>
+          )}
+
           <div style={{ 
              display: 'grid',
              gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(320px, 1fr))',
