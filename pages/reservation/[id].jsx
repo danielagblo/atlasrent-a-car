@@ -184,17 +184,17 @@ export default function RentalPage() {
                 <form onSubmit={submit} style={{ display: 'grid', gap: isMobile ? 16 : 20 }}>
 
                   <div className="input-group">
-                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>ESTEEMED CLIENT</label>
+                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>NAME</label>
                     <div style={{ position: 'relative' }}>
                       <User size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
-                      <input name="name" required value={form.name} onChange={update} placeholder="Full Legal Identity" className="luxury-input" />
+                      <input name="name" required value={form.name} onChange={update} placeholder="Full Name" className="luxury-input" />
                     </div>
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                     <div className="input-group">
                       <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Email</label>
-                      <input name="email" required type="email" value={form.email} onChange={update} placeholder="Emauil" className="luxury-input small" />
+                      <input name="email" required type="email" value={form.email} onChange={update} placeholder="Email" className="luxury-input small" />
                     </div>
                     <div className="input-group">
                       <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>Phone</label>
@@ -204,17 +204,17 @@ export default function RentalPage() {
 
                   <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                     <div className="input-group">
-                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>MOBILIZE</label>
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>PICK-UP DATE</label>
                       <input name="start" required type="date" value={form.start} onChange={update} min={new Date().toISOString().split('T')[0]} className="luxury-input small" />
                     </div>
                     <div className="input-group">
-                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>RESTORE</label>
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>RETURN DATE</label>
                       <input name="end" required type="date" value={form.end} onChange={update} min={form.start || new Date().toISOString().split('T')[0]} className="luxury-input small" />
                     </div>
                   </div>
 
                   <div className="input-group">
-                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>DELIVERY COORDINATES</label>
+                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, display: 'block' }}>PICK-UP LOCATION</label>
                     <div style={{ position: 'relative' }}>
                       <MapPin size={16} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
                       <input name="location" value={form.location} onChange={update} placeholder="e.g. Kotoka Terminal 3" className="luxury-input" />
