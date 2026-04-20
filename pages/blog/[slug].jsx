@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Head from 'next/head'
-import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, MessageCircle } from 'lucide-react'
+import { ArrowLeft, Calendar, User, MessageSquare, Facebook, Twitter, Linkedin, MessageCircle, Heart } from 'lucide-react'
 import storage from '../../lib/api-storage'
 
 export default function ArticlePage({ post: initialPost }) {
@@ -15,11 +15,47 @@ export default function ArticlePage({ post: initialPost }) {
   const [isMobile, setIsMobile] = useState(false)
   const [commentForm, setCommentForm] = useState({ author: '', email: '', content: '' })
   const [submitting, setSubmitting] = useState(false)
+  const [likes, setLikes] = useState(initialPost?.likes || 0)
+  const [isLiked, setIsLiked] = useState(false)
 
   // Ensure internal state syncs with server props
   useEffect(() => {
     setPost(initialPost);
+    setLikes(initialPost?.likes || 0);
+    
+    // Check if previously liked
+    if (initialPost && typeof window !== 'undefined') {
+      const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
+      if (likedPosts.includes(initialPost.id)) {
+        setIsLiked(true);
+      }
+    }
   }, [initialPost]);
+
+  const handleLike = async () => {
+    if (isLiked || !post) return;
+    
+    try {
+      const res = await fetch('/api/news/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId: post.id })
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        setLikes(data.likes);
+        setIsLiked(true);
+        
+        // Save to local storage
+        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
+        likedPosts.push(post.id);
+        localStorage.setItem('liked_posts', JSON.stringify(likedPosts));
+      }
+    } catch (err) {
+      console.error("Like failed", err);
+    }
+  }
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : ''
   const shareText = post ? encodeURIComponent(`Check out this article: ${post.title}`) : ''
@@ -137,6 +173,7 @@ export default function ArticlePage({ post: initialPost }) {
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Calendar size={14} /> {post.date}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><User size={14} /> {post.author}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><MessageSquare size={14} /> {comments.length} Comments</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: isLiked ? '#ef4444' : '#94a3b8' }}><Heart size={14} fill={isLiked ? '#ef4444' : 'none'} /> {likes} Likes</span>
             </div>
           </div>
         </section>
@@ -170,7 +207,7 @@ export default function ArticlePage({ post: initialPost }) {
                 <h3 style={{ fontSize: isMobile ? 28 : 32, fontWeight: 900, color: 'var(--accent)', marginBottom: isMobile ? 24 : 40 }}>Leave a Reply</h3>
                 <p style={{ fontSize: isMobile ? 13 : 14, color: '#94a3b8', marginBottom: 24 }}>Your email address will not be published. Required fields are marked *</p>
 
-                <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20 }}>
+                <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                   <div style={{ gridColumn: 'span 2' }}>
                     <textarea
                       required
@@ -181,22 +218,26 @@ export default function ArticlePage({ post: initialPost }) {
                       style={{ width: '100%', padding: '20px', borderRadius: 16, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none', fontSize: 15 }}
                     ></textarea>
                   </div>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Full Name*"
-                    value={commentForm.author}
-                    onChange={(e) => setCommentForm({ ...commentForm, author: e.target.value })}
-                    style={{ width: '100%', padding: '16px', borderRadius: 12, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none' }}
-                  />
-                  <input
-                    required
-                    type="email"
-                    placeholder="Email Address*"
-                    value={commentForm.email}
-                    onChange={(e) => setCommentForm({ ...commentForm, email: e.target.value })}
-                    style={{ width: '100%', padding: '16px', borderRadius: 12, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none' }}
-                  />
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Full Name*"
+                      value={commentForm.author}
+                      onChange={(e) => setCommentForm({ ...commentForm, author: e.target.value })}
+                      style={{ width: '100%', padding: '16px', borderRadius: 12, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none' }}
+                    />
+                  </div>
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <input
+                      required
+                      type="email"
+                      placeholder="Email Address*"
+                      value={commentForm.email}
+                      onChange={(e) => setCommentForm({ ...commentForm, email: e.target.value })}
+                      style={{ width: '100%', padding: '16px', borderRadius: 12, border: '1px solid #e2e8f0', background: '#f8fafc', outline: 'none' }}
+                    />
+                  </div>
                   <div style={{ gridColumn: 'span 2' }}>
                     <button
                       disabled={submitting}
@@ -240,6 +281,27 @@ export default function ArticlePage({ post: initialPost }) {
                 <div>
                   <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Category</h4>
                   <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>{post.category}</div>
+                </div>
+                <div>
+                  <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Appreciate</h4>
+                  <button 
+                    onClick={handleLike}
+                    disabled={isLiked}
+                    style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 12, 
+                      background: isLiked ? '#fef2f2' : '#f8fafc', 
+                      border: isLiked ? '1px solid #fee2e2' : '1px solid #e2e8f0', 
+                      padding: '12px 24px', 
+                      borderRadius: 16, 
+                      cursor: isLiked ? 'default' : 'pointer',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    <Heart size={20} color={isLiked ? '#ef4444' : 'var(--accent)'} fill={isLiked ? '#ef4444' : 'none'} />
+                    <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>{likes} Likes</span>
+                  </button>
                 </div>
                 <div>
                   <h4 style={{ fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)', marginBottom: 12 }}>Share This</h4>
