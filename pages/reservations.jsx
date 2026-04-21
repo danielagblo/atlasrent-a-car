@@ -11,6 +11,10 @@ export default function MyReservations() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [inputValue, setInputValue] = useState('')
+    
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     // Load initial linked contacts
     useEffect(() => {

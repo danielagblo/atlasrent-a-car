@@ -54,6 +54,16 @@ export default function RentalPage() {
     return () => { mounted = false }
   }, [])
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  React.useEffect(() => {
+    if (rentalSuccess) {
+      window.scrollTo(0, 0)
+    }
+  }, [rentalSuccess])
+
   if (vehiclesLoading) return (
     <Layout>
       <div style={{ height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
