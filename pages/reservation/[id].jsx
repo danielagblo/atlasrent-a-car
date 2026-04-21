@@ -99,12 +99,12 @@ export default function RentalPage() {
       <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ minHeight: '100vh', background: '#fcfcf9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <div style={{ maxWidth: 640, width: '100%', textAlign: 'center' }}>
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1 }}>
-            <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Charter Accomplished</div>
-            <h2 style={{ fontSize: isMobile ? 32 : 56, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', marginBottom: 24, letterSpacing: '-0.02em', fontStyle: 'italic' }}>Your Vessel Awaits.</h2>
+            <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Order Confirmed</div>
+            <h2 style={{ fontSize: isMobile ? 32 : 56, fontFamily: 'serif', fontWeight: 400, color: '#1a1a1a', marginBottom: 24, letterSpacing: '-0.02em', fontStyle: 'italic' }}>Thank you for your order!</h2>
             <p style={{ fontSize: 16, color: '#666', lineHeight: 1.8, marginBottom: 48 }}>
-              Charter ID <span style={{ fontWeight: 800, color: '#1a1a1a' }}>#{rentalSuccess.id}</span>. An Executive Dispatcher is finalizing your mobilization itinerary.
+              Order ID: <span style={{ fontWeight: 800, color: '#1a1a1a' }}>#{rentalSuccess.id}</span>. We have received your request and will contact you shortly to confirm your booking.
             </p>
-            <button className="primary" onClick={() => navigate('/vehicles')} style={{ padding: '20px 48px', width: '100%', borderRadius: 16 }}>Return to Showcase</button>
+            <button className="primary" onClick={() => navigate('/vehicles')} style={{ padding: '20px 48px', width: '100%', borderRadius: 16 }}>Back to Vehicles</button>
           </motion.div>
         </div>
       </motion.section>

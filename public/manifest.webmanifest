@@ -1,10 +1,10 @@
 {
-  "name": "EKG Logistics and transport",
-  "short_name": "EKG",
+  "name": "Atlas Rent-A-Car",
+  "short_name": "Atlas",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#071029",
-  "theme_color": "#071029",
+  "background_color": "#24276F",
+  "theme_color": "#24276F",
   "icons": [
     {
       "src": "/favicon.png",
@@ -22,7 +22,7 @@
       "name": "Fleet",
       "short_name": "Fleet",
       "description": "Browse our executive fleet",
-      "url": "/models",
+      "url": "/vehicles",
       "icons": [
         {
           "src": "/favicon.png",
@@ -31,10 +31,10 @@
       ]
     },
     {
-      "name": "My Orders",
-      "short_name": "Orders",
+      "name": "My Reservations",
+      "short_name": "Reservations",
       "description": "View your rental history",
-      "url": "/my-orders",
+      "url": "/reservations",
       "icons": [
         {
           "src": "/favicon.png",

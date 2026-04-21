@@ -26,8 +26,8 @@ module.exports = async function handler(req, res) {
         const data = await sendViaGmailApi({
           from: fromEmail,
           to: order.email,
-          subject: `EKG Logistics and transport — Invoice ${order.id}`,
-          html: `<p>Dear ${order.name},</p><p>Please find attached the invoice for your order <b>${order.id}</b>.</p><p>Payment will be collected on delivery.</p><p>Thank you,<br/>EKG Logistics and transport</p>`,
+          subject: `Atlas Rent-A-Car — Invoice ${order.id}`,
+          html: `<p>Dear ${order.name},</p><p>Please find attached the invoice for your order <b>${order.id}</b>.</p><p>Payment will be collected on delivery.</p><p>Thank you,<br/>Atlas Rent-A-Car</p>`,
           attachments: [
             {
               filename: `invoice-${order.id}.pdf`,
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
       return res.status(501).json({ error: "Email service not configured." });
     }
 
-    const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || smtpUser || "no-reply@ekgtransport.com";
+    const fromEmail = settings?.fromEmail || process.env.FROM_EMAIL || smtpUser || "no-reply@atlasrentacargh.com";
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: Number(smtpPort),
@@ -63,8 +63,8 @@ module.exports = async function handler(req, res) {
     const info = await transporter.sendMail({
       from: fromEmail,
       to: order.email,
-      subject: `EKG Logistics and transport — Invoice ${order.id}`,
-      text: `Dear ${order.name},\n\nPlease find attached the invoice for your order ${order.id}. Payment will be collected on delivery.\n\nThank you,\nEKG Logistics and transport`,
+      subject: `Atlas Rent-A-Car — Invoice ${order.id}`,
+      text: `Dear ${order.name},\n\nPlease find attached the invoice for your order ${order.id}. Payment will be collected on delivery.\n\nThank you,\nAtlas Rent-A-Car`,
       attachments: [
         { filename: `invoice-${order.id}.pdf`, content: pdfBuffer },
       ],
