@@ -34,7 +34,6 @@ export default function RentalPage() {
     start: '', 
     end: '', 
     location: '', 
-    useLocation: 'within',
     addChauffeur: false,
     paymentMethod: 'Pay on Delivery',
     note: '' 
@@ -75,11 +74,7 @@ export default function RentalPage() {
     }
   }, [rentalSuccess])
 
-  React.useEffect(() => {
-    if (model?.name?.toLowerCase().includes('outside accra')) {
-      setForm(f => ({ ...f, useLocation: 'outside' }))
-    }
-  }, [model])
+
 
   if (vehiclesLoading) return (
     <Layout>
@@ -113,10 +108,7 @@ export default function RentalPage() {
     const diffTime = Math.abs(end - start)
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1
     
-    const dailyPrice = form.useLocation === 'outside' 
-      ? (model.priceOutside || Number(model.price) * 1.4) 
-      : Number(model.price)
-
+    const dailyPrice = Number(model.price)
     const baseTotal = dailyPrice * diffDays
     const chauffeurTotal = form.addChauffeur ? (250 * diffDays) : 0
     const total = baseTotal + chauffeurTotal
@@ -284,47 +276,7 @@ export default function RentalPage() {
                   </div>
 
                   <div style={{ padding: '24px', background: '#fcfcf9', borderRadius: 20, border: '1px solid #f0f0f0', display: 'grid', gap: 24 }}>
-                    <div className="input-group">
-                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 16, display: 'block' }}>Operating Zone</label>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                        <button 
-                          type="button"
-                          onClick={() => setForm(f => ({ ...f, useLocation: 'within' }))}
-                          style={{ 
-                            padding: '12px', 
-                            borderRadius: 12, 
-                            border: '1px solid',
-                            borderColor: form.useLocation === 'within' ? 'var(--accent-gold)' : '#eee',
-                            background: form.useLocation === 'within' ? '#fff' : 'transparent',
-                            color: form.useLocation === 'within' ? '#000' : '#999',
-                            fontSize: 12,
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            transition: '0.3s'
-                          }}
-                        >
-                          Within Accra
-                        </button>
-                        <button 
-                          type="button"
-                          onClick={() => setForm(f => ({ ...f, useLocation: 'outside' }))}
-                          style={{ 
-                            padding: '12px', 
-                            borderRadius: 12, 
-                            border: '1px solid',
-                            borderColor: form.useLocation === 'outside' ? 'var(--accent-gold)' : '#eee',
-                            background: form.useLocation === 'outside' ? '#fff' : 'transparent',
-                            color: form.useLocation === 'outside' ? '#000' : '#999',
-                            fontSize: 12,
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            transition: '0.3s'
-                          }}
-                        >
-                          Outside Accra
-                        </button>
-                      </div>
-                    </div>
+
 
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div>
