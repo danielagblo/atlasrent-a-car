@@ -295,9 +295,51 @@ export default function RentalPage() {
 
                   <div className="input-group">
                     <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 12, display: 'block' }}>Payment Method</label>
-                    <div style={{ padding: '16px 20px', background: '#fff', border: '1px solid var(--accent-gold)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-gold)' }} />
-                      <span style={{ fontSize: 14, fontWeight: 700 }}>Pay on Delivery</span>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                      <button 
+                        type="button"
+                        onClick={() => setForm(f => ({ ...f, paymentMethod: 'Pay on Delivery' }))}
+                        style={{ 
+                          padding: '16px', 
+                          borderRadius: 12, 
+                          border: '1px solid',
+                          borderColor: form.paymentMethod === 'Pay on Delivery' ? 'var(--accent-gold)' : '#eee',
+                          background: form.paymentMethod === 'Pay on Delivery' ? '#fff' : 'transparent',
+                          color: form.paymentMethod === 'Pay on Delivery' ? '#000' : '#999',
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          transition: '0.3s',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 10
+                        }}
+                      >
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: form.paymentMethod === 'Pay on Delivery' ? 'var(--accent-gold)' : '#ccc' }} />
+                        Pay on Delivery
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => setForm(f => ({ ...f, paymentMethod: 'Mobile Money' }))}
+                        style={{ 
+                          padding: '16px', 
+                          borderRadius: 12, 
+                          border: '1px solid',
+                          borderColor: form.paymentMethod === 'Mobile Money' ? 'var(--accent-gold)' : '#eee',
+                          background: form.paymentMethod === 'Mobile Money' ? '#fff' : 'transparent',
+                          color: form.paymentMethod === 'Mobile Money' ? '#000' : '#999',
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          transition: '0.3s',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 10
+                        }}
+                      >
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: form.paymentMethod === 'Mobile Money' ? 'var(--accent-gold)' : '#ccc' }} />
+                        Mobile Money
+                      </button>
                     </div>
                   </div>
 
