@@ -32,15 +32,18 @@ export default function App({ Component, pageProps }) {
       {!hideLayout && <Footer />}
 
       {/* Floating WhatsApp Icon */}
-      <div style={{
-        position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '15px',
-        zIndex: 1000,
-      }}>
+      <div 
+        className="whatsapp-container"
+        style={{
+          position: 'fixed',
+          bottom: '30px',
+          right: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '15px',
+          zIndex: 1000,
+        }}
+      >
         <div className="whatsapp-bubble" style={{
           background: '#fff',
           padding: '12px 24px',
@@ -52,7 +55,9 @@ export default function App({ Component, pageProps }) {
           whiteSpace: 'nowrap',
           letterSpacing: '0.05em',
           pointerEvents: 'none',
-          transition: '0.3s',
+          transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          opacity: 0,
+          transform: 'translateX(20px)',
         }}>
           NEED HELP? CHAT NOW
         </div>
@@ -110,6 +115,10 @@ export default function App({ Component, pageProps }) {
         }
         .whatsapp-float:hover {
           animation: none;
+        }
+        .whatsapp-container:hover .whatsapp-bubble {
+          opacity: 1 !important;
+          transform: translateX(0) !important;
         }
       `}</style>
     </div>
