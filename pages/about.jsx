@@ -219,7 +219,7 @@ export default function AboutPage() {
                   <Users size={20} style={{ transform: 'rotate(45deg)' }} />
                 </button>
 
-                <div style={{ flex: 1, height: isMobile ? 300 : 600, background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ flex: 1, minHeight: isMobile ? 300 : 600, background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {selectedPerson.image ? (
                     <img
                       src={selectedPerson.image}
