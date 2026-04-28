@@ -4,6 +4,7 @@ import ProductCard from './ProductCard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChevronRight } from 'lucide-react'
+import { getVehicles } from '../lib/vehiclesApi'
 
 const CATEGORIES = ['Business Cars', 'Economic Cars', 'Luxury Cars', 'Premium Cars']
 
@@ -273,8 +274,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   }, [propIsMobile])
 
   useEffect(() => {
-    fetch('/api/vehicles')
-      .then(res => res.json())
+    getVehicles()
       .then(data => {
         if (Array.isArray(data)) {
           setItems(data.filter(i => i.status !== 'inactive'))

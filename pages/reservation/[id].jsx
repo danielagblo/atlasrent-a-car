@@ -27,7 +27,18 @@ export default function RentalPage() {
 
   const [vehicles, setVehicles] = React.useState([])
   const [vehiclesLoading, setVehiclesLoading] = React.useState(true)
-  const [form, setForm] = React.useState({ name: '', email: '', phone: '', start: '', end: '', location: '', note: '' })
+  const [form, setForm] = React.useState({ 
+    name: '', 
+    email: '', 
+    phone: '', 
+    start: '', 
+    end: '', 
+    location: '', 
+    useLocation: 'within',
+    addChauffeur: false,
+    paymentMethod: 'Pay on Delivery',
+    note: '' 
+  })
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState('')
   const [rentalSuccess, setRentalSuccess] = React.useState(null)
@@ -64,6 +75,12 @@ export default function RentalPage() {
     }
   }, [rentalSuccess])
 
+  React.useEffect(() => {
+    if (model?.name?.toLowerCase().includes('outside accra')) {
+      setForm(f => ({ ...f, useLocation: 'outside' }))
+    }
+  }, [model])
+
   if (vehiclesLoading) return (
     <Layout>
       <div style={{ height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
@@ -82,7 +99,38 @@ export default function RentalPage() {
   )
 
   const allImages = [model.image, ...(model.gallery || [])]
-  const update = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const update = (e) => {
+    const { name, value, type, checked } = e.target
+    setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
+  }
+
+  // Cost calculation logic
+  const calculateTotal = () => {
+    if (!form.start || !form.end) return { days: 0, baseTotal: 0, chauffeurTotal: 0, total: 0 }
+    
+    const start = new Date(form.start)
+    const end = new Date(form.end)
+    const diffTime = Math.abs(end - start)
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1
+    
+    const dailyPrice = form.useLocation === 'outside' 
+      ? (model.priceOutside || Number(model.price) * 1.4) 
+      : Number(model.price)
+
+    const baseTotal = dailyPrice * diffDays
+    const chauffeurTotal = form.addChauffeur ? (250 * diffDays) : 0
+    const total = baseTotal + chauffeurTotal
+
+    return { 
+      days: diffDays, 
+      dailyPrice,
+      baseTotal, 
+      chauffeurTotal, 
+      total 
+    }
+  }
+
+  const cost = calculateTotal()
 
   const submit = async (e) => {
     e.preventDefault()
@@ -98,6 +146,10 @@ export default function RentalPage() {
       price: model.price,
       rate: model.rate,
       ...form,
+      total: cost.total,
+      days: cost.days,
+      basePrice: cost.dailyPrice,
+      chauffeurFee: cost.chauffeurTotal,
       createdAt: new Date().toISOString()
     })
     setLoading(false)
@@ -230,6 +282,91 @@ export default function RentalPage() {
                       <input name="location" value={form.location} onChange={update} placeholder="e.g. Kotoka Terminal 3" className="luxury-input" />
                     </div>
                   </div>
+
+                  <div style={{ padding: '24px', background: '#fcfcf9', borderRadius: 20, border: '1px solid #f0f0f0', display: 'grid', gap: 24 }}>
+                    <div className="input-group">
+                      <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 16, display: 'block' }}>Operating Zone</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <button 
+                          type="button"
+                          onClick={() => setForm(f => ({ ...f, useLocation: 'within' }))}
+                          style={{ 
+                            padding: '12px', 
+                            borderRadius: 12, 
+                            border: '1px solid',
+                            borderColor: form.useLocation === 'within' ? 'var(--accent-gold)' : '#eee',
+                            background: form.useLocation === 'within' ? '#fff' : 'transparent',
+                            color: form.useLocation === 'within' ? '#000' : '#999',
+                            fontSize: 12,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            transition: '0.3s'
+                          }}
+                        >
+                          Within Accra
+                        </button>
+                        <button 
+                          type="button"
+                          onClick={() => setForm(f => ({ ...f, useLocation: 'outside' }))}
+                          style={{ 
+                            padding: '12px', 
+                            borderRadius: 12, 
+                            border: '1px solid',
+                            borderColor: form.useLocation === 'outside' ? 'var(--accent-gold)' : '#eee',
+                            background: form.useLocation === 'outside' ? '#fff' : 'transparent',
+                            color: form.useLocation === 'outside' ? '#000' : '#999',
+                            fontSize: 12,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            transition: '0.3s'
+                          }}
+                        >
+                          Outside Accra
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: '#1a1a1a' }}>Add Chauffeur</div>
+                        <div style={{ fontSize: 11, color: '#999' }}>+GHS 250/day · Professional driver</div>
+                      </div>
+                      <input 
+                        type="checkbox" 
+                        name="addChauffeur" 
+                        checked={form.addChauffeur} 
+                        onChange={update}
+                        style={{ width: 24, height: 24, accentColor: 'var(--accent-gold)', cursor: 'pointer' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label style={{ fontSize: 9, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 12, display: 'block' }}>Payment Method</label>
+                    <div style={{ padding: '16px 20px', background: '#fff', border: '1px solid var(--accent-gold)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-gold)' }} />
+                      <span style={{ fontSize: 14, fontWeight: 700 }}>Pay on Delivery</span>
+                    </div>
+                  </div>
+
+                  {cost.days > 0 && (
+                    <div style={{ borderTop: '1px solid #eee', paddingTop: 20, marginTop: 10, display: 'grid', gap: 12 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
+                        <span style={{ color: '#666' }}>{cost.dailyPrice.toLocaleString()} GHS × {cost.days} days</span>
+                        <span style={{ fontWeight: 600 }}>{cost.baseTotal.toLocaleString()} GHS</span>
+                      </div>
+                      {form.addChauffeur && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
+                          <span style={{ color: '#666' }}>Chauffeur Service</span>
+                          <span style={{ fontWeight: 600 }}>{cost.chauffeurTotal.toLocaleString()} GHS</span>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, fontWeight: 900, marginTop: 8, borderTop: '1px solid #f0f0f0', paddingTop: 12 }}>
+                        <span>Total</span>
+                        <span style={{ color: 'var(--accent-gold)' }}>{cost.total.toLocaleString()} GHS</span>
+                      </div>
+                    </div>
+                  )}
 
                   {error && <div style={{ fontSize: 13, color: '#ef4444', fontWeight: 700 }}>{error}</div>}
 
