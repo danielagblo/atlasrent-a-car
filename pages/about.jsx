@@ -41,23 +41,27 @@ export default function AboutPage() {
   }, [])
 
   return (
-    <Layout>
-      <div style={{ background: '#fcfcfd', color: '#24276F' }}>
+    <div style={{ background: '#fcfcfd', color: '#24276F', overflowX: 'hidden' }}>
 
-        {/* ... Hero Section remains unchanged ... */}
-        {/* Cinematic Hero */}
         <section style={{
-          minHeight: '60vh',
+          width: '100vw',
           position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          minHeight: isMobile ? '70vh' : '85vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           background: `linear-gradient(rgba(10, 10, 12, 0.7), rgba(15, 15, 20, 0.9)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           color: '#fff',
           textAlign: 'center',
-          padding: isMobile ? '160px 24px 80px' : '100px 64px'
+          padding: isMobile ? '120px 24px 60px' : '100px 64px',
+          overflow: 'hidden'
         }}>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 800 }}>
             <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(223, 151, 56, 0.15)', border: '1px solid var(--accent-gold)', borderRadius: 999, marginBottom: 24, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
@@ -735,7 +739,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-      </div>
-    </Layout>
+    </div>
   )
 }

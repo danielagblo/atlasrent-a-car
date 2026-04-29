@@ -430,11 +430,7 @@ export default function Products({ limit, isMobile: propIsMobile }) {
             </div>
           )}
 
-          <div style={{ 
-             display: 'grid',
-             gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(320px, 1fr))',
-             gap: isMobile ? 16 : 48
-          }}>
+          <div className="vehicle-grid">
              {displayedItems.map(i => <ProductCard key={i.id} item={i} i={0} />)}
           </div>
 

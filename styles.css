@@ -495,6 +495,19 @@ main {
   border-color: #000;
 }
 
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 48px;
+}
+
+@media (max-width: 768px) {
+  .vehicle-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
 /* =========================================
    FOOTER (Footer.jsx)
 ========================================= */
@@ -658,12 +671,37 @@ main {
   .fleet-section { padding: 80px 24px; }
   .footer-grid { grid-template-columns: 1fr; gap: 40px; }
 
-  .product-card-img-wrap { height: 140px; padding: 12px; }
-  .product-card-content { padding: 12px; }
-  .product-card h3 { font-size: 14px; min-height: 38px; margin-bottom: 4px; }
-  .product-price { font-size: 14px; margin-bottom: 12px; }
-  .product-price span { font-size: 11px !important; }
+  .product-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .product-card-img-wrap {
+    height: 130px;
+    padding: 0;
+    background: #f1f5f9;
+  }
+  .product-card-img-wrap img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .product-card-content { padding: 10px; }
+  .product-card h3 {
+    font-size: 13px;
+    min-height: auto;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .product-price {
+    font-size: 13px;
+    margin-bottom: 8px;
+    font-weight: 800;
+  }
+  .product-price span { font-size: 10px !important; }
   .product-specs { display: none; }
-  .product-card { border-radius: 12px; }
-  .product-card .btn-outline { padding: 10px; font-size: 12px; }
+  .product-card .btn-outline {
+    padding: 8px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
 }
