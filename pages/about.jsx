@@ -13,17 +13,17 @@ export default function AboutPage() {
   const [selectedPerson, setSelectedPerson] = useState(null)
 
   const initialBenefits = [
-    { col: 'span 3', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
-    { col: 'span 3', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options, including daily and monthly plans." },
-    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Our professional team is here to ensure your experience is smooth and enjoyable." },
-    { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible and ready to serve you." },
-    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear, straightforward pricing and terms." }
+    { col: 'span 4', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
+    { col: 'span 2', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
+    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Ensuring your experience is smooth and enjoyable." },
+    { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible." },
+    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear terms." }
   ]
 
   const extraBenefits = [
-    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200', t: "24/7 Roadside Assistance", d: "Round-the-clock support to ensure you're never stranded, no matter where your journey takes you." },
-    { col: 'span 2', icon: <Users />, img: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200', t: "Vetted Chauffeurs", d: "Our drivers are extensively trained in executive protocol and safe driving standards." },
-    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200', t: "Seamless Digital Booking", d: "Manage your reservations effortlessly through our streamlined online platform." }
+    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200', t: "24/7 Roadside Assistance", d: "Support wherever your journey takes you." },
+    { col: 'span 2', icon: <Users />, img: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200', t: "Vetted Chauffeurs", d: "Extensively trained in executive protocol." },
+    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200', t: "Seamless Digital Booking", d: "Manage reservations effortlessly online." }
   ]
 
   useEffect(() => {
@@ -64,12 +64,31 @@ export default function AboutPage() {
               Our Story
             </div>
             <h1 style={{ fontSize: isMobile ? 40 : 85, fontWeight: 900, marginBottom: 16, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#fff' }}>
-              Defining <span style={{ color: 'var(--accent-gold)' }}>Excellence</span> <br />
-              <span style={{ opacity: 0.6, fontSize: isMobile ? 24 : 60, display: 'block', marginTop: 8 }}>Since Day One</span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ display: 'block' }}
+              >
+                Defining <span style={{ color: 'var(--accent-gold)' }}>Excellence</span>
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                style={{ opacity: 0.6, fontSize: isMobile ? 24 : 60, display: 'block', marginTop: 8 }}
+              >
+                Since Day One
+              </motion.span>
             </h1>
-            <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: 650, margin: '0 auto' }}>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: 650, margin: '0 auto' }}
+            >
               Atlas Rent-a-Car is your trusted mobility partner in Dansoman. We provide reliable, high-end services tailored to your unique travel needs.
-            </p>
+            </motion.p>
           </motion.div>
         </section>
 
@@ -86,84 +105,151 @@ export default function AboutPage() {
                   Why Choose <br /> <span style={{ color: 'var(--accent-gold)' }}>The Atlas Experience</span>?
                 </h2>
               </div>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'minmax(280px, auto)' : '350px', gap: 24 }}>
+            </div>            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'minmax(280px, auto)' : '350px', gap: 24 }}>
               {(showAllBenefits ? [...initialBenefits, ...extraBenefits] : initialBenefits).map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  whileHover={!isMobile ? { y: -10, boxShadow: '0 30px 60px rgba(0,0,0,0.3)' } : {}}
-                  className="benefit-tile"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={!isMobile ? { y: -12 } : {}}
+                  className="benefit-tile group"
                   style={{
                     gridColumn: isMobile ? 'span 6' : item.col,
                     position: 'relative',
-                    borderRadius: 24,
+                    borderRadius: 32,
                     overflow: 'hidden',
-                    background: '#1a1b1e',
-                    border: '1px solid rgba(223, 151, 56, 0.15)',
-                    minHeight: isMobile ? 300 : 0,
-                    cursor: 'default'
+                    background: '#0a0a0c',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    cursor: 'pointer'
                   }}
                 >
+                  {/* Liquid Shine Effect */}
+                  <div className="shine-sweep" />
+
+                  {/* Glassmorphic Icon Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 24,
+                    left: 24,
+                    width: 48,
+                    height: 48,
+                    borderRadius: 16,
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 2,
+                    color: 'var(--accent-gold)'
+                  }}>
+                    {React.cloneElement(item.icon, { size: 20, strokeWidth: 1.5 })}
+                  </div>
+
+                  {item.t === "Wide Range of Vehicles" && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 24,
+                      right: 24,
+                      padding: '6px 12px',
+                      background: 'linear-gradient(135deg, var(--accent-gold), #f59e0b)',
+                      color: '#fff',
+                      fontSize: 10,
+                      fontWeight: 900,
+                      borderRadius: 99,
+                      textTransform: 'uppercase',
+                      letterSpacing: 1,
+                      zIndex: 2,
+                      boxShadow: '0 10px 20px rgba(223, 151, 56, 0.3)'
+                    }}>
+                      Platinum Choice
+                    </div>
+                  )}
+
                   <img
                     src={item.img}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5, transition: 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, transition: 'transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     className="tile-img"
                     alt={item.t}
                   />
+
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(10, 10, 12, 0.9) 0%, rgba(10, 10, 12, 0.4) 60%, transparent 100%)',
-                    padding: isMobile ? 24 : 40,
+                    background: 'linear-gradient(to top, rgba(10, 10, 12, 1) 0%, rgba(10, 10, 12, 0.3) 50%, transparent 100%)',
+                    padding: 32,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     zIndex: 1
                   }}>
-                    <div style={{ color: 'var(--accent-gold)', marginBottom: 16 }}>
-                      {React.cloneElement(item.icon, { size: 24, strokeWidth: 1.5 })}
-                    </div>
-                    <h3 style={{ fontSize: isMobile ? 20 : 24, fontWeight: 900, color: '#fff', marginBottom: 10, letterSpacing: '-0.02em' }}>{item.t}</h3>
-                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
+                    <h3 style={{ fontSize: isMobile ? 20 : 24, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '-0.02em' }}>{item.t}</h3>
+                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            <div style={{ marginTop: 48, textAlign: 'center' }}>
+            <div style={{ marginTop: 64, textAlign: 'center' }}>
               <button 
                 onClick={() => setShowAllBenefits(!showAllBenefits)}
                 style={{ 
-                  background: 'none', 
-                  border: '1px solid var(--accent-gold)', 
+                  background: 'rgba(255,255,255,0.03)', 
+                  border: '1px solid rgba(223, 151, 56, 0.3)', 
                   color: 'var(--accent-gold)', 
-                  padding: '12px 32px', 
+                  padding: '16px 48px', 
                   borderRadius: 99, 
-                  fontSize: 14, 
-                  fontWeight: 800, 
+                  fontSize: 13, 
+                  fontWeight: 900, 
                   cursor: 'pointer', 
                   textTransform: 'uppercase', 
-                  letterSpacing: '0.1em',
-                  transition: '0.3s'
+                  letterSpacing: '0.2em',
+                  transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  backdropFilter: 'blur(10px)'
                 }}
-                onMouseEnter={e => { e.target.style.background = 'rgba(223, 151, 56, 0.1)'; }}
-                onMouseLeave={e => { e.target.style.background = 'none'; }}
+                className="explore-btn"
               >
-                {showAllBenefits ? "Show Less" : "Explore All Advantages"}
+                {showAllBenefits ? "Show Less" : "Discover All Advantages"}
               </button>
             </div>
           </div>
 
           <style jsx>{`
             .benefit-tile:hover .tile-img {
-              transform: ${isMobile ? 'none' : 'scale(1.1) rotate(1deg)'};
+              transform: scale(1.1) rotate(-1deg);
+            }
+            .benefit-tile:hover .shine-sweep {
+              left: 100%;
+            }
+            .shine-sweep {
+              position: absolute;
+              top: 0;
+              left: -150%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+              );
+              transition: 0.8s;
+              z-index: 3;
+              pointer-events: none;
+            }
+            .explore-btn:hover {
+              background: var(--accent-gold);
+              color: #fff;
+              box-shadow: 0 20px 40px rgba(223, 151, 56, 0.3);
+              border-color: var(--accent-gold);
+              transform: translateY(-4px);
             }
           `}</style>
-        </section>        {/* New Section: Core Philosophy & Mission */}
+        </section>
+
+        {/* New Section: Core Philosophy & Mission */}
         <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
@@ -519,7 +605,12 @@ export default function AboutPage() {
                  </p>
               </motion.div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 24 }}>
+              <div style={{ 
+                display: 'flex', 
+                flexWrap: 'wrap', 
+                justifyContent: 'center', 
+                gap: 24 
+              }}>
                  {[
                     { year: "2020", title: "Customers' Choice Car Rental Company", org: "National Customers' Choice Awards", desc: "Honored for exceptional service delivery and maintaining the highest levels of customer satisfaction." },
                     { year: "2021", title: "Elite Service Excellence Award", org: "Ghana Transport Awards", desc: "Recognized for our unwavering commitment to professional standards and fleet maintenance." },
@@ -535,12 +626,17 @@ export default function AboutPage() {
                       transition={{ delay: i * 0.1 }}
                       whileHover={{ scale: 1.05 }}
                       style={{ 
+                        flex: isMobile ? '1 1 100%' : '0 1 280px',
                         padding: '40px 24px', 
                         border: '1px solid #f1f5f9', 
                         borderRadius: 24, 
                         textAlign: 'center',
                         position: 'relative',
-                        background: '#fcfcfd'
+                        background: '#fcfcfd',
+                        minHeight: 320,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center'
                       }} className="award-card">
                        <div style={{ 
                           position: 'absolute', 
