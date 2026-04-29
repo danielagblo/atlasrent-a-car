@@ -35,6 +35,7 @@ export default function Footer() {
             <li><Link href="/">Home</Link></li>
             <li><Link href="/vehicles">Vehicles</Link></li>
             <li><Link href="/about">About Atlas</Link></li>
+            <li><Link href="/gallery">Gallery</Link></li>
             <li><Link href="/contact">Contact</Link></li>
             <li><Link href="/reservations">My Reservations</Link></li>
           </ul>

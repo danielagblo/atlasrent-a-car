@@ -166,6 +166,40 @@ export default function AdminGallery() {
     }
   }
 
+  const [selectedIds, setSelectedIds] = React.useState(new Set())
+  const [isSelectionMode, setIsSelectionMode] = React.useState(false)
+
+  function toggleSelect(id) {
+    const next = new Set(selectedIds)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    setSelectedIds(next)
+  }
+
+  function selectAll() {
+    if (selectedIds.size === filtered.length) setSelectedIds(new Set())
+    else setSelectedIds(new Set(filtered.map(i => i.id)))
+  }
+
+  async function removeSelected() {
+    if (!confirm(`Delete ${selectedIds.size} selected images?`)) return
+    setLoading(true)
+    const token = localStorage.getItem('admin_token')
+    const ids = Array.from(selectedIds)
+    let success = 0
+    for (const id of ids) {
+      try {
+        const res = await fetch(`/api/gallery/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+        if (res.ok) success++
+      } catch (e) { console.error(e) }
+    }
+    setItems(s => s.filter(i => !selectedIds.has(i.id)))
+    setSelectedIds(new Set())
+    setIsSelectionMode(false)
+    setLoading(false)
+    if (success < ids.length) setError(`Deleted ${success} items. Some failed.`)
+  }
+
   const filtered = items.filter(i => {
     const q = search.trim().toLowerCase()
     return q ? (`${i.caption} ${i.category}`.toLowerCase()).includes(q) : true
@@ -189,19 +223,52 @@ export default function AdminGallery() {
             }}
           />
         </div>
+        
         <div style={{ display: 'flex', gap: 12 }}>
-          <label style={{ height: 44, padding: '0 24px', background: '#F1F5F9', color: '#475569', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, cursor: 'pointer', transition: '0.3s', fontSize: 14 }}>
-            <Plus size={18} /> Bulk Upload
-            <input type="file" multiple accept="image/*" onChange={onBulkUpload} style={{ display: 'none' }} />
-          </label>
+          {selectedIds.size > 0 && (
+            <button
+              onClick={removeSelected}
+              style={{ height: 44, padding: '0 24px', background: '#EF4444', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}
+            >
+              <Trash2 size={18} /> Delete ({selectedIds.size})
+            </button>
+          )}
+
           <button
-            onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
-            style={{ height: 44, padding: '0 24px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}
+            onClick={() => {
+              setIsSelectionMode(!isSelectionMode)
+              if (isSelectionMode) setSelectedIds(new Set())
+            }}
+            style={{ height: 44, padding: '0 24px', background: isSelectionMode ? '#24276F' : '#F1F5F9', color: isSelectionMode ? '#fff' : '#475569', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}
           >
-            <Plus size={18} /> Add Image
+            <CheckCircle2 size={18} /> {isSelectionMode ? 'Cancel Selection' : 'Select Multiple'}
           </button>
+
+          {!isSelectionMode && (
+            <>
+              <label style={{ height: 44, padding: '0 24px', background: '#F1F5F9', color: '#475569', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, cursor: 'pointer', transition: '0.3s', fontSize: 14 }}>
+                <Plus size={18} /> Bulk Upload
+                <input type="file" multiple accept="image/*" onChange={onBulkUpload} style={{ display: 'none' }} />
+              </label>
+              <button
+                onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
+                style={{ height: 44, padding: '0 24px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}
+              >
+                <Plus size={18} /> Add Image
+              </button>
+            </>
+          )}
         </div>
       </div>
+
+      {isSelectionMode && (
+        <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16 }}>
+          <button onClick={selectAll} style={{ background: 'none', border: 'none', color: '#24276F', fontWeight: 700, cursor: 'pointer', fontSize: 13 }}>
+            {selectedIds.size === filtered.length ? 'Deselect All' : 'Select All Visible'}
+          </button>
+          <span style={{ fontSize: 13, color: '#64748B' }}>{selectedIds.size} items selected</span>
+        </div>
+      )}
 
       {loading && <div style={{ padding: 120, textAlign: 'center', color: '#64748B', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2 }}>Synchronizing Visuals...</div>}
       {error && <div className="login-error" style={{ marginBottom: 32 }}>{error}</div>}
@@ -209,20 +276,34 @@ export default function AdminGallery() {
       {!loading && filtered.length > 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 32 }}>
           {filtered.map(item => (
-            <div key={item.id} style={{
-              background: '#fff',
-              borderRadius: 16,
-              overflow: 'hidden',
-              border: '1px solid #F1F5F9',
-              transition: '0.3s',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
-            }}>
+            <div 
+              key={item.id} 
+              onClick={() => isSelectionMode && toggleSelect(item.id)}
+              style={{
+                background: '#fff',
+                borderRadius: 16,
+                overflow: 'hidden',
+                border: '2px solid',
+                borderColor: selectedIds.has(item.id) ? '#24276F' : '#F1F5F9',
+                transition: '0.3s',
+                boxShadow: selectedIds.has(item.id) ? '0 10px 20px rgba(36, 39, 111, 0.1)' : '0 4px 6px -1px rgba(0,0,0,0.05)',
+                position: 'relative',
+                cursor: isSelectionMode ? 'pointer' : 'default'
+              }}
+            >
               <div style={{ height: 200, width: '100%', position: 'relative', overflow: 'hidden' }}>
-                <CldOptimizedImage src={item.image || '/placeholder-car.png'} alt={item.caption} width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 8 }}>
-                   <button onClick={() => edit(item)} style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.9)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#475569' }}><Edit2 size={14} /></button>
-                   <button onClick={() => remove(item.id)} style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.9)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#EF4444' }}><Trash2 size={14} /></button>
-                </div>
+                <CldOptimizedImage src={item.image || '/placeholder-car.png'} alt={item.caption} width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: selectedIds.has(item.id) ? 0.7 : 1 }} />
+                
+                {isSelectionMode ? (
+                  <div style={{ position: 'absolute', top: 12, left: 12, width: 24, height: 24, borderRadius: 6, background: selectedIds.has(item.id) ? '#24276F' : 'rgba(255,255,255,0.8)', border: '2px solid #24276F', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                    {selectedIds.has(item.id) && <CheckCircle2 size={14} />}
+                  </div>
+                ) : (
+                  <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 8 }}>
+                    <button onClick={(e) => { e.stopPropagation(); edit(item); }} style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.9)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#475569' }}><Edit2 size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); remove(item.id); }} style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.9)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#EF4444' }}><Trash2 size={14} /></button>
+                  </div>
+                )}
               </div>
               <div style={{ padding: 20 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
