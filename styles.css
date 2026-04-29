@@ -217,7 +217,8 @@ main {
   align-items: center;
   justify-content: flex-start;
   padding: 0 64px;
-  margin-top: 80px; 
+  margin-top: 80px;
+  background: #000;
 }
 
 .hero-video-bg {
@@ -604,10 +605,7 @@ main {
 @media (max-width: 1024px) {
   .hero-content h1 { font-size: 48px; }
   .hero-video-bg {
-    width: 100%;
-    mask-image: none;
-    -webkit-mask-image: none;
-    opacity: 0.15;
+    display: none;
   }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .hero-booking-widget {

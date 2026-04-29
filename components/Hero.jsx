@@ -26,29 +26,30 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="hero-section">
-      <motion.img
-        initial={{ scale: 1.05 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 10, ease: 'easeOut' }}
-        src={heroBgUrl}
-        alt="The Sovereign Collection"
-        className="hero-video-bg"
-      />
-
+    <section
+      className="hero-section"
+      style={{
+        backgroundImage: `url('${heroBgUrl}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Dark overlay for text readability */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%)',
-        zIndex: -1,
+        background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 100%)',
+        zIndex: 0,
         pointerEvents: 'none'
-      }}></div>
+      }} />
 
-      <div className="hero-content">
+      <div className="hero-content" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
+          style={{ color: '#fff' }}
         >
           Premium Vehicles, <br />
           <span style={{ color: 'var(--accent-gold)' }}>Exceptional Service.</span>
@@ -58,6 +59,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
+          style={{ color: 'rgba(255,255,255,0.85)' }}
         >
           Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 elite assistance across Ghana.
         </motion.p>
@@ -109,7 +111,8 @@ export default function Hero() {
             bottom: 40,
             left: '50%',
             transform: 'translateX(-50%)',
-            color: 'var(--text-secondary)'
+            color: 'rgba(255,255,255,0.7)',
+            zIndex: 1
           }}
         >
           Scroll to explore
