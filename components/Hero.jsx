@@ -126,86 +126,87 @@ export default function Hero() {
         
 
 
-      {/* Booking panel spanning hero width */}
-      <div style={{ position: 'absolute', zIndex: 1, maxWidth: '880px', display: 'flex', justifyContent: 'center', marginTop: 24 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          style={{
-            width: isMobile ? 'calc(100% - 48px)' : 'calc(100%)',
-            maxWidth: 'none',
-            padding: isMobile ? '0 24px' : '0',
-            boxSizing: 'border-box',
-            margin: '0 auto'
-          }}
-        >
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '220px 220px minmax(220px, 1fr) 140px',
-            gap: 12,
-            alignItems: 'center',
-            background: '#fff',
-            padding: isMobile ? '12px 12px 16px' : '18px',
-            borderRadius: 14,
-            boxShadow: '0 10px 30px rgba(2,6,23,0.35)',
-            width: '',
-            boxSizing: 'border-box'
-          }}>
-            <div className="booking-field-group">
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Pick-up Location</label>
-              <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }}>
-                <option value="" disabled>Select City</option>
-                <option value="accra">Accra (HQ)</option>
-                <option value="takoradi">Takoradi</option>
-                <option value="kumasi">Kumasi</option>
-              </select>
-            </div>
-
-            <div className="booking-field-group">
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Pick-up Date</label>
-              <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }} />
-            </div>
-
-            <div className="booking-field-group">
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Vehicle Type</label>
-              <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }}>
-                <option value="All">All Classes</option>
-                <option value="Premium Cars">Premium</option>
-                <option value="Luxury Cars">Luxury</option>
-                <option value="Business Cars">Business</option>
-                <option value="Economic Cars">Economic</option>
-              </select>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: isMobile ? 'stretch' : 'center', alignItems: 'center' }}>
-              <button
-                onClick={() => {
-                  // handler: prefer category query if set, otherwise go to /vehicles
-                  if (category && category !== 'All') {
-                    router.push(`/vehicles?category=${encodeURIComponent(category)}`)
-                  } else {
-                    router.push('/vehicles')
-                  }
-                }}
-                style={{
-                  background: 'var(--accent-gold)',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '12px 20px',
-                  borderRadius: 10,
-                  fontWeight: 900,
-                  cursor: 'pointer',
-                  width: '100%',
-                  justifySelf: 'stretch'
-                }}
-              >
-                Find Car
-              </button>
-            </div>
+      {/* Booking panel */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.7 }}
+        style={{
+          width: '100%',
+          maxWidth: isMobile ? '100%' : '1000px',
+          marginTop: 48,
+          position: 'relative',
+          zIndex: 10
+        }}
+      >
+        <div style={{
+          display: isMobile ? 'flex' : 'grid',
+          flexDirection: isMobile ? 'column' : 'unset',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr) auto',
+          gap: isMobile ? 16 : 0,
+          alignItems: 'center',
+          background: '#fff',
+          padding: isMobile ? '24px' : '12px 12px 12px 24px',
+          borderRadius: 20,
+          boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', paddingRight: isMobile ? 0 : 20 }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Location</label>
+            <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }}>
+              <option value="" disabled>Select City</option>
+              <option value="accra">Accra (HQ)</option>
+              <option value="takoradi">Takoradi</option>
+              <option value="kumasi">Kumasi</option>
+            </select>
           </div>
-        </motion.div>
-      </div>
+
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', padding: isMobile ? 0 : '0 20px' }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Date</label>
+            <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }} />
+          </div>
+
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : 'none', padding: isMobile ? 0 : '0 20px' }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Vehicle Class</label>
+            <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }}>
+              <option value="All">All Categories</option>
+              <option value="Premium Cars">Premium</option>
+              <option value="Luxury Cars">Luxury</option>
+              <option value="Business Cars">Business</option>
+              <option value="Economic Cars">Economic</option>
+            </select>
+          </div>
+
+          <button
+            onClick={() => {
+              if (category && category !== 'All') {
+                router.push(`/vehicles?category=${encodeURIComponent(category)}`)
+              } else {
+                router.push('/vehicles')
+              }
+            }}
+            style={{
+              background: 'var(--accent-gold)',
+              color: '#fff',
+              border: 'none',
+              padding: isMobile ? '16px' : '16px 32px',
+              borderRadius: 14,
+              fontWeight: 800,
+              fontSize: 14,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              cursor: 'pointer',
+              transition: '0.3s',
+              boxShadow: '0 10px 20px rgba(223, 151, 56, 0.3)',
+              width: isMobile ? '100%' : 'auto'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            Find Vehicle
+          </button>
+        </div>
+      </motion.div>
       </div>
 
       {/* Scroll indicator */}
