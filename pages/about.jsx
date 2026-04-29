@@ -13,16 +13,16 @@ export default function AboutPage() {
   const [selectedPerson, setSelectedPerson] = useState(null)
 
   const initialBenefits = [
-    { col: 'span 4', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
-    { col: 'span 2', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
-    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Ensuring your experience is smooth and enjoyable." },
-    { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible." },
-    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear terms." }
+    { col: 'span 4', icon: <Users />, img: '/assets/wide.jpg', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
+    { col: 'span 2', icon: <Award />, img: '/assets/dobn.jpg', t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
+    { col: 'span 2', icon: <CheckCircle2 />, img: '/assets/supportog.jpg', t: "Exceptional Service", d: "Ensuring your experience is smooth and enjoyable." },
+    { col: 'span 2', icon: <MapPin />, img: '/assets/dansoman.jpg', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible." },
+    { col: 'span 2', icon: <Shield />, img: '/assets/transparent.jpg', t: "Transparent Policies", d: "No hidden fees—just clear terms." }
   ]
 
   const extraBenefits = [
-    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200', t: "24/7 Roadside Assistance", d: "Support wherever your journey takes you." },
-    { col: 'span 2', icon: <Users />, img: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200', t: "Vetted Chauffeurs", d: "Extensively trained in executive protocol." },
+    { col: 'span 2', icon: <Shield />, img: '/assets/247.jpg', t: "24/7 Roadside Assistance", d: "Support wherever your journey takes you." },
+    { col: 'span 2', icon: <Users />, img: '/assets/chaffer.png', t: "Vetted Chauffeurs", d: "Extensively trained in executive protocol." },
     { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200', t: "Seamless Digital Booking", d: "Manage reservations effortlessly online." }
   ]
 
