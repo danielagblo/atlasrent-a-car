@@ -7,6 +7,10 @@ import { ArrowRight, ChevronRight } from 'lucide-react'
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
+  const router = useRouter()
+  const [location, setLocation] = useState('')
+  const [pickUpDate, setPickUpDate] = useState('')
+  const [category, setCategory] = useState('All')
   const heroBgUrl = IMAGES.hero || '/hero-placeholder.jpg'
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export default function Hero() {
         zIndex: 0,
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 680 }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 880 }}>
 
         {/* Badge */}
         <motion.div
@@ -119,65 +123,89 @@ export default function Hero() {
           Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 assistance across Ghana.
         </motion.p>
 
-        {/* CTA Buttons */}
+        
+
+
+      {/* Booking panel spanning hero width */}
+      <div style={{ position: 'absolute', zIndex: 1, maxWidth: '880px', display: 'flex', justifyContent: 'center', marginTop: 24 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.7 }}
-          style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
+          style={{
+            width: isMobile ? 'calc(100% - 48px)' : 'calc(100%)',
+            maxWidth: 'none',
+            padding: isMobile ? '0 24px' : '0',
+            boxSizing: 'border-box',
+            margin: '0 auto'
+          }}
         >
-          {/* Primary Button */}
-          <Link href="/vehicles" style={{ textDecoration: 'none' }}>
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(223,151,56,0.4)' }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                background: 'var(--accent-gold)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 999,
-                padding: isMobile ? '14px 28px' : '16px 36px',
-                fontSize: 14,
-                fontWeight: 800,
-                cursor: 'pointer',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                transition: 'background 0.3s',
-              }}
-            >
-              Browse Fleet <ChevronRight size={18} strokeWidth={2.5} />
-            </motion.button>
-          </Link>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '220px 220px minmax(220px, 1fr) 140px',
+            gap: 12,
+            alignItems: 'center',
+            background: '#fff',
+            padding: isMobile ? '12px 12px 16px' : '18px',
+            borderRadius: 14,
+            boxShadow: '0 10px 30px rgba(2,6,23,0.35)',
+            width: '',
+            boxSizing: 'border-box'
+          }}>
+            <div className="booking-field-group">
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Pick-up Location</label>
+              <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }}>
+                <option value="" disabled>Select City</option>
+                <option value="accra">Accra (HQ)</option>
+                <option value="takoradi">Takoradi</option>
+                <option value="kumasi">Kumasi</option>
+              </select>
+            </div>
 
-          {/* Secondary Button */}
-          <Link href="/about" style={{ textDecoration: 'none' }}>
-            <motion.button
-              whileHover={{ background: 'rgba(255,255,255,0.15)', scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                background: 'rgba(255,255,255,0.08)',
-                color: '#fff',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: 999,
-                padding: isMobile ? '14px 28px' : '16px 36px',
-                fontSize: 14,
-                fontWeight: 700,
-                cursor: 'pointer',
-                backdropFilter: 'blur(8px)',
-                transition: 'all 0.3s',
-              }}
-            >
-              Discover Our Story <ArrowRight size={16} />
-            </motion.button>
-          </Link>
+            <div className="booking-field-group">
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Pick-up Date</label>
+              <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }} />
+            </div>
+
+            <div className="booking-field-group">
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: 6 }}>Vehicle Type</label>
+              <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e6e9ef', fontWeight: 700 }}>
+                <option value="All">All Classes</option>
+                <option value="Premium Cars">Premium</option>
+                <option value="Luxury Cars">Luxury</option>
+                <option value="Business Cars">Business</option>
+                <option value="Economic Cars">Economic</option>
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'stretch' : 'center', alignItems: 'center' }}>
+              <button
+                onClick={() => {
+                  // handler: prefer category query if set, otherwise go to /vehicles
+                  if (category && category !== 'All') {
+                    router.push(`/vehicles?category=${encodeURIComponent(category)}`)
+                  } else {
+                    router.push('/vehicles')
+                  }
+                }}
+                style={{
+                  background: 'var(--accent-gold)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px 20px',
+                  borderRadius: 10,
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                  width: '100%',
+                  justifySelf: 'stretch'
+                }}
+              >
+                Find Car
+              </button>
+            </div>
+          </div>
         </motion.div>
-
+      </div>
       </div>
 
       {/* Scroll indicator */}
