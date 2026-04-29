@@ -8,8 +8,23 @@ import { getTeam } from '../lib/siteContentApi'
 
 export default function AboutPage() {
   const [isMobile, setIsMobile] = useState(false)
+  const [showAllBenefits, setShowAllBenefits] = useState(false)
   const [teamItems, setTeamItems] = useState([])
   const [selectedPerson, setSelectedPerson] = useState(null)
+
+  const initialBenefits = [
+    { col: 'span 3', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
+    { col: 'span 3', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options, including daily and monthly plans." },
+    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Our professional team is here to ensure your experience is smooth and enjoyable." },
+    { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible and ready to serve you." },
+    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear, straightforward pricing and terms." }
+  ]
+
+  const extraBenefits = [
+    { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=1200', t: "24/7 Roadside Assistance", d: "Round-the-clock support to ensure you're never stranded, no matter where your journey takes you." },
+    { col: 'span 2', icon: <Users />, img: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200', t: "Vetted Chauffeurs", d: "Our drivers are extensively trained in executive protocol and safe driving standards." },
+    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200', t: "Seamless Digital Booking", d: "Manage your reservations effortlessly through our streamlined online platform." }
+  ]
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768)
@@ -74,16 +89,13 @@ export default function AboutPage() {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'minmax(280px, auto)' : '350px', gap: 24 }}>
-              {[
-                { col: 'span 3', icon: <Users />, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
-                { col: 'span 3', icon: <Award />, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200', t: "Affordable Pricing", d: "Competitive rates with flexible rental options, including daily and monthly plans." },
-                { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', t: "Exceptional Service", d: "Our professional team is here to ensure your experience is smooth and enjoyable." },
-                { col: 'span 2', icon: <MapPin />, img: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible and ready to serve you." },
-                { col: 'span 2', icon: <Shield />, img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200', t: "Transparent Policies", d: "No hidden fees—just clear, straightforward pricing and terms." }
-              ].map((item, i) => (
+              {(showAllBenefits ? [...initialBenefits, ...extraBenefits] : initialBenefits).map((item, i) => (
                 <motion.div
                   key={i}
-                  whileHover={!isMobile ? { scale: 0.98 } : {}}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  whileHover={!isMobile ? { y: -10, boxShadow: '0 30px 60px rgba(0,0,0,0.3)' } : {}}
                   className="benefit-tile"
                   style={{
                     gridColumn: isMobile ? 'span 6' : item.col,
@@ -91,47 +103,77 @@ export default function AboutPage() {
                     borderRadius: 24,
                     overflow: 'hidden',
                     background: '#1a1b1e',
-                    border: '1px solid rgba(223, 151, 56, 0.1)',
-                    minHeight: isMobile ? 300 : 0
+                    border: '1px solid rgba(223, 151, 56, 0.15)',
+                    minHeight: isMobile ? 300 : 0,
+                    cursor: 'default'
                   }}
                 >
                   <img
                     src={item.img}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, transition: 'transform 0.8s ease' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5, transition: 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     className="tile-img"
                     alt={item.t}
                   />
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(10, 10, 12, 1) 0%, rgba(10, 10, 12, 0.4) 50%, transparent 100%)',
+                    background: 'linear-gradient(to top, rgba(10, 10, 12, 0.9) 0%, rgba(10, 10, 12, 0.4) 60%, transparent 100%)',
                     padding: isMobile ? 24 : 40,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     zIndex: 1
                   }}>
-                    <div style={{ color: 'var(--accent-gold)', marginBottom: 12 }}>{item.icon}</div>
-                    <h3 style={{ fontSize: isMobile ? 18 : 22, fontWeight: 900, color: '#fff', marginBottom: 8 }}>{item.t}</h3>
-                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, margin: 0 }}>{item.d}</p>
+                    <div style={{ color: 'var(--accent-gold)', marginBottom: 16 }}>
+                      {React.cloneElement(item.icon, { size: 24, strokeWidth: 1.5 })}
+                    </div>
+                    <h3 style={{ fontSize: isMobile ? 20 : 24, fontWeight: 900, color: '#fff', marginBottom: 10, letterSpacing: '-0.02em' }}>{item.t}</h3>
+                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            <div style={{ marginTop: 48, textAlign: 'center' }}>
+              <button 
+                onClick={() => setShowAllBenefits(!showAllBenefits)}
+                style={{ 
+                  background: 'none', 
+                  border: '1px solid var(--accent-gold)', 
+                  color: 'var(--accent-gold)', 
+                  padding: '12px 32px', 
+                  borderRadius: 99, 
+                  fontSize: 14, 
+                  fontWeight: 800, 
+                  cursor: 'pointer', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.1em',
+                  transition: '0.3s'
+                }}
+                onMouseEnter={e => { e.target.style.background = 'rgba(223, 151, 56, 0.1)'; }}
+                onMouseLeave={e => { e.target.style.background = 'none'; }}
+              >
+                {showAllBenefits ? "Show Less" : "Explore All Advantages"}
+              </button>
             </div>
           </div>
 
           <style jsx>{`
             .benefit-tile:hover .tile-img {
-              transform: ${isMobile ? 'none' : 'scale(1.15)'};
+              transform: ${isMobile ? 'none' : 'scale(1.1) rotate(1deg)'};
             }
           `}</style>
-        </section>
-
-        {/* New Section: Core Philosophy & Mission */}
+        </section>        {/* New Section: Core Philosophy & Mission */}
         <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
-                 <div style={{ order: isMobile ? 2 : 1 }}>
+                 <motion.div 
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    style={{ order: isMobile ? 2 : 1 }}
+                 >
                     <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Our Core Philosophy</div>
                     <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 32, lineHeight: 1.1 }}>
                        A Commitment to <span style={{ color: 'var(--accent-gold)' }}>Uncompromising</span> Quality
@@ -142,7 +184,14 @@ export default function AboutPage() {
                          { title: "Elite Service", desc: "We don't just rent cars; we provide a concierge-level experience tailored to your specific travel requirements." },
                          { title: "Local Heritage", desc: "Proudly based in Dansoman, we understand the local landscape and provide insights that only a neighbor can." }
                        ].map((v, i) => (
-                         <div key={i} style={{ display: 'flex', gap: 20 }}>
+                         <motion.div 
+                           key={i} 
+                           initial={{ opacity: 0, y: 10 }}
+                           whileInView={{ opacity: 1, y: 0 }}
+                           viewport={{ once: true }}
+                           transition={{ delay: i * 0.2 }}
+                           style={{ display: 'flex', gap: 20 }}
+                         >
                             <div style={{ width: 48, height: 48, borderRadius: 12, background: '#fff', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
                                <CheckCircle2 size={20} color="var(--accent-gold)" />
                             </div>
@@ -150,18 +199,24 @@ export default function AboutPage() {
                                <h4 style={{ fontSize: 18, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>{v.title}</h4>
                                <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{v.desc}</p>
                             </div>
-                         </div>
+                         </motion.div>
                        ))}
                     </div>
-                 </div>
-                 <div style={{ order: isMobile ? 1 : 2, position: 'relative' }}>
+                 </motion.div>
+                 <motion.div 
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    style={{ order: isMobile ? 1 : 2, position: 'relative' }}
+                 >
                     <div style={{ position: 'absolute', top: -30, right: -30, width: 200, height: 200, border: '40px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
                     <img 
                        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop" 
                        style={{ width: '100%', borderRadius: 32, boxShadow: '0 40px 80px rgba(36, 39, 111, 0.15)', position: 'relative', zIndex: 1 }} 
                        alt="Luxury Interior" 
                     />
-                 </div>
+                 </motion.div>
               </div>
            </div>
         </section>
@@ -169,13 +224,18 @@ export default function AboutPage() {
         {/* New Section: Fleet Excellence & Maintenance */}
         <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff', overflow: 'hidden' }}>
            <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-              <div style={{ textAlign: 'center', marginBottom: 80 }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ textAlign: 'center', marginBottom: 80 }}
+              >
                  <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Technical Mastery</div>
                  <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 24 }}>The Science of <span style={{ fontStyle: 'italic', fontWeight: 400 }}>Maintenance</span></h2>
                  <p style={{ maxWidth: 700, margin: '0 auto', color: '#64748b', fontSize: 16, lineHeight: 1.8 }}>
                     Our vehicles aren't just cars; they are precision-engineered assets. Our in-house team of master technicians ensures every engine purrs and every leather seat is pristine.
                  </p>
-              </div>
+              </motion.div>
 
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
                  {[
@@ -183,11 +243,19 @@ export default function AboutPage() {
                     { t: "Performance Testing", d: "Advanced diagnostic checks to ensure optimal braking, suspension, and engine performance at all times.", icon: "⚙️" },
                     { t: "Premium Amenities", d: "We equip our premium collection with complimentary WiFi, refreshments, and modern climate controls.", icon: "🧊" }
                  ].map((item, i) => (
-                    <div key={i} style={{ padding: 48, background: '#f8fafc', borderRadius: 24, border: '1px solid #f1f5f9', transition: '0.4s' }}>
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.2 }}
+                      whileHover={{ scale: 1.02 }}
+                      style={{ padding: 48, background: '#f8fafc', borderRadius: 24, border: '1px solid #f1f5f9', transition: '0.4s' }}
+                    >
                        <div style={{ fontSize: 40, marginBottom: 24 }}>{item.icon}</div>
                        <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--accent)', marginBottom: 16 }}>{item.t}</h3>
                        <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
-                    </div>
+                    </motion.div>
                  ))}
               </div>
            </div>
@@ -197,35 +265,29 @@ export default function AboutPage() {
         {teamItems.length > 0 && (
           <section style={{ padding: isMobile ? '80px 24px' : '120px 64px', background: '#fff' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ marginBottom: 64 }}>
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                style={{ marginBottom: 64 }}
+              >
                 <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: '#1a1b1e', marginBottom: 16 }}>Meet Our <span style={{ color: 'var(--accent-gold)' }}>Leadership</span></h2>
                 <p style={{ color: '#64748b', fontSize: 16 }}>The experts ensuring your safe and seamless travel.</p>
-              </div>
+              </motion.div>
 
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', 
-                gap: isMobile ? 24 : 48,
-                rowGap: isMobile ? 40 : 48 
-              }}>
+              <div className="leadership-grid">
                 {teamItems.map((person, i) => (
                   <motion.div
                     key={person.id || i}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="leadership-card"
                     style={{ textAlign: isMobile ? 'center' : 'left', cursor: 'pointer' }}
                     onClick={() => setSelectedPerson(person)}
                   >
-                    <div style={{
-                      width: 140,
-                      height: 140,
-                      borderRadius: '50%',
-                      overflow: 'hidden',
-                      margin: isMobile ? '0 auto 20px' : '0 0 20px',
-                      background: '#f8fafc',
-                      border: '1px solid #f1f5f9'
-                    }}>
+                    <div className="portrait-container">
                       {person.image ? (
                         <img src={person.image} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={person.name} />
                       ) : (
@@ -234,15 +296,73 @@ export default function AboutPage() {
                         </div>
                       )}
                     </div>
-                    <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 4 }}>{person.name}</h3>
-                    <div style={{ fontSize: 13, color: '#64748b', marginBottom: 16 }}>{person.role}</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 800, color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                    <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 4, textAlign: isMobile ? 'center' : 'left' }}>{person.name}</h3>
+                    <div style={{ fontSize: 13, color: '#64748b', marginBottom: 16, textAlign: isMobile ? 'center' : 'left' }}>{person.role}</div>
+                    <div className="see-info-btn">
                       See Info <ArrowRight size={12} />
                     </div>
                   </motion.div>
                 ))}
               </div>
             </div>
+            <style jsx>{`
+              .leadership-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 48px;
+                row-gap: 48px;
+              }
+              .leadership-card {
+                text-align: left;
+                cursor: pointer;
+              }
+              .portrait-container {
+                width: 140px;
+                height: 140px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 0 0 20px;
+                background: #f8fafc;
+                border: 1px solid #f1f5f9;
+              }
+              .see-info-btn {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 8px;
+                fontSize: 11px;
+                font-weight: 800;
+                color: #999;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+              }
+              @media (max-width: 768px) {
+                .leadership-grid {
+                  grid-template-columns: repeat(2, 1fr);
+                  gap: 16px;
+                  row-gap: 32px;
+                }
+                .leadership-card {
+                  text-align: center;
+                }
+                .portrait-container {
+                  width: 100px;
+                  height: 100px;
+                  margin: 0 auto 16px;
+                }
+                .see-info-btn {
+                  justify-content: center;
+                  font-size: 9px !important;
+                  opacity: 0.8;
+                }
+                .leadership-card h3 {
+                  font-size: 15px !important;
+                }
+                .leadership-card div:nth-child(3) {
+                  font-size: 11px !important;
+                }
+              }
+            `}</style>
           </section>
         )}
 
@@ -322,14 +442,19 @@ export default function AboutPage() {
         {/* New Section: Bespoke Mobility Services */}
         <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ 
-                display: 'flex', 
-                flexDirection: isMobile ? 'column' : 'row', 
-                justifyContent: 'space-between', 
-                alignItems: isMobile ? 'flex-start' : 'flex-end', 
-                gap: 32, 
-                marginBottom: isMobile ? 40 : 80 
-              }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: isMobile ? 'column' : 'row', 
+                  justifyContent: 'space-between', 
+                  alignItems: isMobile ? 'flex-start' : 'flex-end', 
+                  gap: 32, 
+                  marginBottom: isMobile ? 40 : 80 
+                }}
+              >
                  <div style={{ maxWidth: 600 }}>
                     <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Tailored Services</div>
                     <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', margin: 0, lineHeight: 1.1 }}>Elevating Every <br /><span style={{ color: 'var(--accent-gold)' }}>Interaction</span></h2>
@@ -337,7 +462,7 @@ export default function AboutPage() {
                  <p style={{ maxWidth: 400, color: '#64748b', fontSize: 15, lineHeight: 1.8, marginBottom: 8 }}>
                     Beyond standard rentals, we curate mobility solutions that align with the pace of your lifestyle and business requirements.
                  </p>
-              </div>
+              </motion.div>
 
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 24 }}>
                  {[
@@ -346,57 +471,77 @@ export default function AboutPage() {
                     { title: "Corporate Suite", desc: "Tailored long-term leasing options for businesses requiring a dedicated fleet.", icon: <Shield size={24} /> },
                     { title: "Event Mobility", desc: "Coordinated transportation management for high-profile weddings and corporate summits.", icon: <Award size={24} /> }
                  ].map((s, i) => (
-                    <div key={i} style={{ 
-                       padding: '40px 32px', 
-                       background: '#fff', 
-                       borderRadius: 24, 
-                       border: '1px solid #f1f5f9',
-                       transition: '0.4s ease',
-                       cursor: 'default',
-                    }} className="service-card">
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ y: -10 }}
+                      style={{ 
+                        padding: '40px 32px', 
+                        background: '#fff', 
+                        borderRadius: 24, 
+                        border: '1px solid #f1f5f9',
+                        transition: '0.4s ease',
+                        cursor: 'default',
+                      }} className="service-card">
                        <div style={{ width: 56, height: 56, borderRadius: 16, background: 'rgba(36, 39, 111, 0.03)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
                           {s.icon}
                        </div>
                        <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 12 }}>{s.title}</h3>
                        <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{s.desc}</p>
-                    </div>
+                    </motion.div>
                  ))}
               </div>
            </div>
            <style jsx>{`
               .service-card:hover {
-                 transform: translateY(-8px);
                  box-shadow: 0 30px 60px rgba(36, 39, 111, 0.08);
                  border-color: rgba(223, 151, 56, 0.2);
               }
            `}</style>
         </section>
 
-        {/* New Section: Honors & Distinctions */}
+        {/* New Section: Awards & Recognitions */}
         <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff' }}>
            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ textAlign: 'center', marginBottom: 80 }}>
-                 <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Accolades</div>
-                 <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: 'var(--accent)' }}>Honors & <span style={{ color: 'var(--accent-gold)' }}>Distinctions</span></h2>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ textAlign: 'center', marginBottom: 80 }}
+              >
+                 <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Industry Recognition</div>
+                 <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: 'var(--accent)' }}>Awards & <span style={{ color: 'var(--accent-gold)' }}>Recognitions</span></h2>
                  <p style={{ maxWidth: 600, margin: '24px auto 0', color: '#64748b', lineHeight: 1.8 }}>
-                    Our commitment to redefining mobility has been recognized by industry leaders and our valued patrons alike.
+                    Atlas Rent-a-Car is a multiple award-winning transport company, recognized for setting the benchmark in professionalism, safety, and elite service delivery across Ghana.
                  </p>
-              </div>
+              </motion.div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 24 }}>
                  {[
-                    { year: "2024", title: "Luxury Car Rental of the Year", org: "Ghana Tourism Awards", desc: "Recognized for maintaining the highest standards of fleet quality and customer service in the region." },
-                    { year: "2023", title: "Excellence in Private Mobility", org: "West Africa Business Excellence", desc: "Awarded for our innovative approach to corporate leasing and executive chauffeur services." },
-                    { year: "2022", title: "Customer Choice Award", org: "Hospitality & Travel Insider", desc: "Voted #1 by international travelers for reliability and safety in premium transportation." }
+                    { year: "2020", title: "Customers' Choice Car Rental Company", org: "National Customers' Choice Awards", desc: "Honored for exceptional service delivery and maintaining the highest levels of customer satisfaction." },
+                    { year: "2021", title: "Elite Service Excellence Award", org: "Ghana Transport Awards", desc: "Recognized for our unwavering commitment to professional standards and fleet maintenance." },
+                    { year: "2023", title: "Diplomatic Mobility Partner", org: "Industry Distinction", desc: "Voted as the preferred transport provider for major diplomatic missions and international summits." },
+                    { year: "Since 2001", title: "Legacy of Excellence", org: "Industry Pioneer", desc: "Celebrating over two decades of pioneering premium mobility solutions in the Ghanaian market." },
+                    { year: "Ongoing", title: "Airport Mobility Partner", org: "Kotoka Int. Airport", desc: "Trusted provider of seamless executive transfers and VVIP meet-and-greet services at Ghana's premier gateway." }
                  ].map((a, i) => (
-                    <div key={i} style={{ 
-                       padding: '48px 32px', 
-                       border: '1px solid #f1f5f9', 
-                       borderRadius: 24, 
-                       textAlign: 'center',
-                       position: 'relative',
-                       background: '#fcfcfd'
-                    }} className="award-card">
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      style={{ 
+                        padding: '40px 24px', 
+                        border: '1px solid #f1f5f9', 
+                        borderRadius: 24, 
+                        textAlign: 'center',
+                        position: 'relative',
+                        background: '#fcfcfd'
+                      }} className="award-card">
                        <div style={{ 
                           position: 'absolute', 
                           top: -16, 
@@ -406,19 +551,70 @@ export default function AboutPage() {
                           color: '#fff', 
                           padding: '4px 16px', 
                           borderRadius: 99, 
-                          fontSize: 11, 
-                          fontWeight: 800 
+                          fontSize: 10, 
+                          fontWeight: 800,
+                          whiteSpace: 'nowrap'
                        }}>
                           {a.year}
                        </div>
-                       <div style={{ color: 'var(--accent)', marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
-                          <Award size={40} strokeWidth={1.5} />
+                       <div style={{ color: 'var(--accent)', marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
+                          <Award size={32} strokeWidth={1.5} />
                        </div>
-                       <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 8 }}>{a.title}</h3>
-                       <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 20 }}>{a.org}</div>
-                       <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
-                    </div>
+                       <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1a1b1e', marginBottom: 8, lineHeight: 1.3 }}>{a.title}</h3>
+                       <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 16 }}>{a.org}</div>
+                       <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
+                    </motion.div>
                  ))}
+              </div>
+
+              {/* Strategic Partners Section */}
+              <div style={{ marginTop: 100, textAlign: 'center' }}>
+                 <div style={{ fontSize: 11, fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.3em', marginBottom: 40 }}>Our Strategic Ecosystem</div>
+                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? 32 : 64, opacity: 0.8 }}>
+                    {[
+                       "Ghana Tourism Authority",
+                       "Enterprise Insurance",
+                       "Shell Ghana",
+                       "Kotoka International Airport",
+                       "GCRA"
+                    ].map((p, i) => (
+                       <div key={i} style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', filter: 'grayscale(100%)', opacity: 0.6 }}>
+                          {p}
+                       </div>
+                    ))}
+                 </div>
+              </div>
+
+              {/* Memberships & Licensing */}
+              <div style={{ 
+                 marginTop: 100, 
+                 padding: '40px', 
+                 background: '#f8fafc', 
+                 borderRadius: 32, 
+                 display: 'flex', 
+                 flexDirection: isMobile ? 'column' : 'row', 
+                 alignItems: 'center', 
+                 justifyContent: 'space-between',
+                 gap: 32
+              }}>
+                 <div style={{ maxWidth: isMobile ? '100%' : '50%' }}>
+                    <h4 style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', marginBottom: 12 }}>Strategic Memberships</h4>
+                    <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>
+                       Our leadership is deeply integrated into the national transport ecosystem, with our CEO serving as the <strong>Vice President of the Ghana Car Rental Association (GCRA)</strong>.
+                    </p>
+                 </div>
+                 <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {[
+                       { name: "GCRA Member", icon: <Shield size={18} /> },
+                       { name: "GTA Licensed", icon: <MapPin size={18} /> },
+                       { name: "ISO Standards", icon: <Award size={18} /> }
+                    ].map((m, i) => (
+                       <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px', background: '#fff', borderRadius: 16, border: '1px solid #e2e8f0' }}>
+                          <div style={{ color: 'var(--accent-gold)' }}>{m.icon}</div>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: '#1a1b1e' }}>{m.name}</span>
+                       </div>
+                    ))}
+                 </div>
               </div>
            </div>
            <style jsx>{`
