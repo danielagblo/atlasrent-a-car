@@ -111,6 +111,61 @@ export default function AdminGallery() {
     } catch (e) { setError(e.message || String(e)) }
   }
 
+  async function onBulkUpload(e) {
+    const files = Array.from(e.target.files || [])
+    if (files.length === 0) return
+    
+    setLoading(true)
+    setError('')
+    const token = localStorage.getItem('admin_token')
+    let successCount = 0
+    let failCount = 0
+
+    for (const file of files) {
+      try {
+        const formData = new FormData()
+        formData.append('image', file)
+        const uploadRes = await fetch('/api/upload', { 
+          method: 'POST', 
+          headers: { Authorization: `Bearer ${token}` }, 
+          body: formData 
+        })
+        
+        if (!uploadRes.ok) throw new Error('Upload failed')
+        const uploadData = await uploadRes.json()
+        
+        const galleryRes = await fetch('/api/gallery', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            Authorization: `Bearer ${token}` 
+          },
+          body: JSON.stringify({
+            image: uploadData.url,
+            caption: file.name.split('.')[0], // Use filename as default caption
+            category: 'General'
+          })
+        })
+        
+        if (galleryRes.ok) {
+          const newItem = await galleryRes.json()
+          setItems(s => [newItem, ...s])
+          successCount++
+        } else {
+          failCount++
+        }
+      } catch (err) {
+        console.error(err)
+        failCount++
+      }
+    }
+    
+    setLoading(false)
+    if (failCount > 0) {
+      setError(`Uploaded ${successCount} images. ${failCount} failed.`)
+    }
+  }
+
   const filtered = items.filter(i => {
     const q = search.trim().toLowerCase()
     return q ? (`${i.caption} ${i.category}`.toLowerCase()).includes(q) : true
@@ -120,9 +175,9 @@ export default function AdminGallery() {
     <AdminLayout title="Visual Gallery">
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        marginBottom: 48
+        marginBottom: 48, gap: 16, flexWrap: 'wrap'
       }}>
-        <div style={{ position: 'relative', flex: 1, maxWidth: 360 }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: 280 }}>
           <Search size={16} style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', color: '#64748B' }} />
           <input
             placeholder="Search gallery..."
@@ -134,12 +189,18 @@ export default function AdminGallery() {
             }}
           />
         </div>
-        <button
-          onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
-          style={{ height: 44, padding: '0 24px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10 }}
-        >
-          <Plus size={18} /> Add Image
-        </button>
+        <div style={{ display: 'flex', gap: 12 }}>
+          <label style={{ height: 44, padding: '0 24px', background: '#F1F5F9', color: '#475569', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, cursor: 'pointer', transition: '0.3s', fontSize: 14 }}>
+            <Plus size={18} /> Bulk Upload
+            <input type="file" multiple accept="image/*" onChange={onBulkUpload} style={{ display: 'none' }} />
+          </label>
+          <button
+            onClick={() => { setForm(empty()); setEditingId(null); setImagePreview(''); setShowCreate(true); }}
+            style={{ height: 44, padding: '0 24px', background: '#24276F', color: '#fff', borderRadius: 12, border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.3s', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}
+          >
+            <Plus size={18} /> Add Image
+          </button>
+        </div>
       </div>
 
       {loading && <div style={{ padding: 120, textAlign: 'center', color: '#64748B', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2 }}>Synchronizing Visuals...</div>}
