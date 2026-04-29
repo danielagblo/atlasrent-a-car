@@ -50,39 +50,54 @@ export default function AboutPage() {
         right: '50%',
         marginLeft: '-50vw',
         marginRight: '-50vw',
-        minHeight: isMobile ? '70vh' : '85vh',
+        minHeight: isMobile ? 'auto' : '85vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        /* switched to an absolutely-positioned <img> + overlay for precise focal control */
         backgroundColor: '#0a0a0c',
         color: '#fff',
         textAlign: 'center',
-        padding: isMobile ? '120px 24px 60px' : '100px 64px',
+        padding: isMobile ? '80px 0 0' : '100px 64px',
         overflow: 'hidden'
       }}>
-        {/* background image placed here so we can use object-position */}
+        {/* background image */}
         <img
-          src="/assets/heroabout.jpg"
+          src={isMobile ? "/assets/heroabout2.jpg" : "/assets/heroabout.jpg"}
           alt="Hero"
           style={{
-            position: 'absolute',
+            position: isMobile ? 'relative' : 'absolute',
             inset: 0,
             width: '100%',
-            height: '100%',
-            objectFit: 'cover',
+            height: isMobile ? 'auto' : '100%',
+            objectFit: isMobile ? 'contain' : 'cover',
             /* push the image down more so faces are visible behind the heading */
-            objectPosition: isMobile ? 'center 70%' : 'center 75%',
-            zIndex: 0
+            objectPosition: isMobile ? 'center center' : 'center 75%',
+            zIndex: 0,
+            display: 'block'
           }}
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(10, 10, 12, 0.6), rgba(15, 15, 20, 0.75))', zIndex: 1 }} />
+        <div style={{ 
+          position: 'absolute', 
+          inset: 0, 
+          background: 'linear-gradient(rgba(10, 10, 12, 0.6), rgba(15, 15, 20, 0.75))', 
+          zIndex: 1 
+        }} />
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 800, zIndex: 2 }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          style={{ 
+            maxWidth: 800, 
+            zIndex: 2, 
+            position: isMobile ? 'absolute' : 'relative',
+            padding: isMobile ? '24px' : '0'
+          }}
+        >
           <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(223, 151, 56, 0.15)', border: '1px solid var(--accent-gold)', borderRadius: 999, marginBottom: 24, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
             Our Story
           </div>
-          <h1 style={{ fontSize: isMobile ? 40 : 85, fontWeight: 900, marginBottom: 16, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#fff' }}>
+          <h1 style={{ fontSize: isMobile ? 32 : 85, fontWeight: 900, marginBottom: 16, letterSpacing: '-0.04em', lineHeight: 1.1, color: '#fff' }}>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -95,7 +110,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              style={{ opacity: 0.6, fontSize: isMobile ? 24 : 60, display: 'block', marginTop: 8 }}
+              style={{ opacity: 0.6, fontSize: isMobile ? 18 : 60, display: 'block', marginTop: 8 }}
             >
               Since Day One
             </motion.span>
@@ -104,7 +119,7 @@ export default function AboutPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: 650, margin: '0 auto' }}
+            style={{ fontSize: isMobile ? 14 : 20, lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: 650, margin: '0 auto' }}
           >
             Atlas Rent-a-Car is your trusted mobility partner in Dansoman. We provide reliable, high-end services tailored to your unique travel needs.
           </motion.p>
