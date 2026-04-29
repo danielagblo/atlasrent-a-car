@@ -280,8 +280,9 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0 20px;
+  padding: 0 12px;
   border-right: 1px solid var(--border-color);
+  min-width: 140px;
 }
 
 .booking-field-group:last-of-type {
@@ -295,6 +296,7 @@ main {
   letter-spacing: 0.1em;
   color: var(--text-muted);
   margin-bottom: 6px;
+  white-space: nowrap;
 }
 
 .booking-field-group input, 
@@ -308,6 +310,7 @@ main {
   font-family: inherit;
   cursor: pointer;
   padding: 4px 0;
+  width: 100%;
 }
 
 .btn-premium {

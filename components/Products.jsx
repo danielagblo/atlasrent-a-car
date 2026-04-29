@@ -252,6 +252,8 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   const [loading, setLoading] = useState(true)
   const [internalIsMobile, setInternalIsMobile] = useState(false)
   const [activeCategory, setActiveCategory] = useState('All')
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 16
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -260,8 +262,19 @@ export default function Products({ limit, isMobile: propIsMobile }) {
   useEffect(() => {
     if (router.isReady && router.query.category) {
       setActiveCategory(router.query.category)
+      setCurrentPage(1)
     }
   }, [router.isReady, router.query.category])
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [activeCategory, searchQuery])
+
+  useEffect(() => {
+    if (!limit) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [currentPage, limit])
 
   useEffect(() => {
     if (propIsMobile === undefined) {
@@ -302,7 +315,10 @@ export default function Products({ limit, isMobile: propIsMobile }) {
     return true;
   })
     
-  const displayedItems = limit ? filteredItems.slice(0, limit) : filteredItems
+  const totalPages = Math.ceil(filteredItems.length / pageSize)
+  const displayedItems = limit 
+    ? filteredItems.slice(0, limit) 
+    : filteredItems.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
   return (
      <section style={{ background: '#fff', padding: limit ? (isMobile ? '40px 16px' : '120px 48px') : (isMobile ? '16px 16px' : '32px 48px') }}>
@@ -421,6 +437,87 @@ export default function Products({ limit, isMobile: propIsMobile }) {
           }}>
              {displayedItems.map(i => <ProductCard key={i.id} item={i} i={0} />)}
           </div>
+
+          {!limit && totalPages > 1 && (
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              gap: 8, 
+              marginTop: 60,
+              paddingTop: 40,
+              borderTop: '1px solid #f1f5f9'
+            }}>
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  background: '#fff',
+                  color: currentPage === 1 ? '#cbd5e1' : '#24276f',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.3s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8
+                }}
+              >
+                <ChevronRight size={16} style={{ transform: 'rotate(180deg)' }} /> Previous
+              </button>
+
+              <div style={{ display: 'flex', gap: 8 }}>
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNum = i + 1;
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '12px',
+                        border: 'none',
+                        background: currentPage === pageNum ? '#24276f' : '#f8fafc',
+                        color: currentPage === pageNum ? '#fff' : '#64748b',
+                        fontWeight: '700',
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  background: '#fff',
+                  color: currentPage === totalPages ? '#cbd5e1' : '#24276f',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.3s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8
+                }}
+              >
+                Next <ChevronRight size={16} />
+              </button>
+            </div>
+          )}
+
           {limit && (
             <div style={{ textAlign: 'center', marginTop: isMobile ? 40 : 60 }}>
               <Link href="/vehicles">

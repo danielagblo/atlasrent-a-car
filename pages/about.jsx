@@ -127,6 +127,72 @@ export default function AboutPage() {
           `}</style>
         </section>
 
+        {/* New Section: Core Philosophy & Mission */}
+        <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
+           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
+                 <div style={{ order: isMobile ? 2 : 1 }}>
+                    <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Our Core Philosophy</div>
+                    <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 32, lineHeight: 1.1 }}>
+                       A Commitment to <span style={{ color: 'var(--accent-gold)' }}>Uncompromising</span> Quality
+                    </h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+                       {[
+                         { title: "Safety First", desc: "Every vehicle in our fleet undergoes a rigorous 120-point inspection before every rental to ensure your peace of mind." },
+                         { title: "Elite Service", desc: "We don't just rent cars; we provide a concierge-level experience tailored to your specific travel requirements." },
+                         { title: "Local Heritage", desc: "Proudly based in Dansoman, we understand the local landscape and provide insights that only a neighbor can." }
+                       ].map((v, i) => (
+                         <div key={i} style={{ display: 'flex', gap: 20 }}>
+                            <div style={{ width: 48, height: 48, borderRadius: 12, background: '#fff', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+                               <CheckCircle2 size={20} color="var(--accent-gold)" />
+                            </div>
+                            <div>
+                               <h4 style={{ fontSize: 18, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>{v.title}</h4>
+                               <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{v.desc}</p>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+                 <div style={{ order: isMobile ? 1 : 2, position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: -30, right: -30, width: 200, height: 200, border: '40px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
+                    <img 
+                       src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop" 
+                       style={{ width: '100%', borderRadius: 32, boxShadow: '0 40px 80px rgba(36, 39, 111, 0.15)', position: 'relative', zIndex: 1 }} 
+                       alt="Luxury Interior" 
+                    />
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        {/* New Section: Fleet Excellence & Maintenance */}
+        <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff', overflow: 'hidden' }}>
+           <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: 80 }}>
+                 <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Technical Mastery</div>
+                 <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 24 }}>The Science of <span style={{ fontStyle: 'italic', fontWeight: 400 }}>Maintenance</span></h2>
+                 <p style={{ maxWidth: 700, margin: '0 auto', color: '#64748b', fontSize: 16, lineHeight: 1.8 }}>
+                    Our vehicles aren't just cars; they are precision-engineered assets. Our in-house team of master technicians ensures every engine purrs and every leather seat is pristine.
+                 </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
+                 {[
+                    { t: "Meticulous Detailing", d: "A multi-stage cleaning process that restores each vehicle to showroom condition after every journey.", icon: "✨" },
+                    { t: "Performance Testing", d: "Advanced diagnostic checks to ensure optimal braking, suspension, and engine performance at all times.", icon: "⚙️" },
+                    { t: "Premium Amenities", d: "We equip our premium collection with complimentary WiFi, refreshments, and modern climate controls.", icon: "🧊" }
+                 ].map((item, i) => (
+                    <div key={i} style={{ padding: 48, background: '#f8fafc', borderRadius: 24, border: '1px solid #f1f5f9', transition: '0.4s' }}>
+                       <div style={{ fontSize: 40, marginBottom: 24 }}>{item.icon}</div>
+                       <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--accent)', marginBottom: 16 }}>{item.t}</h3>
+                       <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
+                    </div>
+                 ))}
+              </div>
+           </div>
+        </section>
+
         {/* The Team Section - Interactive Modal Redesign */}
         {teamItems.length > 0 && (
           <section style={{ padding: isMobile ? '80px 24px' : '120px 64px', background: '#fff' }}>
@@ -136,14 +202,19 @@ export default function AboutPage() {
                 <p style={{ color: '#64748b', fontSize: 16 }}>The experts ensuring your safe and seamless travel.</p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: isMobile ? 40 : 48 }}>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', 
+                gap: isMobile ? 24 : 48,
+                rowGap: isMobile ? 40 : 48 
+              }}>
                 {teamItems.map((person, i) => (
                   <motion.div
                     key={person.id || i}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    style={{ textAlign: 'left', cursor: 'pointer' }}
+                    style={{ textAlign: isMobile ? 'center' : 'left', cursor: 'pointer' }}
                     onClick={() => setSelectedPerson(person)}
                   >
                     <div style={{
@@ -151,7 +222,7 @@ export default function AboutPage() {
                       height: 140,
                       borderRadius: '50%',
                       overflow: 'hidden',
-                      marginBottom: 20,
+                      margin: isMobile ? '0 auto 20px' : '0 0 20px',
                       background: '#f8fafc',
                       border: '1px solid #f1f5f9'
                     }}>
@@ -219,15 +290,17 @@ export default function AboutPage() {
                   <Users size={20} style={{ transform: 'rotate(45deg)' }} />
                 </button>
 
-                <div style={{ flex: 1, minHeight: isMobile ? 300 : 600, background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ flex: 1, position: 'relative', minHeight: isMobile ? 300 : 600, background: '#f8fafc' }}>
                   {selectedPerson.image ? (
                     <img
                       src={selectedPerson.image}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                       alt={selectedPerson.name}
                     />
                   ) : (
-                    <Users size={120} strokeWidth={1} style={{ color: '#cbd5e1' }} />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Users size={120} strokeWidth={1} style={{ color: '#cbd5e1' }} />
+                    </div>
                   )}
                 </div>
 
@@ -245,6 +318,59 @@ export default function AboutPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* New Section: Bespoke Mobility Services */}
+        <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
+           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: isMobile ? 'column' : 'row', 
+                justifyContent: 'space-between', 
+                alignItems: isMobile ? 'flex-start' : 'flex-end', 
+                gap: 32, 
+                marginBottom: isMobile ? 40 : 80 
+              }}>
+                 <div style={{ maxWidth: 600 }}>
+                    <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Tailored Services</div>
+                    <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', margin: 0, lineHeight: 1.1 }}>Elevating Every <br /><span style={{ color: 'var(--accent-gold)' }}>Interaction</span></h2>
+                 </div>
+                 <p style={{ maxWidth: 400, color: '#64748b', fontSize: 15, lineHeight: 1.8, marginBottom: 8 }}>
+                    Beyond standard rentals, we curate mobility solutions that align with the pace of your lifestyle and business requirements.
+                 </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: 24 }}>
+                 {[
+                    { title: "Private Chauffeur", desc: "Professional, discreet drivers trained in executive protocol for your safe transit.", icon: <Users size={24} /> },
+                    { title: "Airport Concierge", desc: "Meet-and-greet services at the terminal for a seamless transition to your vehicle.", icon: <MapPin size={24} /> },
+                    { title: "Corporate Suite", desc: "Tailored long-term leasing options for businesses requiring a dedicated fleet.", icon: <Shield size={24} /> },
+                    { title: "Event Mobility", desc: "Coordinated transportation management for high-profile weddings and corporate summits.", icon: <Award size={24} /> }
+                 ].map((s, i) => (
+                    <div key={i} style={{ 
+                       padding: '40px 32px', 
+                       background: '#fff', 
+                       borderRadius: 24, 
+                       border: '1px solid #f1f5f9',
+                       transition: '0.4s ease',
+                       cursor: 'default',
+                    }} className="service-card">
+                       <div style={{ width: 56, height: 56, borderRadius: 16, background: 'rgba(36, 39, 111, 0.03)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
+                          {s.icon}
+                       </div>
+                       <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 12 }}>{s.title}</h3>
+                       <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{s.desc}</p>
+                    </div>
+                 ))}
+              </div>
+           </div>
+           <style jsx>{`
+              .service-card:hover {
+                 transform: translateY(-8px);
+                 box-shadow: 0 30px 60px rgba(36, 39, 111, 0.08);
+                 border-color: rgba(223, 151, 56, 0.2);
+              }
+           `}</style>
+        </section>
 
         {/* Simple CTA */}
         <section style={{ padding: isMobile ? '80px 20px' : '100px 24px', background: '#fff', textAlign: 'center' }}>

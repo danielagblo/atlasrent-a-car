@@ -31,19 +31,19 @@ export default function App({ Component, pageProps }) {
       </main>
       {!hideLayout && <Footer />}
 
-      {/* Floating WhatsApp Icon */}
-      <div 
-        className="whatsapp-container"
-        style={{
-          position: 'fixed',
-          bottom: '30px',
-          right: '30px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '15px',
-          zIndex: 1000,
-        }}
-      >
+      {!hideLayout && (
+        <div 
+          className="whatsapp-container"
+          style={{
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px',
+            zIndex: 1000,
+          }}
+        >
         <div className="whatsapp-bubble" style={{
           background: '#fff',
           padding: '12px 24px',
@@ -97,6 +97,7 @@ export default function App({ Component, pageProps }) {
           </svg>
         </a>
       </div>
+      )}
       <style jsx global>{`
         @keyframes whatsapp-pulse {
           0% {
