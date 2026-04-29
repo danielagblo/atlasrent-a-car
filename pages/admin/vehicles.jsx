@@ -304,9 +304,9 @@ export default function AdminVehicles() {
       )}
 
       {!loading && filtered.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="admin-list-container">
           {/* List Header */}
-          <div style={{ 
+          <div className="admin-list-header" style={{ 
             display: 'grid', 
             gridTemplateColumns: '80px 2fr 1fr 1fr 1fr 120px', 
             gap: 24, 
@@ -327,7 +327,7 @@ export default function AdminVehicles() {
           </div>
 
           {filtered.map(item => (
-            <div key={item.id} style={{ 
+            <div key={item.id} className="admin-list-row" style={{ 
                padding: '24px 0',
                display: 'grid',
                gridTemplateColumns: '80px 2fr 1fr 1fr 1fr 120px',

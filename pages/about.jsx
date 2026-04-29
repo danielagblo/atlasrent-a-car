@@ -372,6 +372,67 @@ export default function AboutPage() {
            `}</style>
         </section>
 
+        {/* New Section: Honors & Distinctions */}
+        <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff' }}>
+           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: 80 }}>
+                 <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Accolades</div>
+                 <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: 'var(--accent)' }}>Honors & <span style={{ color: 'var(--accent-gold)' }}>Distinctions</span></h2>
+                 <p style={{ maxWidth: 600, margin: '24px auto 0', color: '#64748b', lineHeight: 1.8 }}>
+                    Our commitment to redefining mobility has been recognized by industry leaders and our valued patrons alike.
+                 </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
+                 {[
+                    { year: "2024", title: "Luxury Car Rental of the Year", org: "Ghana Tourism Awards", desc: "Recognized for maintaining the highest standards of fleet quality and customer service in the region." },
+                    { year: "2023", title: "Excellence in Private Mobility", org: "West Africa Business Excellence", desc: "Awarded for our innovative approach to corporate leasing and executive chauffeur services." },
+                    { year: "2022", title: "Customer Choice Award", org: "Hospitality & Travel Insider", desc: "Voted #1 by international travelers for reliability and safety in premium transportation." }
+                 ].map((a, i) => (
+                    <div key={i} style={{ 
+                       padding: '48px 32px', 
+                       border: '1px solid #f1f5f9', 
+                       borderRadius: 24, 
+                       textAlign: 'center',
+                       position: 'relative',
+                       background: '#fcfcfd'
+                    }} className="award-card">
+                       <div style={{ 
+                          position: 'absolute', 
+                          top: -16, 
+                          left: '50%', 
+                          transform: 'translateX(-50%)', 
+                          background: 'var(--accent-gold)', 
+                          color: '#fff', 
+                          padding: '4px 16px', 
+                          borderRadius: 99, 
+                          fontSize: 11, 
+                          fontWeight: 800 
+                       }}>
+                          {a.year}
+                       </div>
+                       <div style={{ color: 'var(--accent)', marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
+                          <Award size={40} strokeWidth={1.5} />
+                       </div>
+                       <h3 style={{ fontSize: 18, fontWeight: 800, color: '#1a1b1e', marginBottom: 8 }}>{a.title}</h3>
+                       <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 20 }}>{a.org}</div>
+                       <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
+                    </div>
+                 ))}
+              </div>
+           </div>
+           <style jsx>{`
+              .award-card {
+                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+              }
+              .award-card:hover {
+                 transform: translateY(-8px);
+                 box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+                 border-color: rgba(223, 151, 56, 0.2);
+              }
+           `}</style>
+        </section>
+
         {/* Simple CTA */}
         <section style={{ padding: isMobile ? '80px 20px' : '100px 24px', background: '#fff', textAlign: 'center' }}>
           <div style={{ maxWidth: 600, margin: '0 auto' }}>

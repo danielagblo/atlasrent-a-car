@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
           className="whatsapp-container"
           style={{
             position: 'fixed',
-            bottom: '30px',
+            bottom: '60px',
             right: '30px',
             display: 'flex',
             alignItems: 'center',

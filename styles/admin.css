@@ -880,19 +880,67 @@ select {
     gap: 16px !important;
   }
 
-  /* Specifically fix the vehicle list which has 6 columns */
-  .admin-main .admin-content-wrapper > div > div[style*="grid-template-columns"] {
-    display: block !important;
+  /* Hide header and non-essential columns on mobile for a compact list */
+  .admin-list-header,
+  .admin-list-row > div:nth-child(3),
+  .admin-list-row > div:nth-child(5) {
+    display: none !important;
   }
 
-  .admin-main .admin-content-wrapper > div > div[style*="grid-template-columns"] > div {
-    margin-bottom: 16px;
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
+  .admin-list-row {
     display: flex !important;
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--divider);
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .admin-list-row > div:nth-child(1) {
+    width: 64px !important;
+    height: 48px !important;
+    padding: 4px !important;
+    flex-shrink: 0;
+  }
+
+  .admin-list-row > div:nth-child(2) {
+    flex: 1 !important;
+    width: auto !important;
+  }
+
+  .admin-list-row > div:nth-child(2) h3 {
+    font-size: 14px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+  .admin-list-row > div:nth-child(4) {
+    width: auto !important;
+  }
+  
+  .admin-list-row > div:nth-child(4) span {
+    display: none !important; /* Hide 'Active' text, just show dot */
+  }
+
+  .admin-list-row .card-actions,
+  .admin-list-row div:last-child {
+    width: auto !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    display: flex !important;
+    gap: 12px !important;
+  }
+
+  /* Hide labels if they exist */
+  .admin-list-row label {
+    display: none !important;
   }
 }
 
