@@ -212,12 +212,10 @@ main {
 
 .hero-section {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 64px;
-  margin-top: 80px;
   background: #000;
 }
 
