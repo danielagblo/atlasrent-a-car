@@ -85,23 +85,22 @@
 .admin-sidebar {
   width: var(--sidebar-w);
   height: 100vh;
-  background: var(--bg-sidebar);
+  background: var(--bg-card) !important;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 100;
-  color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  padding: 0;
   border-right: 1px solid var(--border);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-logo-area {
-  padding: 32px 24px;
+  padding: 32px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
 }
 
 .sidebar-logo {
@@ -135,7 +134,7 @@
   padding: 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .sidebar-scrollable-section::-webkit-scrollbar {
@@ -172,21 +171,22 @@
 }
 
 .admin-nav a:hover {
-  background: var(--sidebar-active);
-  color: var(--text-primary);
-  transform: translateX(4px);
+  background: var(--divider);
 }
 
 .admin-nav a.active {
-  background: var(--primary-gold);
-  color: #FFFFFF;
-  box-shadow: 0 8px 30px rgba(223, 151, 56, 0.3);
+  background: var(--primary) !important;
+  color: #fff !important;
+}
+
+.admin-nav a.active .nav-label,
+.admin-nav a.active .nav-icon {
+  color: #fff !important;
 }
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 24px 20px;
-  border-top: 1px solid var(--border);
+  padding: 40px 16px;
 }
 
 .user-profile {
@@ -234,32 +234,58 @@
 .admin-main {
   flex: 1;
   margin-left: var(--sidebar-w);
-  padding-top: var(--header-h);
-  background: var(--bg-main);
+  background: var(--bg-card);
   min-height: 100vh;
+  width: calc(100% - var(--sidebar-w));
 }
 
 .admin-content-wrapper {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 112px 56px 56px;
 }
 
 /* Header Styling */
 .admin-header {
-  height: var(--header-h);
-  background: var(--header-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border);
+  height: 80px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 0 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   right: 0;
   left: var(--sidebar-w);
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  width: calc(100% - var(--sidebar-w));
+}
+
+.mobile-nav-toggle,
+.mobile-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.mobile-nav-toggle:hover,
+.mobile-close-btn:hover {
+  background: var(--divider);
+}
+
+.admin-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   z-index: 90;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
+  animation: fadeIn 0.2s ease-out;
 }
 
 .breadcrumb {
@@ -764,58 +790,109 @@ select {
   }
 }
 
-/* Responsive Tweaks */
+/* Responsive Overrides */
 @media (max-width: 1024px) {
-  .global-search {
-    width: 260px;
+  :root {
+    --sidebar-w: 240px;
+  }
+  
+  .admin-header, .admin-content-wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
 
 @media (max-width: 768px) {
   .admin-sidebar {
-    width: 0;
-    overflow: hidden;
-    border: none;
+    transform: translateX(-100%);
+  }
+
+  .admin-shell.sidebar-open .admin-sidebar {
+    transform: translateX(0);
   }
 
   .admin-main {
     margin-left: 0;
+    width: 100%;
   }
 
   .admin-header {
     left: 0;
+    width: 100%;
     padding: 0 20px;
+    height: 64px;
   }
 
   .admin-content-wrapper {
-    padding: 24px 20px;
+    padding: 84px 20px 40px;
+  }
+
+  .mobile-nav-toggle,
+  .mobile-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-user-role {
+    display: none;
+  }
+
+  /* Form & Grid Adjustments */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
   }
 
   .toolbar-row {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
-  }
-
-  .toolbar-left,
-  .toolbar-right {
-    width: 100%;
+    padding: 12px;
   }
 
   .search-field {
-    width: 100%;
+    width: 100% !important;
   }
 
-  .model-card {
+  /* Card and List Adjustments for Mobile */
+  .model-card, .article-card, .order-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px;
+    padding: 20px;
     gap: 20px;
+  }
+
+  .card-content-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 
   .card-actions {
     width: 100%;
     justify-content: flex-end;
+  }
+
+  /* Prevent table-like grids from breaking */
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Specifically fix the vehicle list which has 6 columns */
+  .admin-main .admin-content-wrapper > div > div[style*="grid-template-columns"] {
+    display: block !important;
+  }
+
+  .admin-main .admin-content-wrapper > div > div[style*="grid-template-columns"] > div {
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
   }
 }
 
