@@ -560,7 +560,7 @@ export default function AboutPage() {
       </AnimatePresence>
 
       {/* New Section: Bespoke Mobility Services */}
-      <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
+      <section style={{ padding: isMobile ? '60px 24px' : '120px 64px 60px', background: '#fcfcfd' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -624,23 +624,76 @@ export default function AboutPage() {
       </section>
 
       {/* Strategic Ecosystem & Memberships */}
-      <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff' }}>
+      <section style={{ padding: isMobile ? '40px 24px 80px' : '60px 64px 120px', background: '#fff' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {/* Strategic Partners Section */}
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 11, fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.3em', marginBottom: 40 }}>Our Strategic Ecosystem</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? 32 : 64, opacity: 0.8 }}>
+            <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Our Strategic Ecosystem</div>
+            <h2 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 900, color: 'var(--accent)', marginBottom: 48 }}>Elite Partners & Clients</h2>
+            
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? 24 : 48, marginBottom: 80 }}>
               {[
                 "Ghana Tourism Authority",
                 "Enterprise Insurance",
                 "Shell Ghana",
                 "Kotoka International Airport",
-                "GCRA"
+                "GCRA",
+                "ATLAS",
+                "Various Diplomats",
+                "High Net Worth Individuals"
               ].map((p, i) => (
-                <div key={i} style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', filter: 'grayscale(100%)', opacity: 0.6 }}>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  viewport={{ once: true }}
+                  style={{ 
+                    fontSize: isMobile ? 12 : 14, 
+                    fontWeight: 800, 
+                    color: 'var(--accent)', 
+                    padding: '12px 24px',
+                    background: 'var(--bg-secondary)',
+                    borderRadius: 12,
+                    border: '1px solid var(--border-color)'
+                  }}
+                >
                   {p}
-                </div>
+                </motion.div>
               ))}
+            </div>
+
+            <div style={{ maxWidth: 800, margin: '0 auto' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: 16 }}>Third Party Fleet Agreements</div>
+              <p style={{ color: '#64748b', fontSize: 15, lineHeight: 1.6, marginBottom: 32 }}>
+                Atlas Rent-A-Car also provides vehicles to the following companies based on professional third-party agreements:
+              </p>
+              
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', 
+                gap: 16,
+                textAlign: 'left'
+              }}>
+                {[
+                  "Pergah Transport",
+                  "Ghana Limited",
+                  "Conship Ghana Ltd",
+                  "Technip",
+                  "1st Star Car Rentals",
+                  "J'S Car Rentals",
+                  "Nageo Car Rentals",
+                  "Worldlink Car Rentals",
+                  "Jobesh Car Rentals",
+                  "Hertz Car Rentals",
+                  "Avis Car Rentals"
+                ].map((c, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-gold)' }} />
+                    <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{c}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
