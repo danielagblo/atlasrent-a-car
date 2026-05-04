@@ -127,7 +127,7 @@ export default function AboutPage() {
       </section>
 
       {/* Immersive Elite Tiles - Why Choose Atlas */}
-      <section style={{ padding: isMobile ? '60px 20px' : '160px 64px', background: '#fff' }}>
+      <section style={{ padding: isMobile ? '60px 20px' : '120px 64px 80px', background: '#fff' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
 
           {/* Redesigned Asymmetric Title */}
@@ -283,8 +283,92 @@ export default function AboutPage() {
           `}</style>
       </section>
 
+      {/* New Section: The Atlas Narrative */}
+      <section style={{ padding: isMobile ? '40px 24px' : '80px 64px', background: '#fff' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.2fr 0.8fr', gap: isMobile ? 40 : 80, alignItems: 'flex-start' }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>The Atlas Narrative</div>
+              <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 32, lineHeight: 1.1 }}>
+                Over Two Decades of <br />
+                <span style={{ color: 'var(--accent-gold)' }}>Pioneering</span> Mobility
+              </h2>
+              <div style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <p>
+                  Atlas Rent-A-Car began operations in 2003 with a team of experienced staff and a fleet of four vehicles. Over nearly 22 years, the company has focused on a vision of becoming a leading light in Ghana's car rental industry by treating the customer as king.
+                </p>
+                <p>
+                  Their operational success is highlighted by long-term partnerships with <strong>Tullow Ghana Limited</strong> and <strong>Anadarko WTCP Company</strong>, for whom they provide 4X4 and cross-country vehicles to support operations in the Jubilee Fields. The company maintains a strong presence in the oil and gas sector and offers a 24-hour emergency assistance hotline as part of its commitment to quality service.
+                </p>
+                <p>
+                  Strategically, Atlas operates three car ports located close to principal clients to decrease turnaround times and allow for the rapid replacement of vehicles on short notice. Their specialized fleet includes <strong>Mitsubishi Pajero, Toyota Land Cruiser, and Toyota Prado</strong> models, chosen for their reliability and off-road capabilities in the diverse terrain of Ghana and the West African sub-region.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              style={{ position: 'relative' }}
+            >
+              <div style={{
+                background: 'var(--bg-secondary)',
+                padding: 40,
+                borderRadius: 32,
+                border: '1px solid var(--border-color)',
+                position: 'relative',
+                zIndex: 1,
+                marginBottom: 32
+              }}>
+                <div style={{ marginBottom: 32 }}>
+                  <div style={{ fontSize: 40, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 8 }}>2003</div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Founded in Accra</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                  <div style={{ display: 'flex', gap: 16 }}>
+                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
+                    <div>
+                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>Elite Fleet</h4>
+                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Mitsubishi Pajero, Toyota Land Cruiser & Prado.</p>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 16 }}>
+                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
+                    <div>
+                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>Oil & Gas Presence</h4>
+                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Strategic partners for Jubilee Fields operations.</p>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 16 }}>
+                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
+                    <div>
+                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>24/7 Hotline</h4>
+                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Unwavering commitment to emergency assistance.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24, padding: '0 20px' }}>
+                <p>
+                  Each vehicle is equipped with safety features such as anti-brake systems, high suspension capacity, and emergency kits including fire extinguishers and first aid supplies. Significant past achievements include being selected in 2008 as the transport provider for the <strong>SPORTFIVE</strong> film crew during the Confederation of African Nations Football tournament.
+                </p>
+              </div>
+
+              {/* Decorative elements */}
+              <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, border: '20px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* New Section: Core Philosophy & Mission */}
-      <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd' }}>
+      <section style={{ padding: isMobile ? '40px 24px 80px' : '80px 64px 120px', background: '#fcfcfd' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
             <motion.div
