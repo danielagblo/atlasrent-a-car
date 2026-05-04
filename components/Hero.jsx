@@ -144,17 +144,17 @@ export default function Hero() {
             gridTemplateColumns: isMobile ? 'unset' : 'repeat(3, 1fr) auto',
             gap: isMobile ? 0 : 0,
             alignItems: 'center',
-            background: isMobile ? 'rgba(255, 255, 255, 0.15)' : '#fff',
+            background: 'rgba(255, 255, 255, 0.15)',
             padding: isMobile ? '10px 8px' : '12px 12px 12px 24px',
             borderRadius: isMobile ? 18 : 24,
             boxShadow: isMobile ? '0 20px 40px rgba(0,0,0,0.4)' : '0 30px 60px rgba(0,0,0,0.3)',
-            border: isMobile ? '1px solid rgba(255, 255, 255, 0.25)' : '1px solid rgba(255, 255, 255, 0.1)',
-            backdropFilter: isMobile ? 'blur(25px)' : 'none',
-            WebkitBackdropFilter: isMobile ? 'blur(25px)' : 'none'
+            border: '1px solid rgba(255, 255, 255, 0.25)',
+            backdropFilter: 'blur(25px)',
+            WebkitBackdropFilter: 'blur(25px)'
           }}>
             {/* Field 1: Location */}
             <div style={{
-              borderRight: isMobile ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid #eee',
+              borderRight: '1px solid rgba(255, 255, 255, 0.15)',
               padding: isMobile ? '0 1px' : '0 20px',
               flex: isMobile ? 1.6 : 1,
               minWidth: 0
@@ -163,7 +163,7 @@ export default function Hero() {
                 display: 'block',
                 fontSize: isMobile ? 8 : 10,
                 fontWeight: 800,
-                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                color: 'rgba(255, 255, 255, 0.6)',
                 textTransform: 'uppercase',
                 letterSpacing: isMobile ? '0.02em' : '0.1em',
                 marginBottom: isMobile ? 2 : 4,
@@ -182,7 +182,7 @@ export default function Hero() {
                   fontWeight: 700,
                   fontSize: isMobile ? 9.5 : 14,
                   outline: 'none',
-                  color: isMobile ? '#ffffff' : '#0f172a',
+                  color: '#ffffff',
                   letterSpacing: isMobile ? '-0.03em' : 'normal'
                 }}
               >
@@ -195,7 +195,7 @@ export default function Hero() {
 
             {/* Field 2: Date */}
             <div style={{
-              borderRight: isMobile ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid #eee',
+              borderRight: '1px solid rgba(255, 255, 255, 0.15)',
               padding: isMobile ? '0 1px' : '0 20px',
               flex: isMobile ? 1.5 : 1,
               minWidth: 0
@@ -204,7 +204,7 @@ export default function Hero() {
                 display: 'block',
                 fontSize: isMobile ? 8 : 10,
                 fontWeight: 800,
-                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                color: 'rgba(255, 255, 255, 0.6)',
                 textTransform: 'uppercase',
                 letterSpacing: isMobile ? '0.02em' : '0.1em',
                 marginBottom: isMobile ? 2 : 4,
@@ -224,9 +224,9 @@ export default function Hero() {
                   fontWeight: 700,
                   fontSize: isMobile ? 9.5 : 14,
                   outline: 'none',
-                  color: isMobile ? '#ffffff' : '#0f172a',
+                  color: '#ffffff',
                   WebkitAppearance: 'none',
-                  colorScheme: isMobile ? 'dark' : 'light',
+                  colorScheme: 'dark',
                   letterSpacing: isMobile ? '-0.03em' : 'normal'
                 }}
               />
@@ -243,7 +243,7 @@ export default function Hero() {
                 display: 'block',
                 fontSize: isMobile ? 8 : 10,
                 fontWeight: 800,
-                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                color: 'rgba(255, 255, 255, 0.6)',
                 textTransform: 'uppercase',
                 letterSpacing: isMobile ? '0.02em' : '0.1em',
                 marginBottom: isMobile ? 2 : 4,
@@ -262,7 +262,7 @@ export default function Hero() {
                   fontWeight: 700,
                   fontSize: isMobile ? 9.5 : 14,
                   outline: 'none',
-                  color: isMobile ? '#ffffff' : '#0f172a',
+                  color: '#ffffff',
                   letterSpacing: isMobile ? '-0.03em' : 'normal'
                 }}
               >
