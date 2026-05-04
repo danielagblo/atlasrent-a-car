@@ -623,82 +623,11 @@ export default function AboutPage() {
            `}</style>
       </section>
 
-      {/* New Section: Awards & Recognitions */}
+      {/* Strategic Ecosystem & Memberships */}
       <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: 80 }}
-          >
-            <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Industry Recognition</div>
-            <h2 style={{ fontSize: isMobile ? 32 : 48, fontWeight: 900, color: 'var(--accent)' }}>Awards & <span style={{ color: 'var(--accent-gold)' }}>Recognitions</span></h2>
-            <p style={{ maxWidth: 600, margin: '24px auto 0', color: '#64748b', lineHeight: 1.8 }}>
-              Atlas Rent-a-Car is a multiple award-winning transport company, recognized for setting the benchmark in professionalism, safety, and elite service delivery across Ghana.
-            </p>
-          </motion.div>
-
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: 24
-          }}>
-            {[
-              { year: "2020", title: "Customers' Choice Car Rental Company", org: "National Customers' Choice Awards", desc: "Honored for exceptional service delivery and maintaining the highest levels of customer satisfaction." },
-              { year: "2021", title: "Elite Service Excellence Award", org: "Ghana Transport Awards", desc: "Recognized for our unwavering commitment to professional standards and fleet maintenance." },
-              { year: "2023", title: "Diplomatic Mobility Partner", org: "Industry Distinction", desc: "Voted as the preferred transport provider for major diplomatic missions and international summits." },
-              { year: "Since 2001", title: "Legacy of Excellence", org: "Industry Pioneer", desc: "Celebrating over two decades of pioneering premium mobility solutions in the Ghanaian market." },
-              { year: "Ongoing", title: "Airport Mobility Partner", org: "Kotoka Int. Airport", desc: "Trusted provider of seamless executive transfers and VVIP meet-and-greet services at Ghana's premier gateway." }
-            ].map((a, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                style={{
-                  flex: isMobile ? '1 1 100%' : '0 1 280px',
-                  padding: '40px 24px',
-                  border: '1px solid #f1f5f9',
-                  borderRadius: 24,
-                  textAlign: 'center',
-                  position: 'relative',
-                  background: '#fcfcfd',
-                  minHeight: 320,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center'
-                }} className="award-card">
-                <div style={{
-                  position: 'absolute',
-                  top: -16,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: 'var(--accent-gold)',
-                  color: '#fff',
-                  padding: '4px 16px',
-                  borderRadius: 99,
-                  fontSize: 10,
-                  fontWeight: 800,
-                  whiteSpace: 'nowrap'
-                }}>
-                  {a.year}
-                </div>
-                <div style={{ color: 'var(--accent)', marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
-                  <Award size={32} strokeWidth={1.5} />
-                </div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1a1b1e', marginBottom: 8, lineHeight: 1.3 }}>{a.title}</h3>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 16 }}>{a.org}</div>
-                <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
           {/* Strategic Partners Section */}
-          <div style={{ marginTop: 100, textAlign: 'center' }}>
+          <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 11, fontWeight: 900, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.3em', marginBottom: 40 }}>Our Strategic Ecosystem</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? 32 : 64, opacity: 0.8 }}>
               {[
@@ -714,6 +643,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
+
 
           {/* Memberships & Licensing */}
           <div style={{
@@ -747,16 +677,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-        <style jsx>{`
-              .award-card {
-                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-              }
-              .award-card:hover {
-                 transform: translateY(-8px);
-                 box-shadow: 0 40px 80px rgba(0,0,0,0.06);
-                 border-color: rgba(223, 151, 56, 0.2);
-              }
-           `}</style>
+
       </section>
     </div>
   )

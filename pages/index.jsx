@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CldOptimizedImage from '../components/CldOptimizedImage'
 import { getTestimonials, getNews } from '../lib/siteContentApi'
 import Link from 'next/link'
-import { Heart, Car, Flag, MessageCircle } from 'lucide-react'
+import { Heart, Car, Flag, MessageCircle, Shield } from 'lucide-react'
 import { useInView } from 'framer-motion'
 import PartnerMarquee from '../components/PartnerMarquee'
 
@@ -284,6 +284,225 @@ function News({ newsItems, isMobile }) {
   )
 }
 
+function Awards({ isMobile }) {
+  const awards = [
+    {
+      icon: <Flag size={24} />,
+      title: "National Awards",
+      subtitle: "Customers' Choice Car Rental Company",
+      description: "Honored by National Customers' Choice Awards for exceptional service delivery and customer satisfaction."
+    },
+    {
+      icon: <Heart size={24} />,
+      title: "2021 Excellence",
+      subtitle: "Elite Service Excellence Award",
+      description: "Ghana Transport Awards. Recognized for our unwavering commitment to professional standards and fleet maintenance."
+    },
+    {
+      icon: <Shield size={24} />,
+      title: "2023 Distinction",
+      subtitle: "Diplomatic Mobility Partner",
+      description: "Industry Distinction. Voted as the preferred transport provider for major diplomatic missions and international summits."
+    }
+  ];
+
+  return (
+    <section style={{ 
+      padding: isMobile ? '80px 24px' : '120px 64px', 
+      backgroundColor: '#fff',
+      color: 'var(--text-primary)',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Abstract background glow */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '10%',
+        width: '30%',
+        height: '40%',
+        background: 'radial-gradient(circle, rgba(223, 151, 56, 0.05) 0%, transparent 70%)',
+        filter: 'blur(60px)',
+        zIndex: 0
+      }} />
+
+      <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: isMobile ? 'column' : 'row', 
+          alignItems: 'center', 
+          gap: isMobile ? 48 : 100,
+          marginBottom: isMobile ? 64 : 100 
+        }}>
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            style={{ flex: 1 }}
+          >
+            <span style={{ 
+              fontSize: 12, 
+              fontWeight: 900, 
+              color: 'var(--accent-gold)', 
+              textTransform: 'uppercase', 
+              letterSpacing: '0.4em',
+              display: 'block',
+              marginBottom: 20
+            }}>
+              Distinction & Honor
+            </span>
+            <h2 style={{ 
+              fontFamily: "'Playfair Display', serif", 
+              fontSize: isMobile ? 36 : 64, 
+              fontWeight: 900, 
+              color: 'var(--accent)', 
+              margin: '0 0 32px',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em'
+            }}>
+              A Legacy of <br />
+              <span style={{ color: 'var(--accent-gold)' }}>Award-Winning</span> Service
+            </h2>
+            <p style={{ 
+              fontSize: 18, 
+              color: 'var(--text-secondary)', 
+              lineHeight: 1.7, 
+              maxWidth: 500,
+              margin: 0
+            }}>
+              We don't just set standards; we exceed them. Our commitment to excellence has been recognized by industry leaders and our valued clients worldwide.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            style={{ 
+              width: isMobile ? 180 : 320, 
+              height: isMobile ? 180 : 320, 
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <div style={{
+              position: 'absolute',
+              inset: -20,
+              border: '1px solid rgba(223, 151, 56, 0.1)',
+              borderRadius: '50%',
+              animation: 'spin 30s linear infinite'
+            }} />
+            <div style={{
+              position: 'absolute',
+              inset: -40,
+              border: '1px dashed rgba(0, 0, 0, 0.05)',
+              borderRadius: '50%',
+              animation: 'spin-reverse 40s linear infinite'
+            }} />
+            <img 
+              src="/assets/award.jpeg" 
+              alt="Awards Icon" 
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.1))'
+              }} 
+            />
+          </motion.div>
+        </div>
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', 
+          gap: 32 
+        }}>
+          {awards.map((award, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              style={{
+                padding: '48px 40px',
+                borderRadius: 32,
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-color)',
+                transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+              whileHover={{ 
+                y: -12, 
+                background: '#fff',
+                borderColor: 'var(--accent-gold)',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.06)'
+              }}
+            >
+              <div style={{ 
+                width: 64, 
+                height: 64, 
+                borderRadius: 20,
+                background: 'linear-gradient(135deg, var(--accent-gold), #c9822a)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 32,
+                color: '#fff',
+                boxShadow: '0 10px 20px rgba(223, 151, 56, 0.2)'
+              }}>
+                {award.icon}
+              </div>
+              
+              <div style={{ 
+                fontSize: 11, 
+                fontWeight: 900, 
+                color: 'var(--accent-gold)', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.2em',
+                marginBottom: 12
+              }}>
+                {award.title}
+              </div>
+              <h3 style={{ 
+                fontSize: 22, 
+                fontWeight: 800, 
+                color: 'var(--accent)', 
+                marginBottom: 20,
+                lineHeight: 1.3,
+                letterSpacing: '-0.01em'
+              }}>
+                {award.subtitle}
+              </h3>
+              <p style={{ 
+                fontSize: 15, 
+                color: 'var(--text-secondary)', 
+                lineHeight: 1.6,
+                margin: 0 
+              }}>
+                {award.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+      `}</style>
+    </section>
+  )
+}
+
+
 export default function Home() {
   const [testimonials, setTestimonials] = React.useState([])
   const [newsItems, setNewsItems] = React.useState([])
@@ -316,6 +535,7 @@ export default function Home() {
       <Hero />
       <PartnerMarquee />
       <Statistics isMobile={isMobile} />
+      <Awards isMobile={isMobile} />
       <Products limit={6} isMobile={isMobile} />
       <Testimonials testimonials={testimonials} isMobile={isMobile} />
       <News newsItems={newsItems} isMobile={isMobile} />
