@@ -288,21 +288,21 @@ function Awards({ isMobile }) {
   const awards = [
     {
       icon: <Flag size={24} />,
-      title: "National Awards",
-      subtitle: "Customers' Choice Car Rental Company",
-      description: "Honored by National Customers' Choice Awards for exceptional service delivery and customer satisfaction."
+      title: "Industry Excellence",
+      subtitle: "CIMIG Hospitality & Allied Service Company of the Year",
+      description: "Recognized for outstanding hospitality and professional service delivery across our national operations."
     },
     {
       icon: <Heart size={24} />,
-      title: "2021 Excellence",
-      subtitle: "Elite Service Excellence Award",
-      description: "Ghana Transport Awards. Recognized for our unwavering commitment to professional standards and fleet maintenance."
+      title: "Regional Distinction",
+      subtitle: "Best Car Rental Company in Accra & Kumasi",
+      description: "Voted as the premier car rental provider in Ghana's two largest metropolitan hubs for superior fleet quality."
     },
     {
       icon: <Shield size={24} />,
-      title: "2023 Distinction",
-      subtitle: "Diplomatic Mobility Partner",
-      description: "Industry Distinction. Voted as the preferred transport provider for major diplomatic missions and international summits."
+      title: "National Legacy",
+      subtitle: "The Best Rental Company in Ghana 2018",
+      description: "A prestigious national honor cementing our status as the country's most trusted vehicle rental partner."
     }
   ];
 
@@ -408,7 +408,7 @@ function Awards({ isMobile }) {
                 width: '100%', 
                 height: '100%', 
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.1))'
+                mixBlendMode: 'multiply'
               }} 
             />
           </motion.div>

@@ -12,6 +12,39 @@ export default function AboutPage() {
   const [teamItems, setTeamItems] = useState([])
   const [selectedPerson, setSelectedPerson] = useState(null)
 
+  const MilestoneCard = () => (
+    <div style={{
+      background: 'var(--bg-secondary)',
+      padding: 40,
+      borderRadius: 32,
+      border: '1px solid var(--border-color)',
+      position: 'relative',
+      zIndex: 1
+    }}>
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ fontSize: 40, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 8 }}>2003</div>
+        <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Founded in Accra</div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        {[
+          { t: "Elite Fleet", d: "Mitsubishi Pajero, Toyota Land Cruiser & Prado." },
+          { t: "Oil & Gas Presence", d: "Strategic partners for Jubilee Fields operations." },
+          { t: "24/7 Hotline", d: "Unwavering commitment to emergency assistance." }
+        ].map((item, i) => (
+          <div key={i} style={{ display: 'flex', gap: 16 }}>
+            <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
+            <div>
+              <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>{item.t}</h4>
+              <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>{item.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Decorative elements */}
+      <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, border: '20px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
+    </div>
+  )
+
   const initialBenefits = [
     { col: 'span 4', icon: <Users />, img: '/assets/wide.jpg', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
     { col: 'span 2', icon: <Award />, img: '/assets/dobn.jpg', t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
@@ -77,19 +110,19 @@ export default function AboutPage() {
             display: 'block'
           }}
         />
-        <div style={{ 
-          position: 'absolute', 
-          inset: 0, 
-          background: 'linear-gradient(rgba(10, 10, 12, 0.6), rgba(15, 15, 20, 0.75))', 
-          zIndex: 1 
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(rgba(10, 10, 12, 0.6), rgba(15, 15, 20, 0.75))',
+          zIndex: 1
         }} />
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          style={{ 
-            maxWidth: 800, 
-            zIndex: 2, 
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            maxWidth: 800,
+            zIndex: 2,
             position: isMobile ? 'absolute' : 'relative',
             padding: isMobile ? '24px' : '0'
           }}
@@ -287,16 +320,26 @@ export default function AboutPage() {
       <section style={{ padding: isMobile ? '40px 24px' : '80px 64px', background: '#fff' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.2fr 0.8fr', gap: isMobile ? 40 : 80, alignItems: 'flex-start' }}>
+
+            {/* Left Column: Topic & Main Narrative */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
               <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>The Atlas Narrative</div>
-              <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 32, lineHeight: 1.1 }}>
+              <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: isMobile ? 32 : 48, lineHeight: 1.1 }}>
                 Over Two Decades of <br />
                 <span style={{ color: 'var(--accent-gold)' }}>Pioneering</span> Mobility
               </h2>
+
+              {/* Mobile Only Card Insertion */}
+              {isMobile && (
+                <div style={{ marginBottom: 40 }}>
+                  <MilestoneCard />
+                </div>
+              )}
+
               <div style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
                 <p>
                   Atlas Rent-A-Car began operations in 2003 with a team of experienced staff and a fleet of four vehicles. Over nearly 22 years, the company has focused on a vision of becoming a leading light in Ghana's car rental industry by treating the customer as king.
@@ -307,65 +350,37 @@ export default function AboutPage() {
                 <p>
                   Strategically, Atlas operates three car ports located close to principal clients to decrease turnaround times and allow for the rapid replacement of vehicles on short notice. Their specialized fleet includes <strong>Mitsubishi Pajero, Toyota Land Cruiser, and Toyota Prado</strong> models, chosen for their reliability and off-road capabilities in the diverse terrain of Ghana and the West African sub-region.
                 </p>
+                {isMobile && (
+                  <p>
+                    Each vehicle is equipped with safety features such as anti-brake systems, high suspension capacity, and emergency kits including fire extinguishers and first aid supplies. Significant past achievements include being selected in 2008 as the transport provider for the <strong>SPORTFIVE</strong> film crew during the Confederation of African Nations Football tournament.
+                  </p>
+                )}
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              style={{ position: 'relative' }}
-            >
-              <div style={{
-                background: 'var(--bg-secondary)',
-                padding: 40,
-                borderRadius: 32,
-                border: '1px solid var(--border-color)',
-                position: 'relative',
-                zIndex: 1,
-                marginBottom: 32
-              }}>
-                <div style={{ marginBottom: 32 }}>
-                  <div style={{ fontSize: 40, fontWeight: 900, color: 'var(--accent-gold)', marginBottom: 8 }}>2003</div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Founded in Accra</div>
+            {/* Right Column: Milestone Card & Supplementary Narrative (Desktop) */}
+            {!isMobile && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                style={{ position: 'relative', paddingTop: 20 }}
+              >
+                <div style={{ marginBottom: 48 }}>
+                  <MilestoneCard />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                  <div style={{ display: 'flex', gap: 16 }}>
-                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
-                    <div>
-                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>Elite Fleet</h4>
-                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Mitsubishi Pajero, Toyota Land Cruiser & Prado.</p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 16 }}>
-                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
-                    <div>
-                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>Oil & Gas Presence</h4>
-                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Strategic partners for Jubilee Fields operations.</p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 16 }}>
-                    <div style={{ width: 4, background: 'var(--accent-gold)', borderRadius: 2 }} />
-                    <div>
-                      <h4 style={{ fontSize: 14, fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>24/7 Hotline</h4>
-                      <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>Unwavering commitment to emergency assistance.</p>
-                    </div>
-                  </div>
+                <div style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+                  <p>
+                    Each vehicle is equipped with safety features such as anti-brake systems, high suspension capacity, and emergency kits including fire extinguishers and first aid supplies. Significant past achievements include being selected in 2008 as the transport provider for the <strong>SPORTFIVE</strong> film crew during the Confederation of African Nations Football tournament.
+                  </p>
                 </div>
-              </div>
-
-              <div style={{ fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24, padding: '0 20px' }}>
-                <p>
-                  Each vehicle is equipped with safety features such as anti-brake systems, high suspension capacity, and emergency kits including fire extinguishers and first aid supplies. Significant past achievements include being selected in 2008 as the transport provider for the <strong>SPORTFIVE</strong> film crew during the Confederation of African Nations Football tournament.
-                </p>
-              </div>
-
-              {/* Decorative elements */}
-              <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, border: '20px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
-            </motion.div>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
+
+      {/* New Section: Core Philosophy & Mission */}
 
       {/* New Section: Core Philosophy & Mission */}
       <section style={{ padding: isMobile ? '40px 24px 80px' : '80px 64px 120px', background: '#fcfcfd' }}>
@@ -416,7 +431,7 @@ export default function AboutPage() {
             >
               <div style={{ position: 'absolute', top: -30, right: -30, width: 200, height: 200, border: '40px solid rgba(223, 151, 56, 0.05)', borderRadius: '50%', zIndex: 0 }} />
               <img
-                src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop"
+                src="assets/transparent.jpg"
                 style={{ width: '100%', borderRadius: 32, boxShadow: '0 40px 80px rgba(36, 39, 111, 0.15)', position: 'relative', zIndex: 1 }}
                 alt="Luxury Interior"
               />
@@ -714,7 +729,7 @@ export default function AboutPage() {
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Our Strategic Ecosystem</div>
             <h2 style={{ fontSize: isMobile ? 28 : 40, fontWeight: 900, color: 'var(--accent)', marginBottom: 48 }}>Elite Partners & Clients</h2>
-            
+
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? 24 : 48, marginBottom: 80 }}>
               {[
                 "Ghana Tourism Authority",
@@ -726,16 +741,16 @@ export default function AboutPage() {
                 "Various Diplomats",
                 "High Net Worth Individuals"
               ].map((p, i) => (
-                <motion.div 
-                  key={i} 
+                <motion.div
+                  key={i}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
                   viewport={{ once: true }}
-                  style={{ 
-                    fontSize: isMobile ? 12 : 14, 
-                    fontWeight: 800, 
-                    color: 'var(--accent)', 
+                  style={{
+                    fontSize: isMobile ? 12 : 14,
+                    fontWeight: 800,
+                    color: 'var(--accent)',
                     padding: '12px 24px',
                     background: 'var(--bg-secondary)',
                     borderRadius: 12,
@@ -752,10 +767,10 @@ export default function AboutPage() {
               <p style={{ color: '#64748b', fontSize: 15, lineHeight: 1.6, marginBottom: 32 }}>
                 Atlas Rent-A-Car also provides vehicles to the following companies based on professional third-party agreements:
               </p>
-              
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', 
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)',
                 gap: 16,
                 textAlign: 'left'
               }}>
