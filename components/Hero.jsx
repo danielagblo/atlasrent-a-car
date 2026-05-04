@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import IMAGES from '../data/images'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronRight, Search } from 'lucide-react'
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
@@ -41,7 +41,7 @@ export default function Hero() {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: isMobile 
+        background: isMobile
           ? 'linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%)'
           : 'linear-gradient(105deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.1) 100%)',
         zIndex: 0,
@@ -125,89 +125,191 @@ export default function Hero() {
           Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 assistance across Ghana.
         </motion.p>
 
-      {/* Booking panel */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.7 }}
-        style={{
-          width: '100%',
-          maxWidth: isMobile ? '100%' : '1000px',
-          marginTop: isMobile ? 20 : 48,
-          position: 'relative',
-          zIndex: 10
-        }}
-      >
-        <div style={{
-          display: isMobile ? 'flex' : 'grid',
-          flexDirection: isMobile ? 'column' : 'unset',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr) auto',
-          gap: isMobile ? 12 : 0,
-          alignItems: 'center',
-          background: isMobile ? 'rgba(255,255,255,0.95)' : '#fff',
-          padding: isMobile ? '20px' : '12px 12px 12px 24px',
-          borderRadius: 24,
-          boxShadow: '0 30px 60px rgba(0,0,0,0.3)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          backdropFilter: isMobile ? 'blur(10px)' : 'none'
-        }}>
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', paddingRight: isMobile ? 0 : 20, width: '100%' }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Location</label>
-            <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }}>
-              <option value="" disabled>Select City</option>
-              <option value="accra">Accra (HQ)</option>
-              <option value="takoradi">Takoradi</option>
-              <option value="kumasi">Kumasi</option>
-            </select>
-          </div>
+        {/* Booking panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+          style={{
+            width: '100%',
+            maxWidth: isMobile ? '100%' : '1000px',
+            marginTop: isMobile ? 12 : 48,
+            position: 'relative',
+            zIndex: 10
+          }}
+        >
+          <div style={{
+            display: isMobile ? 'flex' : 'grid',
+            flexDirection: isMobile ? 'row' : 'unset',
+            gridTemplateColumns: isMobile ? 'unset' : 'repeat(3, 1fr) auto',
+            gap: isMobile ? 0 : 0,
+            alignItems: 'center',
+            background: isMobile ? 'rgba(255, 255, 255, 0.15)' : '#fff',
+            padding: isMobile ? '10px 8px' : '12px 12px 12px 24px',
+            borderRadius: isMobile ? 18 : 24,
+            boxShadow: isMobile ? '0 20px 40px rgba(0,0,0,0.4)' : '0 30px 60px rgba(0,0,0,0.3)',
+            border: isMobile ? '1px solid rgba(255, 255, 255, 0.25)' : '1px solid rgba(255, 255, 255, 0.1)',
+            backdropFilter: isMobile ? 'blur(25px)' : 'none',
+            WebkitBackdropFilter: isMobile ? 'blur(25px)' : 'none'
+          }}>
+            {/* Field 1: Location */}
+            <div style={{
+              borderRight: isMobile ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid #eee',
+              padding: isMobile ? '0 1px' : '0 20px',
+              flex: isMobile ? 1.6 : 1,
+              minWidth: 0
+            }}>
+              <label style={{
+                display: 'block',
+                fontSize: isMobile ? 8 : 10,
+                fontWeight: 800,
+                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                textTransform: 'uppercase',
+                letterSpacing: isMobile ? '0.02em' : '0.1em',
+                marginBottom: isMobile ? 2 : 4,
+                whiteSpace: 'nowrap'
+              }}>
+                {isMobile ? 'Location' : 'PICK-UP LOCATION'}
+              </label>
+              <select
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: isMobile ? '4px 0' : '8px 0',
+                  border: 'none',
+                  background: 'transparent',
+                  fontWeight: 700,
+                  fontSize: isMobile ? 9.5 : 14,
+                  outline: 'none',
+                  color: isMobile ? '#ffffff' : '#0f172a',
+                  letterSpacing: isMobile ? '-0.03em' : 'normal'
+                }}
+              >
+                <option value="" disabled style={{ color: '#000' }}>{isMobile ? 'City' : 'Select City'}</option>
+                <option value="accra" style={{ color: '#000' }}>Accra</option>
+                <option value="takoradi" style={{ color: '#000' }}>Takoradi</option>
+                <option value="kumasi" style={{ color: '#000' }}>Kumasi</option>
+              </select>
+            </div>
 
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', padding: isMobile ? 0 : '0 20px', width: '100%' }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Date</label>
-            <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }} />
-          </div>
+            {/* Field 2: Date */}
+            <div style={{
+              borderRight: isMobile ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid #eee',
+              padding: isMobile ? '0 1px' : '0 20px',
+              flex: isMobile ? 1.5 : 1,
+              minWidth: 0
+            }}>
+              <label style={{
+                display: 'block',
+                fontSize: isMobile ? 8 : 10,
+                fontWeight: 800,
+                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                textTransform: 'uppercase',
+                letterSpacing: isMobile ? '0.02em' : '0.1em',
+                marginBottom: isMobile ? 2 : 4,
+                whiteSpace: 'nowrap'
+              }}>
+                {isMobile ? 'Date' : 'PICK-UP DATE'}
+              </label>
+              <input
+                type="date"
+                value={pickUpDate}
+                onChange={(e) => setPickUpDate(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: isMobile ? '4px 0' : '8px 0',
+                  border: 'none',
+                  background: 'transparent',
+                  fontWeight: 700,
+                  fontSize: isMobile ? 9.5 : 14,
+                  outline: 'none',
+                  color: isMobile ? '#ffffff' : '#0f172a',
+                  WebkitAppearance: 'none',
+                  colorScheme: isMobile ? 'dark' : 'light',
+                  letterSpacing: isMobile ? '-0.03em' : 'normal'
+                }}
+              />
+            </div>
 
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : 'none', padding: isMobile ? 0 : '0 20px', width: '100%' }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Vehicle Class</label>
-            <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }}>
-              <option value="All">All Categories</option>
-              <option value="Premium Cars">Premium</option>
-              <option value="Luxury Cars">Luxury</option>
-              <option value="Business Cars">Business</option>
-              <option value="Economic Cars">Economic</option>
-            </select>
-          </div>
+            {/* Field 3: Category */}
+            <div style={{
+              borderRight: 'none',
+              padding: isMobile ? '0 1px' : '0 20px',
+              flex: isMobile ? 1.8 : 1,
+              minWidth: 0
+            }}>
+              <label style={{
+                display: 'block',
+                fontSize: isMobile ? 8 : 10,
+                fontWeight: 800,
+                color: isMobile ? 'rgba(255, 255, 255, 0.6)' : '#64748b',
+                textTransform: 'uppercase',
+                letterSpacing: isMobile ? '0.02em' : '0.1em',
+                marginBottom: isMobile ? 2 : 4,
+                whiteSpace: 'nowrap'
+              }}>
+                {isMobile ? 'Category' : 'VEHICLE CLASS'}
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: isMobile ? '4px 0' : '8px 0',
+                  border: 'none',
+                  background: 'transparent',
+                  fontWeight: 700,
+                  fontSize: isMobile ? 9.5 : 14,
+                  outline: 'none',
+                  color: isMobile ? '#ffffff' : '#0f172a',
+                  letterSpacing: isMobile ? '-0.03em' : 'normal'
+                }}
+              >
+                <option value="All" style={{ color: '#000' }}>{isMobile ? 'All' : 'All Categories'}</option>
+                <option value="Premium Cars" style={{ color: '#000' }}>Premium</option>
+                <option value="Luxury Cars" style={{ color: '#000' }}>Luxury</option>
+                <option value="Business Cars" style={{ color: '#000' }}>Business</option>
+                <option value="Economic Cars" style={{ color: '#000' }}>Economic</option>
+              </select>
+            </div>
 
-          <button
-            onClick={() => {
-              if (category && category !== 'All') {
-                router.push(`/vehicles?category=${encodeURIComponent(category)}`)
-              } else {
-                router.push('/vehicles')
-              }
-            }}
-            style={{
-              background: 'var(--accent-gold)',
-              color: '#fff',
-              border: 'none',
-              padding: '18px 32px',
-              borderRadius: 16,
-              fontWeight: 800,
-              fontSize: 14,
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              cursor: 'pointer',
-              transition: '0.3s',
-              boxShadow: '0 10px 20px rgba(223, 151, 56, 0.3)',
-              width: isMobile ? '100%' : 'auto',
-              marginTop: isMobile ? 8 : 0
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            Find Vehicle
-          </button>
-        </div>
-      </motion.div>
+            <button
+              onClick={() => {
+                if (category && category !== 'All') {
+                  router.push(`/vehicles?category=${encodeURIComponent(category)}`)
+                } else {
+                  router.push('/vehicles')
+                }
+              }}
+              style={{
+                background: 'var(--accent-gold)',
+                color: '#fff',
+                border: 'none',
+                padding: isMobile ? '0' : '18px 32px',
+                borderRadius: isMobile ? 8 : 16,
+                fontWeight: 800,
+                fontSize: 14,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                boxShadow: isMobile ? '0 8px 24px rgba(223, 151, 56, 0.4)' : '0 10px 20px rgba(223, 151, 56, 0.3)',
+                width: isMobile ? '34px' : 'auto',
+                height: isMobile ? '34px' : 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                marginLeft: isMobile ? 1 : 0
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              {isMobile ? <Search size={14} /> : 'Find Vehicle'}
+            </button>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
