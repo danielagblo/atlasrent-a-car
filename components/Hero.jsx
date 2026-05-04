@@ -28,24 +28,26 @@ export default function Hero() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        minHeight: '100vh',
+        minHeight: isMobile ? '85vh' : '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: isMobile ? '100px 24px 60px' : '0 72px',
+        padding: isMobile ? '120px 24px 80px' : '0 72px',
         position: 'relative',
         marginTop: 0,
       }}
     >
-      {/* Dark gradient overlay */}
+      {/* Dynamic gradient overlay - deeper on mobile for text clarity */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(105deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.1) 100%)',
+        background: isMobile 
+          ? 'linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%)'
+          : 'linear-gradient(105deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.1) 100%)',
         zIndex: 0,
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 880 }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 880, width: '100%' }}>
 
         {/* Badge */}
         <motion.div
@@ -56,32 +58,32 @@ export default function Hero() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            background: 'rgba(255,255,255,0.1)',
-            border: '1px solid rgba(255,255,255,0.2)',
+            background: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.15)',
             borderRadius: 999,
             padding: '6px 16px',
-            marginBottom: 28,
+            marginBottom: isMobile ? 20 : 28,
             backdropFilter: 'blur(8px)',
           }}
         >
-          <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--accent-gold)', display: 'inline-block' }} />
-          <span style={{ fontSize: 11, fontWeight: 800, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-gold)', display: 'inline-block' }} />
+          <span style={{ fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.2em' }}>
             Ghana's Finest Fleet
           </span>
         </motion.div>
 
         {/* Headline */}
-        <div style={{ marginBottom: 28 }}>
+        <div style={{ marginBottom: isMobile ? 24 : 32 }}>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{
-              fontSize: isMobile ? 48 : 76,
+              fontSize: isMobile ? 42 : 76,
               fontWeight: 900,
               color: '#fff',
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              letterSpacing: '-0.04em',
               margin: 0,
             }}
           >
@@ -92,12 +94,12 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
             style={{
-              fontSize: isMobile ? 48 : 76,
+              fontSize: isMobile ? 42 : 76,
               fontWeight: 900,
               fontStyle: 'italic',
               color: 'var(--accent-gold)',
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              letterSpacing: '-0.04em',
               margin: 0,
             }}
           >
@@ -105,26 +107,23 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        {/* Subtitle with left bar */}
+        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
           style={{
-            fontSize: isMobile ? 15 : 17,
-            color: 'rgba(255,255,255,0.8)',
-            lineHeight: 1.65,
-            marginBottom: 44,
-            borderLeft: '3px solid var(--accent-gold)',
+            fontSize: isMobile ? 14 : 17,
+            color: 'rgba(255,255,255,0.7)',
+            lineHeight: 1.6,
+            marginBottom: isMobile ? 32 : 44,
+            borderLeft: '2px solid var(--accent-gold)',
             paddingLeft: 16,
-            maxWidth: 480,
+            maxWidth: isMobile ? '100%' : 480,
           }}
         >
           Experience the ultimate in private mobility. Premium vehicles, elite chauffeurs, and 24/7 assistance across Ghana.
         </motion.p>
-
-        
-
 
       {/* Booking panel */}
       <motion.div
@@ -134,7 +133,7 @@ export default function Hero() {
         style={{
           width: '100%',
           maxWidth: isMobile ? '100%' : '1000px',
-          marginTop: 48,
+          marginTop: isMobile ? 20 : 48,
           position: 'relative',
           zIndex: 10
         }}
@@ -143,17 +142,18 @@ export default function Hero() {
           display: isMobile ? 'flex' : 'grid',
           flexDirection: isMobile ? 'column' : 'unset',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr) auto',
-          gap: isMobile ? 16 : 0,
+          gap: isMobile ? 12 : 0,
           alignItems: 'center',
-          background: '#fff',
-          padding: isMobile ? '24px' : '12px 12px 12px 24px',
-          borderRadius: 20,
-          boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
-          border: '1px solid rgba(255,255,255,0.1)'
+          background: isMobile ? 'rgba(255,255,255,0.95)' : '#fff',
+          padding: isMobile ? '20px' : '12px 12px 12px 24px',
+          borderRadius: 24,
+          boxShadow: '0 30px 60px rgba(0,0,0,0.3)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          backdropFilter: isMobile ? 'blur(10px)' : 'none'
         }}>
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', paddingRight: isMobile ? 0 : 20 }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Location</label>
-            <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }}>
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', paddingRight: isMobile ? 0 : 20, width: '100%' }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Location</label>
+            <select value={location} onChange={(e) => setLocation(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }}>
               <option value="" disabled>Select City</option>
               <option value="accra">Accra (HQ)</option>
               <option value="takoradi">Takoradi</option>
@@ -161,14 +161,14 @@ export default function Hero() {
             </select>
           </div>
 
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', padding: isMobile ? 0 : '0 20px' }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Date</label>
-            <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }} />
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : '1px solid #eee', padding: isMobile ? 0 : '0 20px', width: '100%' }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Pick-up Date</label>
+            <input type="date" value={pickUpDate} onChange={(e) => setPickUpDate(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }} />
           </div>
 
-          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : 'none', padding: isMobile ? 0 : '0 20px' }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Vehicle Class</label>
-            <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 15, outline: 'none', color: '#0f172a' }}>
+          <div className="booking-field-group" style={{ borderRight: isMobile ? 'none' : 'none', padding: isMobile ? 0 : '0 20px', width: '100%' }}>
+            <label style={{ display: 'block', fontSize: 10, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Vehicle Class</label>
+            <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '8px 0', border: 'none', background: 'transparent', fontWeight: 700, fontSize: 14, outline: 'none', color: '#0f172a' }}>
               <option value="All">All Categories</option>
               <option value="Premium Cars">Premium</option>
               <option value="Luxury Cars">Luxury</option>
@@ -189,16 +189,17 @@ export default function Hero() {
               background: 'var(--accent-gold)',
               color: '#fff',
               border: 'none',
-              padding: isMobile ? '16px' : '16px 32px',
-              borderRadius: 14,
+              padding: '18px 32px',
+              borderRadius: 16,
               fontWeight: 800,
               fontSize: 14,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.08em',
               cursor: 'pointer',
               transition: '0.3s',
               boxShadow: '0 10px 20px rgba(223, 151, 56, 0.3)',
-              width: isMobile ? '100%' : 'auto'
+              width: isMobile ? '100%' : 'auto',
+              marginTop: isMobile ? 8 : 0
             }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}

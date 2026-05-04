@@ -7,7 +7,15 @@ import { Menu, X } from 'lucide-react'
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768)
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     if (open) {
@@ -26,17 +34,51 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const isHomePage = router.pathname === '/'
+  const isTransparent = isHomePage && !scrolled && !open
+
   return (
     <motion.header
-      className="nav"
+      className={`nav ${isTransparent ? 'transparent-nav' : ''}`}
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      style={{ padding: scrolled ? '12px 24px' : '24px 48px' }}
+      style={{ 
+        padding: isMobile 
+          ? (isTransparent ? '20px 20px' : '14px 20px') 
+          : (scrolled ? '12px 24px' : '24px 48px'),
+        background: isTransparent ? 'transparent' : 'rgba(255, 255, 255, 0.95)',
+        borderBottomColor: isTransparent ? 'transparent' : 'var(--border-color)',
+        backdropFilter: isTransparent ? 'none' : 'blur(16px)',
+        WebkitBackdropFilter: isTransparent ? 'none' : 'blur(16px)',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
     >
+      <style jsx global>{`
+        .transparent-nav .links a:not(.cta) {
+          color: #ffffff !important;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .transparent-nav .theme-toggle {
+          color: #ffffff !important;
+        }
+        .transparent-nav .links a.active {
+          color: var(--accent-gold) !important;
+        }
+      `}</style>
       <Link href="/" onClick={() => setOpen(false)} style={{ textDecoration: 'none', color: 'inherit', zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/favicon.png" alt="Atlas Rent-A-Car Logo" style={{ height: scrolled ? 40 : 48, objectFit: 'contain', transition: '0.3s' }} />
+          <img 
+            src="/favicon.png" 
+            alt="Atlas Rent-A-Car Logo" 
+            style={{ 
+              height: isMobile 
+                ? (scrolled ? 28 : 36) 
+                : (scrolled ? 40 : 48), 
+              objectFit: 'contain', 
+              transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+            }} 
+          />
         </div>
       </Link>
 
