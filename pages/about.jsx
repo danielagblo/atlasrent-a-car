@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Layout from '../components/Layout'
 import Link from 'next/link'
-import { CheckCircle2, MapPin, Users, Award, Shield, ArrowRight } from 'lucide-react'
+import { Heart, CheckCircle2, MapPin, Users, Award, Shield, ArrowRight } from 'lucide-react'
 
 import { getTeam } from '../lib/siteContentApi'
 
@@ -159,153 +159,131 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      <section style={{ 
+      <section style={{
         position: 'relative',
-        padding: isMobile ? '80px 24px' : '160px 64px 120px', 
-        background: '#fcfcfd',
+        padding: isMobile ? '80px 24px' : '120px 64px',
+        background: '#fff',
         overflow: 'hidden'
       }}>
-        {/* Soft Gold Mesh Background */}
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          right: '-5%',
-          width: '60%',
-          height: '80%',
-          background: 'radial-gradient(circle at center, rgba(223, 151, 56, 0.04) 0%, transparent 70%)',
-          filter: 'blur(100px)',
-          zIndex: 0
-        }} />
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
 
           {/* Redesigned Asymmetric Title */}
-          <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: isMobile ? 24 : 40, marginBottom: 100 }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: isMobile ? 20 : 40, position: 'relative' }}>
-              <div style={{ width: 4, height: isMobile ? 40 : 80, background: 'var(--accent-gold)' }} />
-              <div>
-                <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>The Atlas Advantage</div>
-                <h2 style={{ fontSize: isMobile ? 36 : 72, fontWeight: 600, color: 'var(--accent)', letterSpacing: '-0.02em', lineHeight: 1.1, fontFamily: "'Playfair Display', serif" }}>
-                  Why Choose <br /> <span style={{ color: 'var(--accent-gold)', fontStyle: 'italic' }}>The Atlas Experience</span>?
-                </h2>
-              </div>
-              {/* Decorative Accent Line */}
-              {!isMobile && (
-                <div style={{ position: 'absolute', top: 40, right: -150, width: 120, height: 1, background: 'linear-gradient(to right, var(--accent-gold), transparent)' }} />
-              )}
-            </div>
-            <p style={{ maxWidth: 450, color: '#64748b', fontSize: 17, lineHeight: 1.8, marginBottom: 12, fontWeight: 300 }}>
-              We've redefined mobility by merging elite automotive performance with personalized concierge attention.
-            </p>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: 'center',
+            gap: isMobile ? 48 : 100,
+            marginBottom: isMobile ? 64 : 100
+          }}>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ flex: 1 }}
+            >
+              <span style={{
+                fontSize: 12,
+                fontWeight: 900,
+                color: 'var(--accent-gold)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.4em',
+                display: 'block',
+                marginBottom: 20
+              }}>
+                The Atlas Advantage
+              </span>
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: isMobile ? 36 : 64,
+                fontWeight: 900,
+                color: 'var(--accent)',
+                margin: '0 0 32px',
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em'
+              }}>
+                Why Choose <br />
+                <span style={{ color: 'var(--accent-gold)' }}>The Atlas Experience</span>?
+              </h2>
+              <p style={{
+                fontSize: 18,
+                color: 'var(--text-secondary)',
+                lineHeight: 1.7,
+                maxWidth: 500,
+                margin: 0
+              }}>
+                We've redefined mobility by merging elite automotive performance with personalized concierge attention.
+              </p>
+            </motion.div>
           </div>
 
-          <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'auto' : '320px', gap: 24, zIndex: 1 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
             {(showAllBenefits ? [...initialBenefits, ...extraBenefits] : initialBenefits).map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -10 }}
-                className="liquid-glass-card group"
+                transition={{ delay: i * 0.1 }}
                 style={{
-                  gridColumn: isMobile ? 'span 6' : (i === 0 || i === 3 ? 'span 3' : 'span 3'),
-                  gridRow: isMobile ? 'auto' : (i === 0 ? 'span 2' : 'span 1'),
-                  position: 'relative',
-                  borderRadius: 40,
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(40px)',
-                  WebkitBackdropFilter: 'blur(40px)',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
-                  padding: isMobile ? 40 : 60,
+                  padding: '48px 40px',
+                  borderRadius: 32,
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-color)',
                   cursor: 'pointer',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  boxShadow: '0 20px 80px rgba(36, 39, 111, 0.05)'
+                  transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+                whileHover={{
+                  y: -12,
+                  background: '#fff',
+                  borderColor: 'var(--accent-gold)',
+                  boxShadow: '0 30px 60px rgba(0,0,0,0.06)'
                 }}
               >
-                {/* Liquid Shine Effect */}
-                <div style={{ 
-                  position: 'absolute', 
-                  top: '-100%', 
-                  left: '-100%', 
-                  width: '300%', 
-                  height: '300%', 
-                  background: 'conic-gradient(from 0deg, transparent, rgba(223, 151, 56, 0.1), transparent)',
-                  opacity: 0,
-                  transition: '0.8s',
-                  zIndex: 0
-                }} className="glass-shine" />
-
-                <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  {/* Icon with Refraction */}
-                  <div style={{
-                    width: i === 0 ? 120 : 80,
-                    height: i === 0 ? 120 : 80,
-                    borderRadius: 32,
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: 40,
-                    color: 'var(--accent-gold)',
-                    border: '1px solid rgba(255, 255, 255, 0.8)',
-                    boxShadow: '0 10px 30px rgba(223, 151, 56, 0.15)',
-                    transition: '0.5s cubic-bezier(0.16, 1, 0.3, 1)'
-                  }} className="icon-refraction">
-                    {React.cloneElement(item.icon, { size: i === 0 ? 48 : 32, strokeWidth: 1 })}
-                  </div>
-
-                  <div style={{ textAlign: 'left' }}>
-                    {item.t === "Wide Range of Vehicles" && (
-                      <div style={{
-                        display: 'inline-block',
-                        padding: '6px 0',
-                        color: 'var(--accent-gold)',
-                        fontSize: 10,
-                        fontWeight: 900,
-                        textTransform: 'uppercase',
-                        letterSpacing: 4,
-                        marginBottom: 20,
-                        borderBottom: '2px solid var(--accent-gold)'
-                      }}>
-                        Featured Excellence
-                      </div>
-                    )}
-
-                    <h3 style={{ 
-                      fontSize: isMobile ? 24 : (i === 0 ? 48 : 32), 
-                      fontWeight: 600, 
-                      color: 'var(--accent)', 
-                      marginBottom: 24, 
-                      fontFamily: "'Playfair Display', serif",
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1.1
-                    }}>{item.t}</h3>
-                    
-                    <p style={{ 
-                      fontSize: 17, 
-                      color: '#475569', 
-                      lineHeight: 1.8, 
-                      margin: 0, 
-                      maxWidth: '100%',
-                      fontWeight: 300
-                    }}>{item.d}</p>
-                  </div>
+                <div style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: 20,
+                  background: 'linear-gradient(135deg, var(--accent-gold), #c9822a)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 32,
+                  color: '#fff',
+                  boxShadow: '0 10px 20px rgba(223, 151, 56, 0.2)'
+                }}>
+                  {React.cloneElement(item.icon, { size: 24 })}
                 </div>
 
-                {/* Gold Frame (On Hover) */}
-                <div style={{ 
-                  position: 'absolute',
-                  inset: 20,
-                  border: '1px solid rgba(223, 151, 56, 0.3)',
-                  opacity: 0,
-                  transition: '0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                  pointerEvents: 'none'
-                }} className="card-frame" />
+                <div style={{
+                  fontSize: 11,
+                  fontWeight: 900,
+                  color: 'var(--accent-gold)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.2em',
+                  marginBottom: 12
+                }}>
+                  Premium Benefit
+                </div>
+
+                <h3 style={{
+                  fontSize: 22,
+                  fontWeight: 800,
+                  color: 'var(--accent)',
+                  marginBottom: 20,
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.01em'
+                }}>
+                  {item.t}
+                </h3>
+
+                <p style={{
+                  fontSize: 15,
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.6,
+                  margin: 0
+                }}>
+                  {item.d}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -468,15 +446,15 @@ export default function AboutPage() {
       {/* New Section: Core Philosophy & Mission */}
       <section style={{ position: 'relative', padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd', overflow: 'hidden' }}>
         {/* Decorative Floating Ring */}
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             y: [0, -20, 0],
             rotate: [0, 5, 0]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          style={{ position: 'absolute', top: '10%', left: '-5%', width: 400, height: 400, border: '1px solid rgba(223, 151, 56, 0.1)', borderRadius: '50%', zIndex: 0 }} 
+          style={{ position: 'absolute', top: '10%', left: '-5%', width: 400, height: 400, border: '1px solid rgba(223, 151, 56, 0.1)', borderRadius: '50%', zIndex: 0 }}
         />
-        
+
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
             <motion.div
@@ -533,79 +511,134 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* New Section: Fleet Excellence & Maintenance */}
-      <section style={{ 
-        position: 'relative', 
-        padding: isMobile ? '80px 24px' : '160px 64px', 
-        background: '#fafaf5', 
-        overflow: 'hidden' 
+      <section style={{
+        position: 'relative',
+        padding: isMobile ? '80px 24px' : '120px 64px',
+        backgroundColor: '#fff',
+        color: 'var(--text-primary)',
+        overflow: 'hidden'
       }}>
-        {/* Decorative Grid Pattern */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'radial-gradient(rgba(223, 151, 56, 0.1) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          opacity: 0.5,
-          zIndex: 0
-        }} />
-        
         <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: 120, position: 'relative', zIndex: 1 }}
-          >
-            <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Technical Mastery</div>
-            <h2 style={{ fontSize: isMobile ? 36 : 72, fontWeight: 500, color: 'var(--accent)', marginBottom: 24, fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' }}>
-              The Science of <span style={{ color: 'var(--accent-gold)', fontStyle: 'italic' }}>Maintenance</span>
-            </h2>
-            <p style={{ maxWidth: 750, margin: '0 auto', color: '#64748b', fontSize: 17, lineHeight: 1.8, fontWeight: 300 }}>
-              Our vehicles are precision-engineered assets, maintained by elite master technicians to ensure every engine purrs and every interior remains pristine.
-            </p>
-          </motion.div>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: 'center',
+            gap: isMobile ? 48 : 100,
+            marginBottom: isMobile ? 64 : 100
+          }}>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ flex: 1 }}
+            >
+              <span style={{
+                fontSize: 12,
+                fontWeight: 900,
+                color: 'var(--accent-gold)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.4em',
+                display: 'block',
+                marginBottom: 20
+              }}>
+                Technical Mastery
+              </span>
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: isMobile ? 36 : 64,
+                fontWeight: 900,
+                color: 'var(--accent)',
+                margin: '0 0 32px',
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em'
+              }}>
+                The Science of <br />
+                <span style={{ color: 'var(--accent-gold)' }}>Maintenance</span>
+              </h2>
+              <p style={{
+                fontSize: 18,
+                color: 'var(--text-secondary)',
+                lineHeight: 1.7,
+                maxWidth: 700,
+                margin: 0
+              }}>
+                Our vehicles are precision-engineered assets, maintained by elite master technicians to ensure every engine purrs and every interior remains pristine.
+              </p>
+            </motion.div>
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 32 }}>
             {[
-              { t: "Meticulous Detailing", d: "A multi-stage cleaning process that restores each vehicle to showroom condition after every journey.", icon: "✨" },
-              { t: "Performance Testing", d: "Advanced diagnostic checks to ensure optimal braking, suspension, and engine performance at all times.", icon: "⚙️" },
-              { t: "Premium Amenities", d: "We equip our premium collection with complimentary WiFi, refreshments, and modern climate controls.", icon: "🧊" }
+              { t: "Meticulous Detailing", d: "A multi-stage cleaning process that restores each vehicle to showroom condition after every journey.", icon: <Heart size={24} /> },
+              { t: "Performance Testing", d: "Advanced diagnostic checks to ensure optimal braking, suspension, and engine performance at all times.", icon: <Shield size={24} /> },
+              { t: "Premium Amenities", d: "We equip our premium collection with complimentary WiFi, refreshments, and modern climate controls.", icon: <Award size={24} /> }
             ].map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="mastery-card"
-                style={{ 
-                  padding: isMobile ? 40 : 64, 
-                  background: '#fff', 
-                  borderRadius: 32, 
-                  border: '1px solid #f1f5f9', 
-                  transition: '0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  zIndex: 1,
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.02)'
+                transition={{ delay: i * 0.1 }}
+                style={{
+                  padding: '48px 40px',
+                  borderRadius: 32,
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-color)',
+                  cursor: 'pointer',
+                  transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+                whileHover={{
+                  y: -12,
+                  background: '#fff',
+                  borderColor: 'var(--accent-gold)',
+                  boxShadow: '0 30px 60px rgba(0,0,0,0.06)'
                 }}
               >
-                <div style={{ fontSize: 48, marginBottom: 40, color: 'var(--accent-gold)', fontWeight: 100 }}>{item.icon}</div>
-                <h3 style={{ fontSize: isMobile ? 24 : 32, fontWeight: 500, color: 'var(--accent)', marginBottom: 20, fontFamily: "'Playfair Display', serif" }}>{item.t}</h3>
-                <p style={{ fontSize: 16, color: '#64748b', lineHeight: 1.7, margin: 0, fontWeight: 300 }}>{item.d}</p>
-                
-                <div style={{ 
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: 2,
-                  background: 'var(--accent-gold)',
-                  transform: 'scaleX(0)',
-                  transformOrigin: 'left',
-                  transition: '0.7s cubic-bezier(0.16, 1, 0.3, 1)'
-                }} className="card-accent-bar" />
+                <div style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: 20,
+                  background: 'linear-gradient(135deg, var(--accent-gold), #c9822a)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 32,
+                  color: '#fff',
+                  boxShadow: '0 10px 20px rgba(223, 151, 56, 0.2)'
+                }}>
+                  {item.icon}
+                </div>
+
+                <div style={{
+                  fontSize: 11,
+                  fontWeight: 900,
+                  color: 'var(--accent-gold)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.2em',
+                  marginBottom: 12
+                }}>
+                  Excellence Standard
+                </div>
+
+                <h3 style={{
+                  fontSize: 22,
+                  fontWeight: 800,
+                  color: 'var(--accent)',
+                  marginBottom: 20,
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.01em'
+                }}>
+                  {item.t}
+                </h3>
+
+                <p style={{
+                  fontSize: 15,
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.6,
+                  margin: 0
+                }}>
+                  {item.d}
+                </p>
               </motion.div>
             ))}
           </div>
