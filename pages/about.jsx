@@ -46,17 +46,17 @@ export default function AboutPage() {
   )
 
   const initialBenefits = [
-    { col: 'span 4', icon: <Users />, img: '/assets/wide.jpg', t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
-    { col: 'span 2', icon: <Award />, img: '/assets/dobn.jpg', t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
-    { col: 'span 2', icon: <CheckCircle2 />, img: '/assets/supportog.jpg', t: "Exceptional Service", d: "Ensuring your experience is smooth and enjoyable." },
-    { col: 'span 2', icon: <MapPin />, img: '/assets/dansoman.jpg', t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible." },
-    { col: 'span 2', icon: <Shield />, img: '/assets/transparent.jpg', t: "Transparent Policies", d: "No hidden fees—just clear terms." }
+    { col: 'span 4', icon: <Users />, t: "Wide Range of Vehicles", d: "From sleek sedans and spacious SUVs to rugged 4x4s and comfortable minivans." },
+    { col: 'span 2', icon: <Award />, t: "Affordable Pricing", d: "Competitive rates with flexible rental options." },
+    { col: 'span 2', icon: <CheckCircle2 />, t: "Exceptional Service", d: "Ensuring your experience is smooth and enjoyable." },
+    { col: 'span 2', icon: <MapPin />, t: "Convenient Location", d: "Situated in Dansoman, we are easily accessible." },
+    { col: 'span 2', icon: <Shield />, t: "Transparent Policies", d: "No hidden fees—just clear terms." }
   ]
 
   const extraBenefits = [
-    { col: 'span 2', icon: <Shield />, img: '/assets/247.jpg', t: "24/7 Roadside Assistance", d: "Support wherever your journey takes you." },
-    { col: 'span 2', icon: <Users />, img: '/assets/chaffer.png', t: "Vetted Chauffeurs", d: "Extensively trained in executive protocol." },
-    { col: 'span 2', icon: <CheckCircle2 />, img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200', t: "Seamless Digital Booking", d: "Manage reservations effortlessly online." }
+    { col: 'span 2', icon: <Shield />, t: "24/7 Roadside Assistance", d: "Support wherever your journey takes you." },
+    { col: 'span 2', icon: <Users />, t: "Vetted Chauffeurs", d: "Extensively trained in executive protocol." },
+    { col: 'span 2', icon: <CheckCircle2 />, t: "Seamless Digital Booking", d: "Manage reservations effortlessly online." }
   ]
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function AboutPage() {
         right: '50%',
         marginLeft: '-50vw',
         marginRight: '-50vw',
-        minHeight: isMobile ? 'auto' : '85vh',
+        minHeight: isMobile ? '60vh' : '85vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -91,21 +91,21 @@ export default function AboutPage() {
         backgroundColor: '#0a0a0c',
         color: '#fff',
         textAlign: 'center',
-        padding: isMobile ? '80px 0 0' : '100px 64px',
+        padding: isMobile ? '0' : '100px 64px',
         overflow: 'hidden'
       }}>
         {/* background image */}
         <img
-          src={isMobile ? "/assets/heroabout2.jpg" : "/assets/heroabout.jpg"}
+          src="/assets/ab0ut.jpeg"
           alt="Hero"
           style={{
-            position: isMobile ? 'relative' : 'absolute',
+            position: 'absolute',
             inset: 0,
             width: '100%',
-            height: isMobile ? 'auto' : '100%',
-            objectFit: isMobile ? 'contain' : 'cover',
+            height: '100%',
+            objectFit: 'cover',
             /* push the image down more so faces are visible behind the heading */
-            objectPosition: isMobile ? 'center center' : 'center 75%',
+            objectPosition: 'center center',
             zIndex: 0,
             display: 'block'
           }}
@@ -123,8 +123,8 @@ export default function AboutPage() {
           style={{
             maxWidth: 800,
             zIndex: 2,
-            position: isMobile ? 'absolute' : 'relative',
-            padding: isMobile ? '24px' : '0'
+            position: 'relative',
+            padding: isMobile ? '80px 24px 40px' : '0'
           }}
         >
           <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(223, 151, 56, 0.15)', border: '1px solid var(--accent-gold)', borderRadius: 999, marginBottom: 24, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
@@ -159,102 +159,153 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Immersive Elite Tiles - Why Choose Atlas */}
-      <section style={{ padding: isMobile ? '60px 20px' : '120px 64px 80px', background: '#fff' }}>
+      <section style={{ 
+        position: 'relative',
+        padding: isMobile ? '80px 24px' : '160px 64px 120px', 
+        background: '#fcfcfd',
+        overflow: 'hidden'
+      }}>
+        {/* Soft Gold Mesh Background */}
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-5%',
+          width: '60%',
+          height: '80%',
+          background: 'radial-gradient(circle at center, rgba(223, 151, 56, 0.04) 0%, transparent 70%)',
+          filter: 'blur(100px)',
+          zIndex: 0
+        }} />
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
 
           {/* Redesigned Asymmetric Title */}
-          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? 20 : 40, marginBottom: isMobile ? 40 : 80 }}>
-            <div style={{ width: 4, height: isMobile ? 40 : 80, background: 'var(--accent-gold)' }} />
-            <div>
-              <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 8 }}>The Atlas Advantage</div>
-              <h2 style={{ fontSize: isMobile ? 32 : 64, fontWeight: 900, color: 'var(--accent)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
-                Why Choose <br /> <span style={{ color: 'var(--accent-gold)' }}>The Atlas Experience</span>?
-              </h2>
+          <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: isMobile ? 24 : 40, marginBottom: 100 }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: isMobile ? 20 : 40, position: 'relative' }}>
+              <div style={{ width: 4, height: isMobile ? 40 : 80, background: 'var(--accent-gold)' }} />
+              <div>
+                <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>The Atlas Advantage</div>
+                <h2 style={{ fontSize: isMobile ? 36 : 72, fontWeight: 600, color: 'var(--accent)', letterSpacing: '-0.02em', lineHeight: 1.1, fontFamily: "'Playfair Display', serif" }}>
+                  Why Choose <br /> <span style={{ color: 'var(--accent-gold)', fontStyle: 'italic' }}>The Atlas Experience</span>?
+                </h2>
+              </div>
+              {/* Decorative Accent Line */}
+              {!isMobile && (
+                <div style={{ position: 'absolute', top: 40, right: -150, width: 120, height: 1, background: 'linear-gradient(to right, var(--accent-gold), transparent)' }} />
+              )}
             </div>
-          </div>            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'minmax(280px, auto)' : '350px', gap: 24 }}>
+            <p style={{ maxWidth: 450, color: '#64748b', fontSize: 17, lineHeight: 1.8, marginBottom: 12, fontWeight: 300 }}>
+              We've redefined mobility by merging elite automotive performance with personalized concierge attention.
+            </p>
+          </div>
+
+          <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(6, 1fr)', gridAutoRows: isMobile ? 'auto' : '320px', gap: 24, zIndex: 1 }}>
             {(showAllBenefits ? [...initialBenefits, ...extraBenefits] : initialBenefits).map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={!isMobile ? { y: -12 } : {}}
-                className="benefit-tile group"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -10 }}
+                className="liquid-glass-card group"
                 style={{
-                  gridColumn: isMobile ? 'span 6' : item.col,
+                  gridColumn: isMobile ? 'span 6' : (i === 0 || i === 3 ? 'span 3' : 'span 3'),
+                  gridRow: isMobile ? 'auto' : (i === 0 ? 'span 2' : 'span 1'),
                   position: 'relative',
-                  borderRadius: 32,
+                  borderRadius: 40,
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(40px)',
+                  WebkitBackdropFilter: 'blur(40px)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  padding: isMobile ? 40 : 60,
+                  cursor: 'pointer',
                   overflow: 'hidden',
-                  background: '#0a0a0c',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  cursor: 'pointer'
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  boxShadow: '0 20px 80px rgba(36, 39, 111, 0.05)'
                 }}
               >
                 {/* Liquid Shine Effect */}
-                <div className="shine-sweep" />
+                <div style={{ 
+                  position: 'absolute', 
+                  top: '-100%', 
+                  left: '-100%', 
+                  width: '300%', 
+                  height: '300%', 
+                  background: 'conic-gradient(from 0deg, transparent, rgba(223, 151, 56, 0.1), transparent)',
+                  opacity: 0,
+                  transition: '0.8s',
+                  zIndex: 0
+                }} className="glass-shine" />
 
-                {/* Glassmorphic Icon Badge */}
-                <div style={{
-                  position: 'absolute',
-                  top: 24,
-                  left: 24,
-                  width: 48,
-                  height: 48,
-                  borderRadius: 16,
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 2,
-                  color: 'var(--accent-gold)'
-                }}>
-                  {React.cloneElement(item.icon, { size: 20, strokeWidth: 1.5 })}
-                </div>
-
-                {item.t === "Wide Range of Vehicles" && (
+                <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  {/* Icon with Refraction */}
                   <div style={{
-                    position: 'absolute',
-                    top: 24,
-                    right: 24,
-                    padding: '6px 12px',
-                    background: 'linear-gradient(135deg, var(--accent-gold), #f59e0b)',
-                    color: '#fff',
-                    fontSize: 10,
-                    fontWeight: 900,
-                    borderRadius: 99,
-                    textTransform: 'uppercase',
-                    letterSpacing: 1,
-                    zIndex: 2,
-                    boxShadow: '0 10px 20px rgba(223, 151, 56, 0.3)'
-                  }}>
-                    Platinum Choice
+                    width: i === 0 ? 120 : 80,
+                    height: i === 0 ? 120 : 80,
+                    borderRadius: 32,
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 40,
+                    color: 'var(--accent-gold)',
+                    border: '1px solid rgba(255, 255, 255, 0.8)',
+                    boxShadow: '0 10px 30px rgba(223, 151, 56, 0.15)',
+                    transition: '0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }} className="icon-refraction">
+                    {React.cloneElement(item.icon, { size: i === 0 ? 48 : 32, strokeWidth: 1 })}
                   </div>
-                )}
 
-                <img
-                  src={item.img}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, transition: 'transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)' }}
-                  className="tile-img"
-                  alt={item.t}
-                />
+                  <div style={{ textAlign: 'left' }}>
+                    {item.t === "Wide Range of Vehicles" && (
+                      <div style={{
+                        display: 'inline-block',
+                        padding: '6px 0',
+                        color: 'var(--accent-gold)',
+                        fontSize: 10,
+                        fontWeight: 900,
+                        textTransform: 'uppercase',
+                        letterSpacing: 4,
+                        marginBottom: 20,
+                        borderBottom: '2px solid var(--accent-gold)'
+                      }}>
+                        Featured Excellence
+                      </div>
+                    )}
 
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(10, 10, 12, 1) 0%, rgba(10, 10, 12, 0.3) 50%, transparent 100%)',
-                  padding: 32,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  zIndex: 1
-                }}>
-                  <h3 style={{ fontSize: isMobile ? 20 : 24, fontWeight: 900, color: '#fff', marginBottom: 8, letterSpacing: '-0.02em' }}>{item.t}</h3>
-                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
+                    <h3 style={{ 
+                      fontSize: isMobile ? 24 : (i === 0 ? 48 : 32), 
+                      fontWeight: 600, 
+                      color: 'var(--accent)', 
+                      marginBottom: 24, 
+                      fontFamily: "'Playfair Display', serif",
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.1
+                    }}>{item.t}</h3>
+                    
+                    <p style={{ 
+                      fontSize: 17, 
+                      color: '#475569', 
+                      lineHeight: 1.8, 
+                      margin: 0, 
+                      maxWidth: '100%',
+                      fontWeight: 300
+                    }}>{item.d}</p>
+                  </div>
                 </div>
+
+                {/* Gold Frame (On Hover) */}
+                <div style={{ 
+                  position: 'absolute',
+                  inset: 20,
+                  border: '1px solid rgba(223, 151, 56, 0.3)',
+                  opacity: 0,
+                  transition: '0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                  pointerEvents: 'none'
+                }} className="card-frame" />
               </motion.div>
             ))}
           </div>
@@ -284,11 +335,26 @@ export default function AboutPage() {
         </div>
 
         <style jsx>{`
-            .benefit-tile:hover .tile-img {
-              transform: scale(1.1) rotate(-1deg);
+            .liquid-glass-card:hover {
+              border-color: var(--accent-gold);
+              background: rgba(255, 255, 255, 0.6);
             }
-            .benefit-tile:hover .shine-sweep {
-              left: 100%;
+            .liquid-glass-card:hover .glass-shine {
+              opacity: 1;
+              transform: rotate(45deg) translate(50%, 50%);
+            }
+            .liquid-glass-card:hover .icon-refraction {
+              transform: scale(1.1) rotate(5deg);
+              background: #fff;
+              box-shadow: 0 20px 40px rgba(223, 151, 56, 0.3);
+            }
+            .mastery-card:hover {
+              border-color: var(--accent);
+              box-shadow: 0 40px 80px rgba(36, 39, 111, 0.1);
+              transform: translateY(-16px);
+            }
+            .mastery-card:hover .card-accent-bar {
+              transform: scaleX(1);
             }
             .shine-sweep {
               position: absolute;
@@ -317,8 +383,25 @@ export default function AboutPage() {
       </section>
 
       {/* New Section: The Atlas Narrative */}
-      <section style={{ padding: isMobile ? '40px 24px' : '80px 64px', background: '#fff' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <section style={{ position: 'relative', padding: isMobile ? '60px 24px' : '120px 64px', background: '#fff', overflow: 'hidden' }}>
+        {/* Background Watermark */}
+        {!isMobile && (
+          <div style={{
+            position: 'absolute',
+            bottom: -50,
+            right: -100,
+            fontSize: 280,
+            fontWeight: 900,
+            color: 'rgba(36, 39, 111, 0.02)',
+            zIndex: 0,
+            userSelect: 'none',
+            whiteSpace: 'nowrap',
+            fontFamily: 'Inter'
+          }}>
+            ATLAS
+          </div>
+        )}
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.2fr 0.8fr', gap: isMobile ? 40 : 80, alignItems: 'flex-start' }}>
 
             {/* Left Column: Topic & Main Narrative */}
@@ -383,8 +466,18 @@ export default function AboutPage() {
       {/* New Section: Core Philosophy & Mission */}
 
       {/* New Section: Core Philosophy & Mission */}
-      <section style={{ padding: isMobile ? '40px 24px 80px' : '80px 64px 120px', background: '#fcfcfd' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <section style={{ position: 'relative', padding: isMobile ? '80px 24px' : '160px 64px', background: '#fcfcfd', overflow: 'hidden' }}>
+        {/* Decorative Floating Ring */}
+        <motion.div 
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          style={{ position: 'absolute', top: '10%', left: '-5%', width: 400, height: 400, border: '1px solid rgba(223, 151, 56, 0.1)', borderRadius: '50%', zIndex: 0 }} 
+        />
+        
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 60 : 100, alignItems: 'center' }}>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -441,18 +534,35 @@ export default function AboutPage() {
       </section>
 
       {/* New Section: Fleet Excellence & Maintenance */}
-      <section style={{ padding: isMobile ? '80px 24px' : '160px 64px', background: '#fff', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+      <section style={{ 
+        position: 'relative', 
+        padding: isMobile ? '80px 24px' : '160px 64px', 
+        background: '#fafaf5', 
+        overflow: 'hidden' 
+      }}>
+        {/* Decorative Grid Pattern */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'radial-gradient(rgba(223, 151, 56, 0.1) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+          opacity: 0.5,
+          zIndex: 0
+        }} />
+        
+        <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: 80 }}
+            style={{ textAlign: 'center', marginBottom: 120, position: 'relative', zIndex: 1 }}
           >
-            <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 16 }}>Technical Mastery</div>
-            <h2 style={{ fontSize: isMobile ? 32 : 54, fontWeight: 900, color: 'var(--accent)', marginBottom: 24 }}>The Science of <span style={{ fontStyle: 'italic', fontWeight: 400 }}>Maintenance</span></h2>
-            <p style={{ maxWidth: 700, margin: '0 auto', color: '#64748b', fontSize: 16, lineHeight: 1.8 }}>
-              Our vehicles aren't just cars; they are precision-engineered assets. Our in-house team of master technicians ensures every engine purrs and every leather seat is pristine.
+            <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '0.4em', marginBottom: 24 }}>Technical Mastery</div>
+            <h2 style={{ fontSize: isMobile ? 36 : 72, fontWeight: 500, color: 'var(--accent)', marginBottom: 24, fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' }}>
+              The Science of <span style={{ color: 'var(--accent-gold)', fontStyle: 'italic' }}>Maintenance</span>
+            </h2>
+            <p style={{ maxWidth: 750, margin: '0 auto', color: '#64748b', fontSize: 17, lineHeight: 1.8, fontWeight: 300 }}>
+              Our vehicles are precision-engineered assets, maintained by elite master technicians to ensure every engine purrs and every interior remains pristine.
             </p>
           </motion.div>
 
@@ -468,12 +578,34 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
-                whileHover={{ scale: 1.02 }}
-                style={{ padding: 48, background: '#f8fafc', borderRadius: 24, border: '1px solid #f1f5f9', transition: '0.4s' }}
+                className="mastery-card"
+                style={{ 
+                  padding: isMobile ? 40 : 64, 
+                  background: '#fff', 
+                  borderRadius: 32, 
+                  border: '1px solid #f1f5f9', 
+                  transition: '0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  zIndex: 1,
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.02)'
+                }}
               >
-                <div style={{ fontSize: 40, marginBottom: 24 }}>{item.icon}</div>
-                <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--accent)', marginBottom: 16 }}>{item.t}</h3>
-                <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{item.d}</p>
+                <div style={{ fontSize: 48, marginBottom: 40, color: 'var(--accent-gold)', fontWeight: 100 }}>{item.icon}</div>
+                <h3 style={{ fontSize: isMobile ? 24 : 32, fontWeight: 500, color: 'var(--accent)', marginBottom: 20, fontFamily: "'Playfair Display', serif" }}>{item.t}</h3>
+                <p style={{ fontSize: 16, color: '#64748b', lineHeight: 1.7, margin: 0, fontWeight: 300 }}>{item.d}</p>
+                
+                <div style={{ 
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: 2,
+                  background: 'var(--accent-gold)',
+                  transform: 'scaleX(0)',
+                  transformOrigin: 'left',
+                  transition: '0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                }} className="card-accent-bar" />
               </motion.div>
             ))}
           </div>

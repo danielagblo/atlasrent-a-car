@@ -43,7 +43,7 @@ const HUBS = [
     reviews: 25,
     category: 'Car leasing service',
     address: 'Dansoman Estate, Accra, Ghana',
-    phone: '+233 30 230 1081 / +233 20 211 7122',
+    phone: '+233 30 230 1081 / +233 20 222 5878',
     coords: [5.5585636, -0.2629432],
     photoUrl: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAFWn5jGRDXYe_mIDuShwFzlFUMpZisNCJt4gKHJ-pElmvGSKB4Co7B8YZmHat53CyGjnjHH0W6bX1jU7FI5NdkhMcLp3NhQzgMxFgSwK6334O7udVwHktufJL6QlX06syuNr7opyw=s1600',
     googleMapsUrl: 'https://www.google.com/maps/place/Atlas+Rent-A-Car/@5.5585689,-0.2655181,17z'
@@ -69,7 +69,7 @@ export default function ContactPage() {
     if (typeof window !== 'undefined') {
       const leaflet = require('leaflet')
       import('leaflet/dist/leaflet.css')
-      
+
       delete leaflet.Icon.Default.prototype._getIconUrl
       leaflet.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -276,13 +276,13 @@ export default function ContactPage() {
         <section style={{ padding: '0 20px', marginBottom: isMobile ? 60 : 100 }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', background: '#fff', borderRadius: 24, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 340px', height: isMobile ? 'auto' : 600 }}>
-              
+
               {/* The Map */}
               <div style={{ height: isMobile ? 350 : '100%', background: '#f8fafc', position: 'relative' }}>
                 {L && (
-                  <MapContainer 
-                    center={[5.8, -1.0]} 
-                    zoom={isMobile ? 7 : 8} 
+                  <MapContainer
+                    center={[5.8, -1.0]}
+                    zoom={isMobile ? 7 : 8}
                     style={{ height: '100%', width: '100%', zIndex: 1 }}
                     scrollWheelZoom={false}
                   >
@@ -294,23 +294,23 @@ export default function ContactPage() {
                       <Marker key={idx} position={hub.coords}>
                         <Popup minWidth={300}>
                           <div style={{ padding: 0 }}>
-                             <img 
-                               src={hub.photoUrl}
-                               style={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 8, marginBottom: 12 }}
-                               alt={hub.title}
-                             />
-                             <div style={{ padding: '0 8px 8px' }}>
-                               <div style={{ fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>{hub.city}</div>
-                               <div style={{ fontSize: 13, color: '#64748b', marginBottom: 12 }}>{hub.address}</div>
-                               <a 
-                                 href={hub.googleMapsUrl} 
-                                 target="_blank" 
-                                 rel="noopener noreferrer"
-                                 style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--accent-gold)', fontWeight: 700, textDecoration: 'none', fontSize: 12 }}
-                               >
-                                 Open in Google Maps <ArrowUpRight size={14} />
-                               </a>
-                             </div>
+                            <img
+                              src={hub.photoUrl}
+                              style={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 8, marginBottom: 12 }}
+                              alt={hub.title}
+                            />
+                            <div style={{ padding: '0 8px 8px' }}>
+                              <div style={{ fontWeight: 800, color: 'var(--accent)', marginBottom: 4 }}>{hub.city}</div>
+                              <div style={{ fontSize: 13, color: '#64748b', marginBottom: 12 }}>{hub.address}</div>
+                              <a
+                                href={hub.googleMapsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--accent-gold)', fontWeight: 700, textDecoration: 'none', fontSize: 12 }}
+                              >
+                                Open in Google Maps <ArrowUpRight size={14} />
+                              </a>
+                            </div>
                           </div>
                         </Popup>
                       </Marker>
@@ -322,80 +322,80 @@ export default function ContactPage() {
 
               {/* Hub Discovery List */}
               <div style={{ padding: isMobile ? 32 : 40, background: '#fff', overflowY: 'auto' }}>
-                 <h3 style={{ fontSize: 22, fontWeight: 900, marginBottom: 32, color: 'var(--accent)', letterSpacing: '-0.02em' }}>Atlas Rent-a-Car Branches</h3>
-                 <div style={{ display: 'grid', gap: 48 }}>
-                    {HUBS.map((hub, i) => (
-                      <div key={i} style={{ borderBottom: i === HUBS.length - 1 ? 'none' : '1px solid #f1f5f9', paddingBottom: i === HUBS.length - 1 ? 0 : 40 }}>
-                        <div style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
-                           {/* The Photographic Thumbnail */}
-                           <div style={{ width: 100, height: 100, borderRadius: 16, overflow: 'hidden', flexShrink: 0, background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                             <img 
-                               src={hub.photoUrl}
-                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                               alt={hub.title}
-                             />
-                           </div>
-                           <div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                                <h4 style={{ fontSize: 18, fontWeight: 800, color: 'var(--accent)', margin: 0 }}>{hub.title}</h4>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent)' }}>{hub.rating}</span>
-                                <div style={{ display: 'flex', gap: 1 }}>
-                                  {[...Array(5)].map((_, i) => (
-                                    <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill={i < Math.floor(hub.rating) ? "var(--accent-gold)" : "#e2e8f0"}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                  ))}
-                                </div>
-                                <span style={{ fontSize: 12, color: '#64748b' }}>({hub.reviews})</span>
-                              </div>
-                              <div style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>{hub.category}</div>
-                              {hub.status && <div style={{ fontSize: 12, color: '#059669', fontWeight: 700, marginTop: 4 }}>{hub.status} · <span style={{ color: '#64748b' }}>{hub.city.split(' ')[0]}</span></div>}
-                           </div>
+                <h3 style={{ fontSize: 22, fontWeight: 900, marginBottom: 32, color: 'var(--accent)', letterSpacing: '-0.02em' }}>Atlas Rent-a-Car Branches</h3>
+                <div style={{ display: 'grid', gap: 48 }}>
+                  {HUBS.map((hub, i) => (
+                    <div key={i} style={{ borderBottom: i === HUBS.length - 1 ? 'none' : '1px solid #f1f5f9', paddingBottom: i === HUBS.length - 1 ? 0 : 40 }}>
+                      <div style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
+                        {/* The Photographic Thumbnail */}
+                        <div style={{ width: 100, height: 100, borderRadius: 16, overflow: 'hidden', flexShrink: 0, background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                          <img
+                            src={hub.photoUrl}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            alt={hub.title}
+                          />
                         </div>
-
-                        <div style={{ display: 'grid', gap: 12 }}>
-                           <div style={{ display: 'flex', gap: 12 }}>
-                             <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#000', marginTop: 8, flexShrink: 0 }} />
-                             <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5 }}>
-                               <span style={{ fontWeight: 800 }}>Address: </span> {hub.address}
-                             </div>
-                           </div>
-                           <div style={{ display: 'flex', gap: 12 }}>
-                             <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#000', marginTop: 8, flexShrink: 0 }} />
-                              <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5, display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ fontWeight: 800 }}>Phone: </span> 
-                                {hub.phone.split('/').map((p, idx) => (
-                                  <a key={idx} href={`tel:${p.replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 600 }}>{p.trim()}</a>
-                                ))}
-                              </div>
-                           </div>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                            <h4 style={{ fontSize: 18, fontWeight: 800, color: 'var(--accent)', margin: 0 }}>{hub.title}</h4>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent)' }}>{hub.rating}</span>
+                            <div style={{ display: 'flex', gap: 1 }}>
+                              {[...Array(5)].map((_, i) => (
+                                <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill={i < Math.floor(hub.rating) ? "var(--accent-gold)" : "#e2e8f0"}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                              ))}
+                            </div>
+                            <span style={{ fontSize: 12, color: '#64748b' }}>({hub.reviews})</span>
+                          </div>
+                          <div style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>{hub.category}</div>
+                          {hub.status && <div style={{ fontSize: 12, color: '#059669', fontWeight: 700, marginTop: 4 }}>{hub.status} · <span style={{ color: '#64748b' }}>{hub.city.split(' ')[0]}</span></div>}
                         </div>
-
-                        <a 
-                          href={hub.googleMapsUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          style={{ 
-                            marginTop: 20,
-                            fontSize: 12, 
-                            fontWeight: 800, 
-                            color: 'var(--accent)', 
-                            textDecoration: 'none', 
-                            display: 'inline-flex', 
-                            alignItems: 'center', 
-                            gap: 8,
-                            padding: '10px 20px',
-                            background: '#f8fafc',
-                            borderRadius: 99,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em'
-                          }}
-                        >
-                          Navigate <ArrowUpRight size={14} color="var(--accent-gold)" />
-                        </a>
                       </div>
-                    ))}
-                 </div>
+
+                      <div style={{ display: 'grid', gap: 12 }}>
+                        <div style={{ display: 'flex', gap: 12 }}>
+                          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#000', marginTop: 8, flexShrink: 0 }} />
+                          <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5 }}>
+                            <span style={{ fontWeight: 800 }}>Address: </span> {hub.address}
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: 12 }}>
+                          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#000', marginTop: 8, flexShrink: 0 }} />
+                          <div style={{ fontSize: 14, color: '#000', lineHeight: 1.5, display: 'flex', flexDirection: 'column' }}>
+                            <span style={{ fontWeight: 800 }}>Phone: </span>
+                            {hub.phone.split('/').map((p, idx) => (
+                              <a key={idx} href={`tel:${p.replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 600 }}>{p.trim()}</a>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <a
+                        href={hub.googleMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          marginTop: 20,
+                          fontSize: 12,
+                          fontWeight: 800,
+                          color: 'var(--accent)',
+                          textDecoration: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '10px 20px',
+                          background: '#f8fafc',
+                          borderRadius: 99,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em'
+                        }}
+                      >
+                        Navigate <ArrowUpRight size={14} color="var(--accent-gold)" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
