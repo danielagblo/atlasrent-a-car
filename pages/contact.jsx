@@ -56,7 +56,7 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [L, setL] = useState(null)
   const [settings, setSettings] = useState({
-    supportPhone: '+233 30 230 1081 / +233 20 211 7122',
+    supportPhone: '+233 30 230 1081 / +233 20 222 5878',
     headquarters: 'Dansoman, Accra, Ghana',
     adminEmail: 'contact@atlasrent-a-car.com'
   })
@@ -84,7 +84,7 @@ export default function ContactPage() {
       .then(data => {
         if (data) {
           setSettings({
-            supportPhone: data.supportPhone || '+233 30 230 1081 / +233 20 211 7122',
+            supportPhone: data.supportPhone || '+233 30 230 1081 / +233 20 222 5878',
             headquarters: data.headquarters || 'Dansoman, Accra, Ghana',
             adminEmail: data.adminEmail || 'contact@atlasrent-a-car.com'
           })
