@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Layout from '../components/Layout'
 import Link from 'next/link'
-import { Heart, CheckCircle2, MapPin, Users, Award, Shield, ArrowRight } from 'lucide-react'
+import { Heart, CheckCircle2, MapPin, Users, Award, Shield, ArrowRight, Briefcase, GraduationCap, Scale } from 'lucide-react'
 
 import { getTeam } from '../lib/siteContentApi'
 
@@ -11,6 +11,55 @@ export default function AboutPage() {
   const [showAllBenefits, setShowAllBenefits] = useState(false)
   const [teamItems, setTeamItems] = useState([])
   const [selectedPerson, setSelectedPerson] = useState(null)
+  
+  const boardMembers = [
+    {
+      name: "Mr. Felix Gyekye",
+      role: "Chairperson",
+      bio: (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <span>Mr. Felix Gyekye chairs the Board of Atlas. He is a chartered accountant and banker by profession. He currently is the Chief Executive Officer(CEO) of the following companies;</span>
+          <div style={{ paddingLeft: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {["Cardinal Petroleum", "Petrobay Ghana."].map((item, idx) => (
+              <div key={idx} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-gold)', flexShrink: 0 }} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+          <span>He sits on the following Boards;</span>
+          <div style={{ paddingLeft: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {["Glory Oil Ltd", "Sage Petroleum", "Quantum Terminal", "Sahel Sahara Bank"].map((item, idx) => (
+              <div key={idx} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-gold)', flexShrink: 0 }} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+          <span>Prior to these, he worked with KPMG as an accountant/auditor and went on to work with Standard Chartered Ghana as the Chief Finance Officer (CFO) and then as Vice President, Standard Chartered USA</span>
+        </div>
+      ),
+      icon: <Briefcase size={24} />
+    },
+    {
+      name: "Mr. Kojo Addae-Mensah",
+      role: "Member",
+      bio: `Mr. Addae-Mensah was appointed as a member of the Board of Atlas Rent A Car in 2012. He is a banker by profession. He is currently the CEO of databank. He was the Chief Operating Officer (COO) at Ghana Commercial Bank ltd. He was appointed the COO in January 2012. Before his appointment he had worked diligently as the Chief Operating Officer at Barclays Bank Ghana Ltd from January 2009 to January 2012. Prior to Barclays Bank Ghana as the COO, he worked with Standard Chartered Bank in several capacities. He went to the University of Ghana, Legon. He serves on the Board of Atlas, Changing life's Endowment Fund, and Databank Balance Fund.`,
+      icon: <Award size={24} />
+    },
+    {
+      name: "Mr. Kenerick Akwasi Marfo",
+      role: "A.G. Managing",
+      bio: `Mr. Akwasi holds B.Sc. Degree in Biochemistry from the Kwame Nkrumah University Science and Technology, and Entrepreneurial Management Certificate from EMPRETEC. He has over ten years working experience in the transport service business, having founded Atlas-Rent-A-Car in 2003. Akwasi manages staff strength of 36 and has a hands-on approach to managing the company. He is also a director of Optimal Microfinance Ltd,a bank of Ghana licensed microfinance company.`,
+      icon: <GraduationCap size={24} />
+    },
+    {
+      name: "Mr. Joseph Bernard Ashalley",
+      role: "Secretary",
+      bio: `He is a Lawyer by Profession. He holdsLLB (Hons)) from the University of Buckingham England. He is a seniorassociate at Aelex Legal Practitioners & Arbitrators. He was also a senior associate at Kulendi@Law and also a Legal Assistant to Charles Allotey & Co Solicitors.`,
+      icon: <Scale size={24} />
+    }
+  ]
 
   const MilestoneCard = () => (
     <div style={{
@@ -643,6 +692,217 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* The Atlas Board Section - Timeless Minimalist Design */}
+      <section style={{ 
+        padding: isMobile ? '80px 24px' : '140px 64px', 
+        background: '#fff', 
+        color: 'var(--accent)', 
+        position: 'relative'
+      }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: 'space-between',
+            alignItems: isMobile ? 'flex-start' : 'flex-end',
+            marginBottom: isMobile ? 64 : 100,
+            gap: 32,
+            borderBottom: '1px solid #f1f5f9',
+            paddingBottom: isMobile ? 32 : 48
+          }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <span style={{ 
+                fontSize: 11, 
+                fontWeight: 900, 
+                color: 'var(--accent-gold)', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.4em',
+                display: 'block',
+                marginBottom: 16
+              }}>
+                Strategic Leadership
+              </span>
+              <h2 style={{ 
+                fontFamily: "'Playfair Display', serif",
+                fontSize: isMobile ? 42 : 72, 
+                fontWeight: 900, 
+                color: 'var(--accent)',
+                margin: 0,
+                lineHeight: 1
+              }}>
+                The Atlas <span style={{ color: 'var(--accent-gold)' }}>Board</span>
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ 
+                maxWidth: isMobile ? 'none' : 500,
+                textAlign: isMobile ? 'left' : 'right',
+                position: 'relative'
+              }}
+            >
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <p style={{ 
+                  fontSize: isMobile ? 18 : 22, 
+                  color: 'var(--accent)', 
+                  fontStyle: 'italic',
+                  lineHeight: 1.4,
+                  margin: 0,
+                  fontFamily: "'Playfair Display', serif"
+                }}>
+                  The Board of Directors is made up of the following experienced individuals:
+                </p>
+                {!isMobile && (
+                  <div style={{ 
+                    position: 'absolute', 
+                    bottom: -12, 
+                    right: 0, 
+                    width: '60px', 
+                    height: 2, 
+                    background: 'var(--accent-gold)' 
+                  }} />
+                )}
+              </div>
+            </motion.div>
+          </div>
+
+          <div style={{ position: 'relative' }}>
+            {/* Timeline Line with Drawing Animation */}
+            <motion.div 
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              style={{ 
+                position: 'absolute', 
+                left: 32, 
+                top: 0, 
+                bottom: 0, 
+                width: 1, 
+                background: 'linear-gradient(to bottom, var(--accent-gold), #f1f5f9)',
+                originY: 0,
+                zIndex: 1
+              }} 
+            />
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 64 : 80 }}>
+              {boardMembers.map((member, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: i * 0.2, duration: 0.8, ease: "easeOut" }}
+                  style={{ 
+                    display: 'flex', 
+                    flexDirection: isMobile ? 'column' : 'row',
+                    gap: isMobile ? 24 : 60,
+                    position: 'relative'
+                  }}
+                >
+                  {/* Icon and Connector with Hover Effect */}
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    style={{ 
+                      flex: isMobile ? 'none' : '0 0 64px',
+                      position: 'relative',
+                      zIndex: 2
+                    }}
+                  >
+                    <div style={{ 
+                      width: 64, 
+                      height: 64, 
+                      borderRadius: '50%', 
+                      background: '#fff', 
+                      border: '2px solid var(--accent-gold)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--accent-gold)',
+                      boxShadow: '0 10px 20px rgba(223, 151, 56, 0.1)',
+                      cursor: 'pointer'
+                    }}>
+                      {member.icon}
+                    </div>
+                  </motion.div>
+
+                  {/* Content */}
+                  <div style={{ 
+                    flex: 1, 
+                    paddingTop: isMobile ? 0 : 12,
+                    paddingLeft: isMobile ? 64 : 0 
+                  }}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: (i * 0.2) + 0.3 }}
+                    >
+                      <div style={{ 
+                        fontSize: 11, 
+                        fontWeight: 900, 
+                        color: 'var(--accent-gold)', 
+                        textTransform: 'uppercase', 
+                        letterSpacing: '0.2em', 
+                        marginBottom: 8 
+                      }}>
+                        {member.role}
+                      </div>
+                      <h3 style={{ 
+                        fontSize: isMobile ? 24 : 32, 
+                        fontWeight: 900, 
+                        color: 'var(--accent)', 
+                        marginBottom: 24,
+                        fontFamily: "'Playfair Display', serif"
+                      }}>
+                        {member.name}
+                      </h3>
+                    </motion.div>
+                    
+                    <motion.div 
+                      whileHover={{ 
+                        y: -8,
+                        boxShadow: '0 20px 40px rgba(36, 39, 111, 0.05)',
+                        borderColor: 'var(--accent-gold)'
+                      }}
+                      style={{ 
+                        background: '#fcfcfd',
+                        padding: isMobile ? '24px' : '40px',
+                        borderRadius: 24,
+                        border: '1px solid #f1f5f9',
+                        color: 'var(--text-secondary)',
+                        fontSize: 16,
+                        lineHeight: 1.8,
+                        transition: '0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        cursor: 'pointer'
+                      }} 
+                      className="board-profile-box"
+                    >
+                      {member.bio}
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <style jsx>{`
+          .board-profile-box:hover {
+            border-color: var(--accent-gold);
+            background: #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+          }
+        `}</style>
       </section>
 
       {/* The Team Section - Interactive Modal Redesign */}
